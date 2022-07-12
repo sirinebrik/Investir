@@ -2220,20 +2220,24 @@ contact Us Page
 .contact-us form button {
   width: 44px;
   height: 44px;
+  background-color: #fff;
+  border-image: linear-gradient(to bottom right,#18DB32,#0360FF ) 1;
+  color: #2a2a2a;
+  
+}
+
+  
+
+.contact-us form button:hover {
+  width: 44px;
+  height: 44px;
   display: inline-block;
   text-align: center;
   line-height: 44px;
-  background-color: #2a2a2a;
+  background: linear-gradient(to bottom right,#18DB32,#0360FF );
   box-shadow: none;
   border: 1px solid transparent;
   color: #fff;
-  transition: all 0.3s;
-}
-
-.contact-us form button:hover {
-  background-color: #fff;
-  border: 1px solid #2a2a2a;
-  color: #2a2a2a;
 }
 
 
