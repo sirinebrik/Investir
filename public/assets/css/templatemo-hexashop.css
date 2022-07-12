@@ -144,6 +144,28 @@ body {
     margin-bottom: 60px;
   }
 }
+.section-border {
+ 
+  margin-top: 25px;
+  
+}
+
+.section-border .main-button a {
+  color: #2a2a2a;
+  border-width: 2px;
+  border-style: solid;
+  border-image: linear-gradient(to bottom right,#18DB32,#0360FF ) 1;
+  margin-top: 35px;
+  padding: 8px 22px;
+  font-size: 15px; 
+  font-weight: 500;
+}
+
+.section-border .main-button a:hover {
+  background:linear-gradient(to bottom right,#18DB32,#0360FF );
+  color: #fff;
+}
+
 
 .main-border-button a {
   font-size: 13px;
