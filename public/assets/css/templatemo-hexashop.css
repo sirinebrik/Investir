@@ -151,7 +151,7 @@ body {
 }
 
 .section-border .main-button a {
-  color: #2a2a2a;
+  color: #0360FF ;
   border-width: 2px;
   border-style: solid;
   border-image: linear-gradient(to bottom right,#18DB32,#0360FF ) 1;
@@ -2222,7 +2222,7 @@ contact Us Page
   height: 44px;
   background-color: #fff;
   border-image: linear-gradient(to bottom right,#18DB32,#0360FF ) 1;
-  color: #2a2a2a;
+  color: #0360FF;
   
 }
 
