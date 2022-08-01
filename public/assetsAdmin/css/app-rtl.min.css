@@ -2806,7 +2806,7 @@ div.dataTables_wrapper div.dataTables_filter {
   vertical-align: middle; }
 
 .authentication-bg {
-  background-image: url(../images/title-img.png);
+
   height: 100vh;
   background-size: cover;
   background-position: center; }
@@ -3588,5 +3588,64 @@ div.dataTables_wrapper div.dataTables_filter {
         width: 86px;
         right: -12px;
         bottom: 38px; } }
+
+        #form-search{
+          box-sizing : border-box;
+          padding: 5px;  
+          /* Pour éviter de faire apparaître le rectangle quand on clique sur le champ de recherche */
+          width: 25px; 
+          height: 25px;
+          background: grey;
+          display:flex;
+          align-items:center;
+          justify-content:center;
+          border-radius: 0; 
+          -moz-transition: width .5s, border-radius .5s;
+          -o-transition: width .5s, border-radius .5s ;
+          -ms-transition: width .5s, border-radius .5s;
+          -webkit-transition: width .5s, border-radius .5s;
+          transition: width .5s, border-radius .5s;
+        }
+        #search {
+          box-sizing : border-box;
+          -moz-appearance: none;
+          -webkit-appearance: none;
+          appearance: none;
+          width: 0px;
+          height:20px;
+          margin:0; 
+          padding:0; 
+          background: grey;
+          border:none;
+          
+          -moz-transition: width .5s;
+          -o-transition: width .5s;
+          -ms-transition: width .5s;
+          -webkit-transition: width .5s;
+          transition: width 0.5s;
+        }
+        
+        #form-search.search {
+          width: 400px; 
+          justify-content:space-between;
+          border-radius: 40px; 
+        }
+        #form-search.search #search{
+          width: 100%;
+          margin-left:8px;
+          padding:3px;
+        }
+        #form-search.search #bt-close{
+          display:inline-block
+        }
+        #bt-close,
+        #form-search.search #bt-search{
+          display:none
+        }
+        #bt-close,
+        #bt-search{ 
+          cursor:pointer;
+        }
+        
 
 /*# sourceMappingURL=app-rtl.min.css.map */

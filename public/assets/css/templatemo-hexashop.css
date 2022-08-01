@@ -71,7 +71,7 @@ ul, li {
   list-style: none;
 }
 
-header, nav, section, article, aside, footer, hgroup {
+header, nav, article, aside, footer, hgroup {
   display: block;
 }
 
@@ -685,7 +685,8 @@ banner
 
 .main-banner .left-content .inner-content {
   position: absolute;
-  left: 100px;
+  text-align: center;
+  
   top: 50%;
   transform: translateY(-50%);
 }
@@ -696,6 +697,7 @@ banner
   font-size: 52px;
   font-weight: 700;
   margin-bottom: 20px;
+  text-align: center;
 }
 
 .main-banner .left-content .inner-content span {
@@ -1476,21 +1478,28 @@ Subscribe
 .subscribe form button {
   width: 44px;
   height: 44px;
+  background-color: #fff;
+  border-image: linear-gradient(to bottom right,#18DB32,#0360FF ) 1;
+  color: #0360FF;
+  
+}
+
+  
+
+.subscribe form button:hover {
+  width: 44px;
+  height: 44px;
   display: inline-block;
   text-align: center;
   line-height: 44px;
-  background-color: #2a2a2a;
+  background: linear-gradient(to bottom right,#18DB32,#0360FF );
   box-shadow: none;
   border: 1px solid transparent;
   color: #fff;
-  transition: all 0.3s;
 }
 
-.subscribe form button:hover {
-  background-color: #fff;
-  border: 1px solid #2a2a2a;
-  color: #2a2a2a;
-}
+
+
 
 .subscribe ul li {
   margin-bottom: 30px;
@@ -2161,84 +2170,8 @@ contact Us Page
 --------------------------------------------- 
 */
 
-.contact-us {
-  margin-top: 90px;
-  border-bottom: 3px dotted #eee;
-  padding-bottom: 90px;
-}
 
-.contact-us .section-heading {
-  margin-bottom: 40px;
-}
 
-.contact-us #map {
-  margin-right: 30px;
-}
-
-.contact-us form input {
-  width: 100%;
-  height: 44px;
-  line-height: 44px;
-  padding: 0px 15px;
-  font-size: 14px;
-  font-style: italic;
-  font-weight: 500;
-  color: #aaa;
-  border-radius: 0px;
-  border: 1px solid #7a7a7a;
-  box-shadow: none;
-}
-
-.contact-us form input::focus {
-  border-color: #2a2a2a;
-  border-radius: 0px;
-}
-
-.contact-us form textarea {
-  width: 100%;
-  height: 140px;
-  min-height: 120px;
-  max-height: 200px;
-  margin-top: 30px;
-  margin-bottom: 25px;
-  line-height: 44px;
-  padding: 0px 15px;
-  font-size: 14px;
-  font-style: italic;
-  font-weight: 500;
-  color: #aaa;
-  border-radius: 0px;
-  border: 1px solid #7a7a7a;
-  box-shadow: none;
-}
-
-.contact-us form textarea::focus {
-  border-color: #2a2a2a;
-  border-radius: 0px;
-}
-
-.contact-us form button {
-  width: 44px;
-  height: 44px;
-  background-color: #fff;
-  border-image: linear-gradient(to bottom right,#18DB32,#0360FF ) 1;
-  color: #0360FF;
-  
-}
-
-  
-
-.contact-us form button:hover {
-  width: 44px;
-  height: 44px;
-  display: inline-block;
-  text-align: center;
-  line-height: 44px;
-  background: linear-gradient(to bottom right,#18DB32,#0360FF );
-  box-shadow: none;
-  border: 1px solid transparent;
-  color: #fff;
-}
 
 
 /* 
@@ -2287,6 +2220,7 @@ responsive
     text-align: center;
     margin-bottom: 30px;
   }
+  
   .about-us .right-content {
     margin-left: 0px;
     margin-top: 30px;
@@ -2297,10 +2231,7 @@ responsive
   .our-services .service-item {
     margin-bottom: 30px;
   }
-  .contact-us #map {
-    margin-right: 0px;
-    margin-bottom: 30px;
-  }
+ 
 }
 
 @media (max-width: 767px) {

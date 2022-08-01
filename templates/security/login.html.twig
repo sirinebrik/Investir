@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+
+
+<!-- Mirrored from themesdesign.in/morvin/layouts/auth-login.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 24 Aug 2021 10:51:22 GMT -->
+<head>
+
+    
+    <meta charset="utf-8" />
+    <title>{% block title %}Login{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
+    <meta content="Themesdesign" name="author" />
+  
+    
+
+    <!-- Bootstrap Css -->
+    <link href="assetsAdmin/css/bootstrap.min.css" id="bootstrap-style" rel="stylesheet" type="text/css" />
+    <!-- Icons Css -->
+    <link href="assetsAdmin/css/icons.min.css" rel="stylesheet" type="text/css" />
+    <!-- App Css-->
+    <link href="assetsAdmin/css/app.min.css" id="app-style" rel="stylesheet" type="text/css" />
+
+
+</head>
+
+
+<body class="authentication-bg ">
+<style>
+.btn:hover{
+ 
+  border-width: 2px;
+  border-style: solid;
+  border-image: linear-gradient(to bottom right,#18DB32,#0360FF ) 1;
+  
+  font-size: 15px; 
+  font-weight: 500;
+}
+.btn{
+    background:linear-gradient(to bottom right,#18DB32,#0360FF );
+  color:  #fff;
+ 
+}
+.authentication-bg{
+    background-color:#0360FF;
+}
+
+
+</style>
+ <div class="home-center">
+        <div class="home-desc-center">
+
+            <div class="container">
+
+                <div class="home-btn"><a href="/" class="text-white router-link-active"><i
+                            class="fas fa-home h2" style="font-size:23px;"></i></a></div>
+
+
+                <div class="row justify-content-center">
+                    <div class="col-md-8 col-lg-6 col-xl-5">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="px-2 py-3">
+
+
+                                    <div class="text-center">
+                                        <a href="index.html">
+                                            <img src="assets/images/logo1.png" height="55" alt="logo">
+                                        </a>
+
+                                       
+                                    </div>
+                                    <br/> 
+
+
+                                    <form class="form-horizontal mt-4 pt-2" method="post" action="">
+                                       {% if error %}
+                                         <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                                       {% endif %}
+
+                                       {% if app.user %}
+                                          <div class="mb-3">
+                                         You are logged in as {{ app.user.username }}, <a href="{{ path('app_logout') }}">Logout</a>
+                                         </div>
+                                          {% endif %}
+
+                                        <div class="mb-3">
+                                          
+                                            <input type="email" class="form-control" id="email"
+                                                placeholder="Adresse e-mail">
+                                        </div>
+
+                                        <div class="mb-3">
+                                          
+                                            <input type="password" class="form-control" id="userpassword"
+                                                placeholder="Mot de passe">
+                                                 <input type="hidden" name="_csrf_token"
+                                                  value="{{ csrf_token('authenticate') }}"
+                                                    >
+
+                                        </div>
+
+                                      
+                                       
+                                        <div>
+                                            <button class="btn btn-primary w-100 waves-effect waves-light"
+                                                type="submit">Se connecter</button>
+                                        </div>
+
+                                       
+    
+
+                                    </form>
+                                    <br/>
+                                  
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-5 text-center text-white">
+                            <p>Avez-vous un compte ? Si non, <a href="auth-register.html" class="fw-bold text-white">S'inscrire </a> </p>
+                           
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+        </div>
+        <!-- End Log In page -->
+    </div>
+
+    <!-- JAVASCRIPT -->
+    <script src="assetsAdmin/libs/jquery/jquery.min.js"></script>
+    <script src="assetsAdmin/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="assetsAdmin/libs/metismenu/metisMenu.min.js"></script>
+    <script src="assetsAdmin/libs/simplebar/simplebar.min.js"></script>
+    <script src="assetsAdmin/libs/node-waves/waves.min.js"></script>
+
+    <script src="assetsAdmin/js/app.js"></script>
+
+</body>
+
+
+</html>
+
+
+
