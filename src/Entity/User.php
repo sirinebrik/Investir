@@ -4,11 +4,12 @@ namespace App\Entity;
 
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
  */
-class User
+class User implements UserInterface
 {
     /**
      * @ORM\Id
@@ -20,7 +21,7 @@ class User
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $nomComplet;
+    private $username;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -62,14 +63,14 @@ class User
         return $this->id;
     }
 
-    public function getNomComplet(): ?string
-    {
-        return $this->nomComplet;
-    }
+    public function getUsername(): ?string
+                      {
+                          return $this->username;
+                      }
 
-    public function setNomComplet(string $nomComplet): self
+    public function setUsername(string $username): self
     {
-        $this->nomComplet = $nomComplet;
+        $this->username = $username;
 
         return $this;
     }
@@ -157,4 +158,14 @@ class User
 
         return $this;
     }
+    public function getRoles(){
+                  
+        $roles = [$this->role];
+        return array_unique($roles);
+    }
+     
+
+    public function getSalt(){}
+    public function eraseCredentials(){}
+
 }

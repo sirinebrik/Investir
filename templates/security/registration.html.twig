@@ -2,11 +2,12 @@
 <html lang="en">
 
 
+<!-- Mirrored from themesdesign.in/morvin/layouts/auth-login.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 24 Aug 2021 10:51:22 GMT -->
 <head>
 
     
     <meta charset="utf-8" />
-    <title>{% block title %}Connexion{% endblock %}</title>
+    <title>{% block title %}Inscription{% endblock %}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
     <meta content="Themesdesign" name="author" />
@@ -44,11 +45,13 @@
 }
 .authentication-bg{
     background:linear-gradient(to bottom right,#18DB32,#0360FF );
+   
 }
 .card{
     border-radius: 20px;
-}
-
+     width: 800px;
+      margin-left:150px;
+}         
 </style>
  <div class="home-center">
         <div class="home-desc-center">
@@ -59,8 +62,8 @@
                             class="fas fa-home h2" style="font-size:23px;"></i></a></div>
 
 
-                <div class="row justify-content-center">
-                    <div class="col-md-8 col-lg-6 col-xl-5">
+                <div class="row ">
+                    <div class="col-md-8 ">
                         <div class="card">
                             <div class="card-body">
                                 <div class="px-2 py-3">
@@ -74,50 +77,72 @@
                                        
                                     </div>
                                     <br/> 
+                                     <br/> 
 
 
-                                    <form class="form-horizontal mt-4 pt-2" action = "{{ path('app_login') }}" method="post">
-                                       
-                                        <div class="mb-3">
-                                          
-                                            <input type="email" class="form-control" id="email" name="_username"
-                                                placeholder="Adresse e-mail">
-                                        </div>
 
-                                        <div class="mb-3">
-                                          
-                                            <input type="password" class="form-control" id="userpassword" name="_password"
-                                                placeholder="Mot de passe">
-                                                 <input type="hidden" name="_csrf_token"
-                                                  value="{{ csrf_token('authenticate') }}"
-                                                    >
-
-                                        </div>
-
-                                      
-                                       
-                                        <div>
-                                            <button class="btn btn-primary w-100 waves-effect waves-light"
-                                                type="submit">Se connecter</button>
-                                        </div>
-
-                                       
     
+    {{ form_start(form)}}
+     <div class="row">
+     <div class="col-lg-6 mb-3">
+    {{ form_widget(form.username, {'attr':
+    {'placeholder': 'Nom Complet ...'}})}}
+     </div>
 
-                                    </form>
-                                    <br/>
+     <div class="col-lg-6 mb-3">
+     {{ form_widget(form.email, {'attr':
+    {'placeholder': 'Adresse e-mail ...'}})}}
+     </div>
+      </div>
+
+   <div class="row">
+    <div class="col-lg-6 mb-3">
+    {{ form_widget(form.password, {'attr':
+    {'placeholder': 'Mot de passe ...'}})}}
+     </div>
+   <div class="col-lg-6 mb-3">
+    {{ form_widget(form.tel, {'attr':
+    {'placeholder': 'Numéro de téléphone ...'}})}}
+   </div>
+   </div>
+
+   <div class="row">
+    <div class="col-lg-6 mb-3">
+    {{ form_widget(form.adresse, {'attr':
+    {'placeholder': 'Adresse ...'}})}}
+ </div>
+
+ <div class="col-lg-6 mb-3">
+   <select  class="form-control">  
+   <option disabled selected>Choisir type utilisateur </option>
+   <option>Ministére </option>
+   <option>Investisseur </option>
+   </select>
+ </div>
+  </div>
+   
+
+   
+
+    {{ form_widget(form)}}
+    
+   <button class="btn btn-primary w-100 waves-effect waves-light"
+                                                type="submit">S'inscrire</button>
+    {{ form_end(form)}}
+
+ <br/>
                                   
                                 </div>
                             </div>
                         </div>
 
-                        <div class="mt-4 text-center text-white">
-                            <p>Avez-vous un compte ? Si non, <a href="/inscription" class="fw-bold text-white">S'inscrire </a> </p>
-                           
                         </div>
+                       
                     </div>
                 </div>
-
+<div class="mt-4 text-center  text-white">
+                            <p style="text-align:center;">Avez-vous un compte ? Si oui, <a href="/login" class="fw-bold text-white">Se connecter </a> </p>
+                           
             </div>
 
 
