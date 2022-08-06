@@ -47,7 +47,7 @@ class SecurityController extends AbstractController
         $em->persist($user);
         $em->flush();
 
-        return $this->redirectToRoute('app_login');}
+        return $this->redirectToRoute('app_activation');}
     }
 
     return $this->render('security/registration.html.twig', [
@@ -78,11 +78,20 @@ class SecurityController extends AbstractController
         */
         public function indexAction()
         {
-
-            if($this->getUser()->getRole() =='ROLE_ADMIN')
+            if($this->getUser()->getEtat() =='false')
+            return $this->render('security/login.html.twig');
+            elseif($this->getUser()->getRole() =='ROLE_ADMIN')
                 return $this->redirect($this->generateUrl('dash_admin'));
             else
                 return $this->redirect($this->generateUrl('app_home'));
             
         }
+
+        /**
+     * @Route("/msgActivation", name="app_activation")
+     */
+    public function msgActivation(): Response
+    {
+        return $this->render('security/msgActivation.html.twig');
+    }
 }
