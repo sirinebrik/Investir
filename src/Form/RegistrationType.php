@@ -20,7 +20,7 @@ class RegistrationType extends AbstractType
             ->add('email' , TextType::class ,[
                 'attr' => ['class' => 'form-control']])
             ->add('password', PasswordType::class ,[
-                'attr' => ['class' => 'form-control']])
+                'attr' => ['class' => 'form-control','placeholder' => 'Mot de passe ...']])
             ->add('tel',TextType::class ,[
                 'attr' => ['class' => 'form-control']])
             ->add('adresse',TextType::class ,[
