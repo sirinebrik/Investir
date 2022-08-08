@@ -3,6 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Entity\TypeMinistere;
+use App\Entity\Ministere;
+use App\Entity\Investisseur;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -37,7 +40,13 @@ class SecurityController extends AbstractController
         $user->setPassword($hash);
 
         // Set their role
-        $user->setRole('ROLE_USER');
+        if ($request->get('type_Utilisateur')=="ministére"){
+            $user->setRole('ROLE_MINISTERE');  
+        }
+        if ($request->get('type_Utilisateur')=="investisseur"){
+            $user->setRole('ROLE_INVESTISSEUR');  
+        }
+      
         $user->setEtat("false");
         $date=new \DateTime('now');
         $user->setDateInscription($date->format('d/m/Y'));
@@ -46,12 +55,34 @@ class SecurityController extends AbstractController
         $em = $this->getDoctrine()->getManager();
         $em->persist($user);
         $em->flush();
+        if ($request->get('type_Utilisateur')=="ministére"){
+            $ministere = new Ministere();
+            $ministere->setUtilisateur($user);
+            $typesM = $this->getDoctrine()
+                 ->getRepository(TypeMinistere::class)
+                 ->find($request->get('typeM'));
+            $ministere->setType($typesM) ;
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($ministere);
+            $em->flush();
+        }
+        if ($request->get('type_Utilisateur')=="investisseur"){
+            $investisseur = new Investisseur();
+            $investisseur->setUtilisateur($user);
+            $investisseur->setNomEntreprise($request->get('nom_entreprise')) ;
+            $investisseur->setPays($request->get('pays')) ;
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($investisseur);
+            $em->flush();
+        }
 
         return $this->redirectToRoute('app_activation');}
     }
-
+    $typesM = $this->getDoctrine()
+    ->getRepository(TypeMinistere::class)
+    ->findAll();
     return $this->render('security/registration.html.twig', [
-        'form' => $form->createView(),
+        'form' => $form->createView(),'typesM'=>$typesM,
     ]);
 }
     /**
