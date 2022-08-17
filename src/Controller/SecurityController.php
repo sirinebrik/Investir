@@ -23,6 +23,12 @@ class SecurityController extends AbstractController
     if ($this->getUser()!=NULL && $this->getUser()->getRole()=="ROLE_ADMIN" ){
         return $this->redirectToRoute('dash_admin') ;
     }
+    elseif ($this->getUser()!=NULL && $this->getUser()->getRole()=="ROLE_INVESTISSEUR" ){
+        return $this->redirectToRoute('app_investisseur') ;
+    }
+    elseif ($this->getUser()!=NULL && $this->getUser()->getRole()=="ROLE_MINISTERE" ){
+        return $this->redirectToRoute('app_ministere') ;
+    }
     else{
     
     $user = new User();
@@ -34,7 +40,7 @@ class SecurityController extends AbstractController
     if ($form->isSubmitted() && $form->isValid()) {
         
         // Encode the new users password
-        $plainPassword = $user->getPassword();
+        $plainPassword = $form->get('password')->getData();
         $hash = $encoder->encodePassword($user, $plainPassword);
      
         $user->setPassword($hash);
@@ -93,6 +99,12 @@ class SecurityController extends AbstractController
         if ($this->getUser()!=NULL && $this->getUser()->getRole()=="ROLE_ADMIN" ){
             return $this->redirectToRoute('dash_admin') ;
         }
+        elseif ($this->getUser()!=NULL && $this->getUser()->getRole()=="ROLE_INVESTISSEUR" ){
+            return $this->redirectToRoute('app_investisseur') ;
+        }
+        elseif ($this->getUser()!=NULL && $this->getUser()->getRole()=="ROLE_MINISTERE" ){
+            return $this->redirectToRoute('app_ministere') ;
+        }
         else{
         return $this->render('security/login.html.twig');}
     }
@@ -113,8 +125,13 @@ class SecurityController extends AbstractController
             return $this->render('security/loginActive.html.twig');
             elseif($this->getUser()->getRole() =='ROLE_ADMIN')
                 return $this->redirect($this->generateUrl('dash_admin'));
-            else
-                return $this->redirect($this->generateUrl('app_home'));
+            elseif($this->getUser()->getRole() =='ROLE_INVESTISSEUR')
+                return $this->redirect($this->generateUrl('app_investisseur'));
+            elseif($this->getUser()->getRole() =='ROLE_MINISTERE')
+                return $this->redirect($this->generateUrl('app_ministere'));
+            else{
+                return $this->redirect($this->generateUrl('app_home')); 
+            }
             
         }
 
@@ -123,6 +140,16 @@ class SecurityController extends AbstractController
      */
     public function msgActivation(): Response
     {
-        return $this->render('security/msgActivation.html.twig');
+        if ($this->getUser()!=NULL && $this->getUser()->getRole()=="ROLE_ADMIN" ){
+            return $this->redirectToRoute('dash_admin') ;
+        }
+        elseif ($this->getUser()!=NULL && $this->getUser()->getRole()=="ROLE_INVESTISSEUR" ){
+            return $this->redirectToRoute('app_investisseur') ;
+        }
+        elseif ($this->getUser()!=NULL && $this->getUser()->getRole()=="ROLE_MINISTERE" ){
+            return $this->redirectToRoute('app_ministere') ;
+        }
+        else{
+        return $this->render('security/msgActivation.html.twig');}
     }
 }

@@ -45,15 +45,19 @@
 }
 .authentication-bg{
     background:linear-gradient(to bottom right,#18DB32,#0360FF );
-   
+   height:900px;
 }
 .card{
     border-radius: 20px;
      width: 800px;
       margin-left:150px;
+     
 }  
 #btnToggle {
-  margin-top: 15em;
+  margin-top: 17.3em;
+}
+#btnToggle1 {
+  margin-top: 17.3em;
 }
 
 .toggle {
@@ -65,11 +69,25 @@
   font-weight: 500;
   /*padding: .5em;*/
   position: absolute;
-  right: 26.1em;
+  right:29.7em;
   top: 1.70em;
   
 }
-.toggle:focus { outline:0 !important; }      
+.toggle1 {
+  background: none;
+  border: none;
+  color: #337ab7;
+  /*display: none;*/
+  /*font-size: .9em;*/
+  font-weight: 500;
+  /*padding: .5em;*/
+  position: absolute;
+  right: 2.3em;
+  top: 1.70em;
+  
+}
+.toggle:focus { outline:0 !important; }  
+.toggle1:focus { outline:0 !important; }      
 
 </style>
  <div class="home-center">
@@ -78,7 +96,7 @@
             <div class="container">
 
                 <div class="home-btn"><a href="/" class="text-white router-link-active"><i
-                            class="fas fa-home h2" style="font-size:23px;"></i></a></div>
+                            class="fas fa-home h2" style="font-size:23px;color:white;"></i></a></div>
 
 
                 <div class="row ">
@@ -104,48 +122,67 @@
                                     
                                      <br/> 
 
-
+{% set formErrors = form.vars.errors.form.getErrors(true) %}
+    {% if formErrors|length %}
+      <div class="row">
+        <div class="col-lg-12 mb-3 alert alert-danger ">
+            <ul>
+                {% for error in formErrors %}
+                    <li>{{ error.message }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+      </div>
+      
+    {% endif %}
 
     
                              {{ form_start(form)}}
                                  <div class="row">
                                     <div class="col-lg-6 mb-3">
                                         {{ form_widget(form.username, {'attr':
-                                         {'placeholder': 'Nom Complet ...'}})}}
+                                         {'placeholder': 'Nom Complet'}})}}
                                     </div>
 
                                     <div class="col-lg-6 mb-3">
                                        {{ form_widget(form.email, {'attr':
-                                         {'placeholder': 'Adresse e-mail ...'}})}}
+                                         {'placeholder': 'Adresse e-mail'}})}}
                                     </div>
                                  </div>
 
                                  <div class="row">
                                      <div class="col-lg-6 mb-3">
-                                        {{ form_widget(form.password,{'id':'txtPassword'})}}
+                                        {{ form_widget(form.password.first,{'id':'txtPassword'})}}
+   
+                                     </div>
+                                      <div class="col-lg-6 mb-3">
+                                        {{ form_widget(form.password.second,{'id':'txtPassword1'})}}
    
                                      </div>
        
-                                     <div class="col-lg-6 mb-3">
-                                       {{ form_widget(form.tel, {'attr':
-                                          {'placeholder': 'Numéro de téléphone ...'}})}}
-                                    </div>
+                                    
                                  </div>
                                 <button type="button" id="btnToggle" class="toggle"><i id="eyeIcon" style="font-size:13px;" class="fa fa-eye"></i></button>
+                                 <button type="button" id="btnToggle1" class="toggle1"><i id="eyeIcon1" style="font-size:13px;" class="fa fa-eye"></i></button>
                                  <div class="row">
+                                      <div class="col-lg-6 mb-3">
+                                       {{ form_widget(form.tel, {'attr':
+                                          {'placeholder': 'Numéro de téléphone'}})}}
+                                     </div>
                                      <div class="col-lg-6 mb-3">
                                         {{ form_widget(form.adresse, {'attr':
-                                           {'placeholder': 'Adresse ...'}})}}
+                                           {'placeholder': 'Adresse'}})}}
                                     </div>
-                                  
-                                    <div class="col-lg-6 mb-3">
+                                  </div>
+                                   <div class="row">
+                                    <div class="col-lg-12 mb-3">
                                          <select id="select_box" class="form-control select" name="type_Utilisateur">  
-                                            <option disabled selected>Choisir type utilisateur </option>
+                                            <option disabled selected>Sélectionner le type d'utilisateur </option>
                                             <option value="ministére">Ministére </option>
                                             <option value="investisseur">Investisseur </option>
                                          </select>
                                      </div>
-                                 </div>
+                                   </div>
  
                                  <div class="row hide" id="investisseur">
                                     <div class="col-lg-6 mb-3">
@@ -153,7 +190,7 @@
                                                 placeholder="Nom de l'entreprise ...">
                                     </div>
                                      <div class="col-lg-6 mb-3">
-                                         <select id="country" name="pays" class='form-control select'><option value="" disabled selected>Choisir le pays</option></select>
+                                         <select id="country" name="pays" class='form-control select'><option value="" disabled selected>Sélectionner le pays</option></select>
                                     </div>
  
                                  </div>
@@ -161,7 +198,7 @@
                                  <div class="row">
                                     <div class="col-lg-12 mb-3">
                                          <select id="ministére" class="hide form-control select"name="typeM">  
-                                             <option disabled selected>Choisir type Ministére </option>
+                                             <option disabled selected>Sélectionner le type Ministére </option>
                                               {% for typeM in typesM %}
                                                   <option value={{typeM.id}}>{{typeM.titre}} </option>
                                               {% endfor %}
@@ -270,6 +307,36 @@
 
           toggle.addEventListener('click', togglePassword, false);
           passwordInput.addEventListener('keyup', checkInput, false);
+    </script>
+    <script>
+        let passwordInput1 = document.getElementById('txtPassword1'),
+        toggle1 = document.getElementById('btnToggle1'),
+          icon1 =  document.getElementById('eyeIcon1');
+
+      function togglePassword1() {
+       if (passwordInput1.type === 'password') {
+        passwordInput1.type = 'text';
+       icon1.classList.add("fa-eye-slash");
+       //toggle1.innerHTML = 'hide';
+        } else {
+        passwordInput1.type = 'password';
+        icon1.classList.remove("fa-eye-slash");
+        //toggle1.innerHTML = 'show';
+         }
+         }
+
+       function checkInput1() {
+       //if (passwordInput1.value === '') {
+         //toggle1.style.display = 'none';
+         //toggle1.innerHTML = 'show';
+          //  passwordInput1.type = 'password';
+         //} else {
+         //  toggle1.style.display = 'block';
+         //}
+          }
+
+          toggle1.addEventListener('click', togglePassword1, false);
+          passwordInput1.addEventListener('keyup', checkInput1, false);
     </script>
 
 </body>
