@@ -6,10 +6,11 @@ use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
- * @UniqueEntity("email")
+ * @UniqueEntity(fields={"email"}, message="Email déjà utilisé !")
  */
 class User implements UserInterface
 {
@@ -27,6 +28,7 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=191, unique=true)
+     * @Assert\Email(message = "The email '{{ value }}' is not a valid email.")
      */
     private $email;
 

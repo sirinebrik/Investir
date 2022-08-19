@@ -10,6 +10,7 @@ use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\TelType;
 
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
@@ -24,13 +25,33 @@ class RegistrationType extends AbstractType
     {
         $builder
             ->add('username', TextType::class  ,[
-                'attr' => ['class' => 'form-control']])
-            ->add('email' , EmailType::class ,[
-                'attr' => ['class' => 'form-control']])
+                'attr' => ['class' => 'form-control'],
+                
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Veuillez entrer le nom complet !',
+                    ]),
+                    new Length([
+                        'min' => 4,
+                        'minMessage' => 'Votre nom complet doit comporter au moins {{ limit }} caractères !',
+                        // max length allowed by Symfony for security reasons
+                      
+                    ]),
+                ],])
+            ->add('email' , TextType::class ,[
+                'attr' => ['class' => 'form-control'],
+                
+                'constraints' => [
+                    new NotBlank([
+                        'message' => "Veuillez entrer l'adresse email !",
+                    ]),
+                    
+                ],
+                ])
             ->add('password',RepeatedType::class, [
                 'type' => PasswordType::class,
                 
-                'invalid_message' => 'Les champs de mot de passe doivent correspondre.',
+                'invalid_message' => "Vous n'avez pas entrer le même mot de passe !",
                 'required' => true,
                 'first_options'  => ['label' => false,'attr' => ['class' => 'form-control','placeholder' => 'Mot de passe']],
                 'second_options' => ['label' => false,'attr' => ['class' => 'form-control','placeholder' => 'Répéter le mot de passe']],
@@ -40,19 +61,45 @@ class RegistrationType extends AbstractType
                 'mapped' => false,
                 'constraints' => [
                     new NotBlank([
-                        'message' => 'Veuillez entrer un mot de passe',
+                        'message' => 'Veuillez entrer un mot de passe !',
                     ]),
                     new Length([
-                        'min' => 6,
-                        'minMessage' => 'Votre mot de passe doit comporter au moins {{ limit }} caractères',
+                        'min' => 4,
+                        'minMessage' => 'Votre mot de passe doit comporter au moins {{ limit }} caractères !',
                         // max length allowed by Symfony for security reasons
                         'max' => 4096,
                     ]),
                 ], ])
-            ->add('tel',TextType::class ,[
-                'attr' => ['class' => 'form-control']])
+            ->add('tel',TelType::class ,[
+                'attr' => ['class' => 'form-control'],
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Veuillez entrer le numéro de téléphone !',
+                    ]),
+                    new Length([
+                        'min' => 4,
+                        'minMessage' => 'Votre numéro de téléphone doit comporter au moins {{ limit }} caractères !',
+                        // max length allowed by Symfony for security reasons
+                      
+                    ]),
+                ],
+                
+                ])
             ->add('adresse',TextType::class ,[
-                'attr' => ['class' => 'form-control']])
+                'attr' => ['class' => 'form-control'],
+                'constraints' => [
+                    new NotBlank([
+                        'message' => "Veuillez entrer l'adresse'!",
+                    ]),
+                    new Length([
+                        'min' => 4,
+                        'minMessage' => 'Votre adresse doit comporter au moins {{ limit }} caractères !',
+                        // max length allowed by Symfony for security reasons
+                      
+                    ]),
+                ],
+                
+                ])
           
             
         ;

@@ -56,6 +56,7 @@ class SecurityController extends AbstractController
         $user->setEtat("false");
         $date=new \DateTime('now');
         $user->setDateInscription($date->format('d/m/Y'));
+        
 
         // Save
         $em = $this->getDoctrine()->getManager();
@@ -84,9 +85,18 @@ class SecurityController extends AbstractController
 
         return $this->redirectToRoute('app_activation');}
     }
-    $typesM = $this->getDoctrine()
-    ->getRepository(TypeMinistere::class)
-    ->findAll();
+   
+    $qb = $this->getDoctrine()->getRepository(TypeMinistere::class)->createQueryBuilder('o');
+    $qbm = $this->getDoctrine()->getRepository(Ministere::class)->createQueryBuilder('m');
+    
+    $ministere=$this->getDoctrine()->getRepository(Ministere::class)->findAll(array('type.id'));
+    
+
+    $typesM = $qb->select('o')->where($qb->expr()->notIn('o.id', $this->getDoctrine()->getRepository(Ministere::class)->createQueryBuilder('m')
+    ->select('pa.id')
+    ->join('m.type', 'pa')
+   
+    ->getDQL()))->getQuery()->getResult();
     return $this->render('security/registration.html.twig', [
         'form' => $form->createView(),'typesM'=>$typesM,
     ]);

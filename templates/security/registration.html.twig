@@ -16,6 +16,7 @@
 
     <!-- Bootstrap Css -->
     <link href="assetsAdmin/css/bootstrap.min.css" id="bootstrap-style" rel="stylesheet" type="text/css" />
+     <link href="assets/css/test.css" id="bootstrap-style" rel="stylesheet" type="text/css" />
     <!-- Icons Css -->
     <link href="assetsAdmin/css/icons.min.css" rel="stylesheet" type="text/css" />
     <!-- App Css-->
@@ -27,6 +28,7 @@
 
 <body class="authentication-bg ">
 <style>
+
 .btn:hover{
  
   border-width: 2px;
@@ -41,23 +43,36 @@
   color:  #fff;
    border-radius: 9px;
    margin-top:10px;
+   
  
 }
 .authentication-bg{
     background:linear-gradient(to bottom right,#18DB32,#0360FF );
-   height:900px;
+   height:760px;
 }
 .card{
     border-radius: 20px;
      width: 800px;
       margin-left:150px;
+    
+      
      
 }  
 #btnToggle {
-  margin-top: 17.3em;
+  float: right;
+    position: absolute;
+    right: 13px;
+    top: 9px;
+    cursor: pointer;
+    z-index: 2;
 }
 #btnToggle1 {
-  margin-top: 17.3em;
+   float: right;
+    position: absolute;
+    right: 13px;
+    top: 9px;
+    cursor: pointer;
+    z-index: 2;
 }
 
 .toggle {
@@ -86,10 +101,32 @@
   top: 1.70em;
   
 }
+input[type="text"]:focus {
+  border-color: dodgerBlue;
+  box-shadow: 0 0 px 0 dodgerBlue;
+}
+input[type="password"]:focus {
+  border-color: dodgerBlue;
+  box-shadow: 0 0 px 0 dodgerBlue;
+}
+input[type="email"]:focus {
+  border-color: dodgerBlue;
+  box-shadow: 0 0 px 0 dodgerBlue;
+}
+#phone{
+  width:360px;
+}
+
+
 .toggle:focus { outline:0 !important; }  
 .toggle1:focus { outline:0 !important; }      
 
+ul .country-list.dropup{
+    display: block;
+
+}
 </style>
+
  <div class="home-center">
         <div class="home-desc-center">
 
@@ -125,10 +162,10 @@
 {% set formErrors = form.vars.errors.form.getErrors(true) %}
     {% if formErrors|length %}
       <div class="row">
-        <div class="col-lg-12 mb-3 alert alert-danger ">
+        <div class="col-lg-12 mb-3 alert ">
             <ul>
                 {% for error in formErrors %}
-                    <li>{{ error.message }}</li>
+                    <li style="color:red;">{{ error.message }}</li>
                 {% endfor %}
             </ul>
         </div>
@@ -150,54 +187,43 @@
                                     </div>
                                  </div>
 
-                                 <div class="row">
+                                <div class="row">
                                      <div class="col-lg-6 mb-3">
                                         {{ form_widget(form.password.first,{'id':'txtPassword'})}}
+                                          <button type="button" id="btnToggle" class="toggle"><i id="eyeIcon" style="font-size:13px;" class="fa fa-eye"></i></button>
    
                                      </div>
                                       <div class="col-lg-6 mb-3">
                                         {{ form_widget(form.password.second,{'id':'txtPassword1'})}}
-   
+                                           <button type="button" id="btnToggle1" class="toggle1"><i id="eyeIcon1" style="font-size:13px;" class="fa fa-eye"></i></button>
+
                                      </div>
        
                                     
                                  </div>
-                                <button type="button" id="btnToggle" class="toggle"><i id="eyeIcon" style="font-size:13px;" class="fa fa-eye"></i></button>
-                                 <button type="button" id="btnToggle1" class="toggle1"><i id="eyeIcon1" style="font-size:13px;" class="fa fa-eye"></i></button>
                                  <div class="row">
-                                      <div class="col-lg-6 mb-3">
-                                       {{ form_widget(form.tel, {'attr':
-                                          {'placeholder': 'Numéro de téléphone'}})}}
-                                     </div>
-                                     <div class="col-lg-6 mb-3">
-                                        {{ form_widget(form.adresse, {'attr':
-                                           {'placeholder': 'Adresse'}})}}
-                                    </div>
-                                  </div>
-                                   <div class="row">
-                                    <div class="col-lg-12 mb-3">
-                                         <select id="select_box" class="form-control select" name="type_Utilisateur">  
+                                    <div class="col-lg-12 mb-3"">
+                                         <select id="select_box" class="form-control form-select select" name="type_Utilisateur"   >  
                                             <option disabled selected>Sélectionner le type d'utilisateur </option>
                                             <option value="ministére">Ministére </option>
                                             <option value="investisseur">Investisseur </option>
                                          </select>
                                      </div>
                                    </div>
- 
-                                 <div class="row hide" id="investisseur">
+                                    <div class="row hide1" id="investisseur">
                                     <div class="col-lg-6 mb-3">
-                                        <input type="text" class="form-control"  name="nom_entreprise"
-                                                placeholder="Nom de l'entreprise ...">
+                                        <input type="text" class="form-control"  name="nom_entreprise" id="nom_entreprise"
+                                                placeholder="Nom de l'entreprises">
                                     </div>
-                                     <div class="col-lg-6 mb-3">
-                                         <select id="country" name="pays" class='form-control select'><option value="" disabled selected>Sélectionner le pays</option></select>
+                                     <div class="col-lg-6 mb-3 ">
+                                         <select id="country" name="pays" class='form-control form-select select'><option value="" disabled selected>Sélectionner le pays</option></select>
                                     </div>
  
                                  </div>
 
-                                 <div class="row">
+                                 <div class="row hide1" id="ministére">
                                     <div class="col-lg-12 mb-3">
-                                         <select id="ministére" class="hide form-control select"name="typeM">  
+                                         <select  class="form-control form-select select" name="typeM">  
                                              <option disabled selected>Sélectionner le type Ministére </option>
                                               {% for typeM in typesM %}
                                                   <option value={{typeM.id}}>{{typeM.titre}} </option>
@@ -205,15 +231,28 @@
                                          </select>
                                     </div>
                                </div>
+                                 <div class="row">
+                                       <div class="col-lg-6 mb-3">
+                                       {{ form_widget(form.tel,{'id':'phone'})}}
+                                        
+                                     </div>
+                                     <div class="col-lg-6 mb-3">
+                                        {{ form_widget(form.adresse, {'attr':
+                                           {'placeholder': 'Adresse'}})}}
+                                    </div>
+                                  </div>
+                                  
+ 
+                                
 
                              {{ form_widget(form)}}
     
-                            <button class="btn btn-primary " style="margin-left:310px; padding-left:30px;padding-right:30px;font-size:16px;"
+                            <button id="myBtn" class="btn btn-primary " style="margin-left:310px; padding-left:30px;padding-right:30px;font-size:16px;"
                                                 type="submit">S'inscrire</button>
                                
                             {{ form_end(form)}}
 
-                            <br/>
+                          
                                   
                         </div>
                     </div>
@@ -221,7 +260,7 @@
             </div>
             </div>
             </div>
-            <div class="mt-4 text-center  text-white">
+            <div class="mt-1 text-center  text-white">
                             <p style="text-align:center;">Avez-vous un compte ? Si oui, <a href="/login" class="fw-bold text-white "><span style="font-weight:bold;">Se connecter </span></a> </p>
                            
             </div>
@@ -231,20 +270,89 @@
         <!-- End Log In page -->
     </div>
 
-    <!-- JAVASCRIPT -->
+     <!-- JAVASCRIPT -->
     <script src="assetsAdmin/libs/jquery/jquery.min.js"></script>
     <script src="assetsAdmin/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="assetsAdmin/libs/metismenu/metisMenu.min.js"></script>
     <script src="assetsAdmin/libs/simplebar/simplebar.min.js"></script>
     <script src="assetsAdmin/libs/node-waves/waves.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/11.0.9/js/intlTelInput.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/11.0.9/js/intlTelInput.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/11.0.9/js/utils.js"></script>
+
 
     <script src="assetsAdmin/js/app.js"></script>
     <script >
             $('#select_box').change(function () {
              var select=$(this).find(':selected').val();        
-             $(".hide").hide();
+             $(".hide1").hide();
             $('#' + select).show();
             }).change();
+    </script>
+
+     <script >
+         var telInput = $("#phone"),
+  errorMsg = $("#error-msg"),
+  validMsg = $("#valid-msg");
+
+// initialise plugin
+telInput.intlTelInput({
+
+  allowExtensions: true,
+  formatOnDisplay: true,
+  autoFormat: true,
+  autoHideDialCode: true,
+  autoPlaceholder: true,
+  defaultCountry: "auto",
+  ipinfoToken: "yolo",
+
+  nationalMode: false,
+  numberType: "MOBILE",
+  //onlyCountries: ['us', 'gb', 'ch', 'ca', 'do'],
+  preferredCountries: ['sa', 'ae', 'qa','om','bh','kw','ma'],
+  preventInvalidNumbers: true,
+  separateDialCode: true,
+  initialCountry: "tn",
+  geoIpLookup: function(callback) {
+  $.get("http://ipinfo.io", function() {}, "jsonp").always(function(resp) {
+    var countryCode = (resp && resp.country) ? resp.country : "";
+    callback(countryCode);
+  });
+},
+   utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/11.0.9/js/utils.js"
+});
+
+var reset = function() {
+
+  telInput.removeClass("error");
+  errorMsg.addClass("hide");
+  validMsg.addClass("hide");
+};
+
+// on blur: validate
+telInput.blur(function() {
+  reset();
+ 
+  if ($.trim(telInput.val())) {
+    if (telInput.intlTelInput("isValidNumber")) {
+      validMsg.removeClass("hide");
+       document.getElementById("myBtn").disabled = false;
+   
+    } else {
+      telInput.addClass("error");
+      errorMsg.removeClass("hide");
+       document.getElementById("myBtn").disabled = true;
+    
+    }
+  }
+});
+
+// on keyup / change flag: reset
+telInput.on("keyup change", reset);
+
+
+
     </script>
 
     <script >
@@ -339,10 +447,8 @@
           passwordInput1.addEventListener('keyup', checkInput1, false);
     </script>
 
+
 </body>
 
 
 </html>
-
-
-
