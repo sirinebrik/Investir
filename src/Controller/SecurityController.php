@@ -12,7 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use App\Form\RegistrationType;
-
+use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 class SecurityController extends AbstractController
 {
     
@@ -87,16 +87,14 @@ class SecurityController extends AbstractController
     }
    
     $qb = $this->getDoctrine()->getRepository(TypeMinistere::class)->createQueryBuilder('o');
-    $qbm = $this->getDoctrine()->getRepository(Ministere::class)->createQueryBuilder('m');
-    
-    $ministere=$this->getDoctrine()->getRepository(Ministere::class)->findAll(array('type.id'));
-    
-
-    $typesM = $qb->select('o')->where($qb->expr()->notIn('o.id', $this->getDoctrine()->getRepository(Ministere::class)->createQueryBuilder('m')
-    ->select('pa.id')
-    ->join('m.type', 'pa')
+    $qbm=$this->getDoctrine()->getRepository(Ministere::class)->createQueryBuilder('m')
+    ->select('ty.id')
+    ->join('m.type', 'ty')
+    ->join('m.utilisateur','user')
+    ->where($qb->expr()->in('user.etat', ['true']));
    
-    ->getDQL()))->getQuery()->getResult();
+   
+    $typesM = $qb->select('o')->where($qb->expr()->notIn('o.id', $qbm->getDQL()))->getQuery()->getResult();
     return $this->render('security/registration.html.twig', [
         'form' => $form->createView(),'typesM'=>$typesM,
     ]);
@@ -104,8 +102,9 @@ class SecurityController extends AbstractController
     /**
      * @Route("/login", name="app_login")
      */
-    public function login()
+    public function login(AuthenticationUtils $authenticationUtils)
     {
+        $error = $authenticationUtils->getLastAuthenticationError();
         if ($this->getUser()!=NULL && $this->getUser()->getRole()=="ROLE_ADMIN" ){
             return $this->redirectToRoute('dash_admin') ;
         }
@@ -116,7 +115,10 @@ class SecurityController extends AbstractController
             return $this->redirectToRoute('app_ministere') ;
         }
         else{
-        return $this->render('security/login.html.twig');}
+            return $this->render('security/login.html.twig', [
+               
+                'error' => $error,
+            ]);}
     }
 
     /**
@@ -126,13 +128,16 @@ class SecurityController extends AbstractController
     {
         throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
     }
+   
     /**
         * @Route("/secure-area", name="redirection")
         */
         public function indexAction()
         {
-            if($this->getUser()->getEtat() =='false')
-            return $this->render('security/loginActive.html.twig');
+            if($this->getUser()->getEtat() =='false'){
+                $this->get('security.token_storage')->setToken(null);
+
+            return $this->redirect($this->generateUrl('loginActive'));}
             elseif($this->getUser()->getRole() =='ROLE_ADMIN')
                 return $this->redirect($this->generateUrl('dash_admin'));
             elseif($this->getUser()->getRole() =='ROLE_INVESTISSEUR')
@@ -161,5 +166,13 @@ class SecurityController extends AbstractController
         }
         else{
         return $this->render('security/msgActivation.html.twig');}
+    }
+
+     /**
+     * @Route("/loginActive", name="loginActive")
+     */
+    public function loginActive()
+    {
+        return $this->render('security/loginActive.html.twig');
     }
 }
