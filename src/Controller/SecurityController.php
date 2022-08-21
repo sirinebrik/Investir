@@ -105,6 +105,22 @@ class SecurityController extends AbstractController
     public function login(AuthenticationUtils $authenticationUtils)
     {
         $error = $authenticationUtils->getLastAuthenticationError();
+        $error1="";
+        $error2="";
+       
+        if ($error){
+         
+           $qr=$this->getDoctrine()->getRepository(User::class)->findBy(['email' => $authenticationUtils->getLastUsername()]);
+               $count=count($qr);
+              
+                if(!$count){
+            $error1="L’adresse e-mail que vous avez saisie n’est pas associée à un compte. Trouvez votre compte et connectez-vous!";
+                }
+                else {
+                    $error2="Le mot de passe entré est incorrect!"; 
+                }
+    
+    }
         if ($this->getUser()!=NULL && $this->getUser()->getRole()=="ROLE_ADMIN" ){
             return $this->redirectToRoute('dash_admin') ;
         }
@@ -118,6 +134,9 @@ class SecurityController extends AbstractController
             return $this->render('security/login.html.twig', [
                
                 'error' => $error,
+                'error1' => $error1,
+                'error2' => $error2,
+
             ]);}
     }
 
