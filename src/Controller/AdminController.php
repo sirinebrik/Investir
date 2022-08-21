@@ -3,6 +3,9 @@
 namespace App\Controller;
 use App\Entity\User;
 use App\Service\SendMailService;
+use App\Entity\TypeMinistere;
+use App\Entity\Ministere;
+use App\Entity\Investisseur;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -38,12 +41,190 @@ class AdminController extends AbstractController
     ->findBy(
         ['etat' => 'false']
       );
+      $nb=count($user);
+      
     
         return $this->render('pages/admin/activerCompte.html.twig', [
             'user' => $user,
+            'nb'=> $nb,
         ]);
     }
+
+     /**
+     * @Route("/find/{id}", name="find", methods={"GET","Post"})
+     */
+    public function find(Request $request, User $users){
+        $user = $this->getDoctrine()
+        ->getRepository(User::class)
+        ->findBy(
+            ['etat' => 'false']
+          );
+        $user1 = $this->getDoctrine()
+        ->getRepository(User::class)
+        ->find($users->getId());
+          if($user1->getRole()=="ROLE_MINISTERE"){
+            $role="ROLE_MINISTERE";
+        $user2 = $this->getDoctrine()
+    ->getRepository(Ministere::class)
+    ->createQueryBuilder('u')
+    ->join('u.utilisateur','user')
+    ->where('user.id= :id')
+    ->setParameter('id',$users->getId())
+    ->join('u.type','type')
+    ->getQuery()->getResult();
+   
+}
+    else{
+        $role="ROLE_INVESTISSEUR";
+        $user2 = $this->getDoctrine()
+        ->getRepository(Investisseur::class)
+        ->createQueryBuilder('u')
+        ->join('u.utilisateur','user')
+        ->where('user.id= :id')
+        ->setParameter('id',$users->getId())
+        ->getQuery()->getResult(); 
+       
+    }
+    return $this->render('pages/admin/popupCompte.html.twig', [
+        'user2' => $user2,
+        'user'=>$user,
+        'role'=>$role,
+    ]); 
+   
+    }
+
     /**
+     * @Route("/findM/{id}", name="findM", methods={"GET","Post"})
+     */
+    public function findMinistere(Request $request, User $users){
+       
+        $user = $this->getDoctrine()
+        ->getRepository(Ministere::class)
+        ->createQueryBuilder('u')
+        ->join('u.utilisateur','user')
+        ->where("user.etat= :etat")
+        ->setParameter('etat', 'true')
+        ->join('u.type','type')
+        ->getQuery()->getResult();
+
+        $nb=count($user);
+        $user1 = $this->getDoctrine()
+        ->getRepository(User::class)
+        ->find($users->getId());
+        
+          
+        $user2 = $this->getDoctrine()
+    ->getRepository(Ministere::class)
+    ->createQueryBuilder('u')
+    ->join('u.utilisateur','user')
+    ->where('user.id= :id')
+    ->setParameter('id',$users->getId())
+    ->join('u.type','type')
+    ->getQuery()->getResult();
+   
+
+    
+    return $this->render('pages/admin/popupMinistere.html.twig', [
+        'user2' => $user2,
+        'user'=>$user,
+        'nb'=>$nb,
+        
+    ]); 
+   
+    }
+
+     /**
+     * @Route("/findInv/{id}", name="findInv", methods={"GET","Post"})
+     */
+    public function findInvestisseur(Request $request, User $users){
+       
+        $user = $this->getDoctrine()
+        ->getRepository(Investisseur::class)
+        ->createQueryBuilder('u')
+        ->join('u.utilisateur','user')
+        ->where("user.etat= :etat")
+        ->setParameter('etat', 'true')
+        ->getQuery()->getResult();
+
+        $nb=count($user);
+        $user1 = $this->getDoctrine()
+        ->getRepository(User::class)
+        ->find($users->getId());
+        
+          
+        $user2 = $this->getDoctrine()
+        ->getRepository(Investisseur::class)
+        ->createQueryBuilder('u')
+        ->join('u.utilisateur','user')
+        ->where('user.id= :id')
+        ->setParameter('id',$users->getId())
+        ->getQuery()->getResult();
+   
+
+    
+    return $this->render('pages/admin/popupInvestisseur.html.twig', [
+        'user2' => $user2,
+        'user'=>$user,
+        'nb'=>$nb,
+        
+    ]); 
+   
+    }
+   
+
+    /**
+     * @Route("/showM", name="showM")
+    */
+    public function ShowMinistere()
+    {
+       
+        $user = $this->getDoctrine()
+        ->getRepository(Ministere::class)
+        ->createQueryBuilder('u')
+        ->join('u.utilisateur','user')
+        ->where("user.etat= :etat")
+        ->setParameter('etat', 'true')
+        ->join('u.type','type')
+        ->getQuery()->getResult();
+
+        $nb=count($user);
+          
+          
+        return $this->render('pages/admin/showMinistere.html.twig', [
+            'nb' => $nb,
+            'user'=>$user,
+           
+        ]); 
+        
+    }
+
+    /**
+     * @Route("/showInv", name="showInv")
+    */
+    public function ShowInvestisseur()
+    {
+        
+        $user = $this->getDoctrine()
+        ->getRepository(Investisseur::class)
+        ->createQueryBuilder('u')
+        ->join('u.utilisateur','user')
+        ->where("user.etat= :etat")
+        ->setParameter('etat', 'true')
+        ->getQuery()->getResult();
+
+       $nb=count($user);
+          
+          
+        return $this->render('pages/admin/showInvestisseur.html.twig', [
+            'nb' => $nb,
+            'user'=>$user,
+           
+        ]); 
+        
+        
+    }
+
+     /**
      * @Route("/activation/{id}", name="activation", methods={"GET","Post"})
     */
     public function Activation(Request $request, User $user , SendMailService $mailer): Response
@@ -59,5 +240,23 @@ class AdminController extends AbstractController
           
           return $this->redirectToRoute('activer_compte') ;
         
+    }
+
+    /**
+     * @Route("/desactivation/{id}", name="desactivation", methods={"GET","Post"})
+    */
+    public function Desactivation(Request $request, User $user ): Response
+    {
+        
+          
+          $user->setEtat("false");
+          $em = $this->getDoctrine()->getManager();
+          $em->persist($user);
+          $em->flush();
+          
+          if($user->getRole()=="ROLE_MINISTERE")
+            return $this->redirectToRoute('showM') ;
+          else
+            return $this->redirectToRoute('showInv') ;
     }
 }

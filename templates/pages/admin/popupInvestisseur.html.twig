@@ -1,0 +1,196 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Les Investisseurs{% endblock %}
+
+{% block body %}
+<style>
+.overlay {
+  position: fixed;
+  top: 100px;
+  bottom: 0;
+  left: 250px;
+  right: 0;
+  background: rgba(0, 0, 0, 0.7);
+  transition: opacity 500ms;
+  visibility: hidden;
+  opacity: 0;
+}
+.overlay {
+  visibility: visible;
+  opacity: 1;
+}
+
+.popup {
+  margin: 70px auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 5px;
+  width: 40%;
+  position: relative;
+  transition: all 5s ease-in-out;
+}
+
+.popup h2 {
+  margin-top: 0;
+  color: #333;
+  font-family: Tahoma, Arial, sans-serif;
+}
+.popup .close {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  transition: all 200ms;
+  font-size: 30px;
+  font-weight: bold;
+  text-decoration: none;
+  color: blue;
+}
+.popup .close:hover {
+  color: #06D85F;
+}
+.popup .content {
+  max-height: 30%;
+  overflow: auto;
+}
+
+@media screen and (max-width: 700px){
+  .box{
+    width: 70%;
+  }
+  .popup{
+    width: 70%;
+  }
+}
+th{
+    background: #3498db; 
+	
+}
+
+</style>
+
+                        <div class="row">
+
+                            <div class="col-xl-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h4 style="color:blue;" class="header-title mb-4">Les Investisseurs : {{nb}}</h4>
+                                        <div class="table-responsive">
+                                            <table class="table table-centered table-nowrap mb-0">
+                                                <thead class="thead-light">
+                                                    <tr>
+                                                       
+                                                        <th>Nom Complet</th>
+                                                        <th>Email</th>
+                                                        <th>Pays</th>
+                                                        <th>Nom Entreprise</th>
+                                                        <th>Num Téléphone</th>
+                                                        <th>Adresse</th>
+                                                        <th>Date inscription</th>
+                                                        <th></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                 {% for user in user %}
+                                                    <tr>
+                                                        <td>{{user.utilisateur.username}}</td>
+                                                        <td>{{user.utilisateur.email}}</td>
+                                                        <td>{{user.pays}}</td>
+                                                        <td>{{user.nomEntreprise}}</td>
+                                                        <td>{{user.utilisateur.tel}}</td>
+                                                        <td>{{user.utilisateur.adresse}}</td>
+                                                        <td>{{user.utilisateur.dateInscription}}</td>
+                                                       
+                                                        <td> <a  href="{{ path('desactivation', {'id': user.utilisateur.id}) }}" class="btn btn-outline-danger btn-sm edit" title="Desactiver">
+                                                                    <i class="dripicons-power"></i>
+                                                                </a>
+                                                        </td>
+                                                        <td> <a href="{{ path('find', {'id': user.utilisateur.id})}}" class="btn btn-outline-primary btn-sm edit" title="Show">
+                                                                    <i style=" font-weight:bold;" class="dripicons-preview"></i>
+                                                                </a>
+                                                        </td>
+                                                       
+                                                    </tr>
+                                                  
+                                                     {% endfor %}
+               
+
+                                                </tbody>
+                                            </table>
+                                           
+                                        </div>
+                                         <div class="overlay">
+	                                                <div class="popup">
+                                                       
+                                                            {% for user2 in user2 %}
+		                                                     <center>  <img class="rounded-circle" width="70px" src="/admin/assetsAdmin/images/admin.png">
+                                                           <br><br><br>
+                                                           <div class="row">
+                                                                 <div class="col-lg-6">
+                                                                  <h5>Nom Complet : </h5>
+                                                                 </div>
+                                                                  <div class="col-lg-6">
+                                                                    <h5>{{user2.utilisateur.username}} <h5>
+                                                                 </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                 <div class="col-lg-6">
+                                                                  <h5>Email : </h5>
+                                                                 </div>
+                                                                  <div class="col-lg-6">
+                                                                    <h5>{{user2.utilisateur.email}} <h5>
+                                                                 </div>
+                                                            </div>
+                                                            
+                                                            <div class="row">
+                                                                 <div class="col-lg-6">
+                                                                  <h5>Num Téléphone : </h5>
+                                                                 </div>
+                                                                  <div class="col-lg-6">
+                                                                    <h5>{{user2.utilisateur.tel}} <h5>
+                                                                 </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                 <div class="col-lg-6">
+                                                                  <h5>Adresse : </h5>
+                                                                 </div>
+                                                                  <div class="col-lg-6">
+                                                                    <h5>{{user2.utilisateur.adresse}}</ <h5>
+                                                                 </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                 <div class="col-lg-6">
+                                                                  <h5>Nom Entreprise : </h5>
+                                                                 </div>
+                                                                  <div class="col-lg-6">
+                                                                    <h5>{{user2.nomEntreprise}}</ <h5>
+                                                                 </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                 <div class="col-lg-6">
+                                                                  <h5>Pays : </h5>
+                                                                 </div>
+                                                                  <div class="col-lg-6">
+                                                                    <h5>{{user2.pays}}</ <h5>
+                                                                 </div>
+                                                            </div>
+                                                             
+		                                                      <a class="close" href="{{ path('showInv')}}">&times;</a>
+		                                                     
+                                                              {% endfor %}
+                                                        
+                                                       
+	                                                      </div>
+                                                    </div> 
+                                            
+                                        <!-- end table-responsive -->
+                                    </div>
+                                </div>
+                            </div>
+                         </div>
+
+
+                        
+ {% endblock %}
+
+
+

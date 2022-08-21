@@ -13,14 +13,14 @@
     
 
     <!-- plugin css -->
-    <link href="assetsAdmin/libs/admin-resources/jquery.vectormap/jquery-jvectormap-1.2.2.css" rel="stylesheet" type="text/css" />
+    <link href="/admin/assetsAdmin/libs/admin-resources/jquery.vectormap/jquery-jvectormap-1.2.2.css" rel="stylesheet" type="text/css" />
 
     <!-- Bootstrap Css -->
-    <link href="assetsAdmin/css/bootstrap.min.css" id="bootstrap-style" rel="stylesheet" type="text/css" />
+    <link href="/admin/assetsAdmin/css/bootstrap.min.css" id="bootstrap-style" rel="stylesheet" type="text/css" />
     <!-- Icons Css -->
-    <link href="assetsAdmin/css/icons.min.css" rel="stylesheet" type="text/css" />
+    <link href="/admin/assetsAdmin/css/icons.min.css" rel="stylesheet" type="text/css" />
     <!-- App Css-->
-    <link href="assetsAdmin/css/app.min.css" id="app-style" rel="stylesheet" type="text/css" />
+    <link href="/admin/assetsAdmin/css/app.min.css" id="app-style" rel="stylesheet" type="text/css" />
     
         {# Run `composer require symfony/webpack-encore-bundle`
            and uncomment the following Encore helpers to start using Symfony UX #}
@@ -57,7 +57,7 @@
                    
                         
                         <span class="logo-lg">
-                            <img src="assetsAdmin/images/logo1.png" alt="" height="45">
+                            <img src="/admin/assetsAdmin/images/logo1.png" alt="" height="45">
                         </span>
                     </a>
 
@@ -90,7 +90,7 @@
                     <div class="dropdown d-inline-block">
                         <button type="button" class="btn header-item waves-effect" id="page-header-user-dropdown"
                             data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <img class="rounded-circle header-profile-user" src="assetsAdmin/images/admin.png"
+                            <img class="rounded-circle header-profile-user" src="/admin/assetsAdmin/images/admin.png"
                                 alt="Header Avatar">
                             <span class="d-none d-xl-inline-block ms-1">{{app.user.username}}</span>
                             <i class="mdi mdi-chevron-down d-none d-xl-inline-block"></i>
@@ -119,7 +119,7 @@
                 <div class="user-sidebar text-center">
                     <div class="dropdown">
                         <div class="user-img">
-                            <img src="assetsAdmin/images/admin.png" alt="" class="rounded-circle" height="40">
+                            <img src="/admin/assetsAdmin/images/admin.png" alt="" class="rounded-circle" height="40">
                             <span class="avatar-online bg-success"></span>
                         </div>
                         <div class="user-info">
@@ -155,13 +155,13 @@
                             </a>
                         </li>
                         <li>
-                            <a href="calendar.html" class=" waves-effect">
+                            <a href="/admin/showM" class=" waves-effect">
                                 <i class="dripicons-calendar"></i>
                                 <span> Les ministéres</span>
                             </a>
                         </li>
                         <li>
-                            <a href="calendar.html" class=" waves-effect">
+                            <a href="/admin/showInv" class=" waves-effect">
                                 <i class="dripicons-calendar"></i>
                                 <span>Les investisseurs</span>
                             </a>
@@ -231,13 +231,9 @@
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-sm-6">
-                            <script>document.write(new Date().getFullYear())</script> © Morvin.
+                            <script>document.write(new Date().getFullYear())</script> ©Investir.
                         </div>
-                        <div class="col-sm-6">
-                            <div class="text-sm-end d-none d-sm-block">
-                                Crafted with <i class="mdi mdi-heart text-danger"></i> by Themesdesign
-                            </div>
-                        </div>
+                       
                     </div>
                 </div>
             </footer>
@@ -251,21 +247,21 @@
     <div class="rightbar-overlay"></div>
 
     <!-- JAVASCRIPT -->
-    <script src="assetsAdmin/libs/jquery/jquery.min.js"></script>
-    <script src="assetsAdmin/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="assetsAdmin/libs/metismenu/metisMenu.min.js"></script>
-    <script src="assetsAdmin/libs/simplebar/simplebar.min.js"></script>
-    <script src="assetsAdmin/libs/node-waves/waves.min.js"></script>
+    <script src="/admin/assetsAdmin/libs/jquery/jquery.min.js"></script>
+    <script src="/admin/assetsAdmin/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="/admin/assetsAdmin/libs/metismenu/metisMenu.min.js"></script>
+    <script src="/admin/assetsAdmin/libs/simplebar/simplebar.min.js"></script>
+    <script src="/admin/assetsAdmin/libs/node-waves/waves.min.js"></script>
 
     <!-- apexcharts -->
-    <script src="assetsAdmin/libs/apexcharts/apexcharts.min.js"></script>
+    <script src="/admin/assetsAdmin/libs/apexcharts/apexcharts.min.js"></script>
 
     <!-- Plugins js-->
-     <!-- <script src="assetsAdmin/js/app.js"></script>-->
-    <script src="assetsAdmin/libs/admin-resources/jquery.vectormap/jquery-jvectormap-1.2.2.min.js"></script>
-    <script src="assetsAdmin/libs/admin-resources/jquery.vectormap/maps/jquery-jvectormap-world-mill-en.js"></script>
+     <!-- <script src="/admin/assetsAdmin/js/app.js"></script>-->
+    <script src="/admin/assetsAdmin/libs/admin-resources/jquery.vectormap/jquery-jvectormap-1.2.2.min.js"></script>
+    <script src="/admin/assetsAdmin/libs/admin-resources/jquery.vectormap/maps/jquery-jvectormap-world-mill-en.js"></script>
 
-    <script src="assetsAdmin/js/pages/dashboard.init.js"></script>
+    <script src="/admin/assetsAdmin/js/pages/dashboard.init.js"></script>
 
 
    

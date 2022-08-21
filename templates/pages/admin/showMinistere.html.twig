@@ -1,15 +1,79 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Activer compte!{% endblock %}
+{% block title %}Les Ministéres{% endblock %}
 
 {% block body %}
+<style>
+.overlay {
+  position: fixed;
+  top: 100px;
+  bottom: 0;
+  left: 250px;
+  right: 0;
+  background: rgba(0, 0, 0, 0.7);
+  transition: opacity 500ms;
+  visibility: hidden;
+  opacity: 0;
+}
+.overlay:target {
+  visibility: visible;
+  opacity: 1;
+}
+
+.popup {
+  margin: 70px auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 5px;
+  width: 30%;
+  position: relative;
+  transition: all 5s ease-in-out;
+}
+
+.popup h2 {
+  margin-top: 0;
+  color: #333;
+  font-family: Tahoma, Arial, sans-serif;
+}
+.popup .close {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  transition: all 200ms;
+  font-size: 30px;
+  font-weight: bold;
+  text-decoration: none;
+  color: blue;
+}
+.popup .close:hover {
+  color: #06D85F;
+}
+.popup .content {
+  max-height: 30%;
+  overflow: auto;
+}
+
+@media screen and (max-width: 700px){
+  .box{
+    width: 70%;
+  }
+  .popup{
+    width: 70%;
+  }
+}
+th{
+    background: #3498db; 
+	
+}
+
+</style>
 
                         <div class="row">
 
                             <div class="col-xl-12">
                                 <div class="card">
                                     <div class="card-body">
-                                        <h4 style="color:blue;" class="header-title mb-4">Activation comptes des utilisateurs : {{nb}}</h4>
+                                        <h4 style="color:blue;" class="header-title mb-4">Les Ministéres : {{nb}}</h4>
                                         <div class="table-responsive">
                                             <table class="table table-centered table-nowrap mb-0">
                                                 <thead class="thead-light">
@@ -17,7 +81,9 @@
                                                        
                                                         <th>Nom Complet</th>
                                                         <th>Email</th>
-                                                        <th>Rôle</th>
+                                                        <th>Type</th>
+                                                        <th>Num Téléphone</th>
+                                                        <th>Adresse</th>
                                                         <th>Date inscription</th>
                                                         <th></th>
                                                     </tr>
@@ -25,16 +91,18 @@
                                                 <tbody>
                                                  {% for user in user %}
                                                     <tr>
-                                                        <td>{{user.username}}</td>
-                                                        <td>{{user.email}}</td>
-                                                        <td>{{user.role}}</td>
-                                                        <td>{{user.dateInscription}}</td>
+                                                        <td>{{user.utilisateur.username}}</td>
+                                                        <td>{{user.utilisateur.email}}</td>
+                                                        <td>{{user.type.titre}}</td>
+                                                        <td>{{user.utilisateur.tel}}</td>
+                                                        <td>{{user.utilisateur.adresse}}</td>
+                                                        <td>{{user.utilisateur.dateInscription}}</td>
                                                        
-                                                        <td> <a  href="{{ path('activation', {'id': user.id}) }}" class="btn btn-outline-success btn-sm edit" title="Activer">
-                                                                    <i class="dripicons-checkmark"></i>
+                                                        <td> <a  href="{{ path('desactivation', {'id': user.utilisateur.id}) }}" class="btn btn-outline-danger btn-sm edit" title="Desactiver">
+                                                                    <i class="dripicons-power"></i>
                                                                 </a>
                                                         </td>
-                                                        <td> <a href="{{ path('find', {'id': user.id})}}" class="btn btn-outline-primary btn-sm edit" title="Show">
+                                                        <td> <a href="{{ path('findM', {'id': user.utilisateur.id})}}" class="btn btn-outline-primary btn-sm edit" title="Show">
                                                                     <i style=" font-weight:bold;" class="dripicons-preview"></i>
                                                                 </a>
                                                         </td>
