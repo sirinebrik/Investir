@@ -162,20 +162,55 @@ ul .country-list.dropup{
 
                                     
                                      <br/> 
+                                    
+          
 
 {% set formErrors = form.vars.errors.form.getErrors(true) %}
     {% if formErrors|length %}
-      <div class="row">
-        <div class="col-lg-12 mb-3 alert ">
-            <ul>
+     
+            <ul class="mb-4">
                 {% for error in formErrors %}
                     <li style="color:red;">{{ error.message }}</li>
                 {% endfor %}
+                 {% if (err1==null)   %}
+                    <li style="color:red;">Vous devez choisir le type d'utilisateur</li>
+                {% else %}
+                 {% if (err1=="ministére" ) and (err2 == null ) %}
+                    <li style="color:red;">Vous devez choisir le type de ministére</li>
+                {% endif %}
+                {% if (err1=="investisseur" ) and (err3 == null ) %}
+                    <li style="color:red;">Vous devez choisir le pays</li>
+                {% endif %}
+                {% if (err1=="investisseur" ) and (err4 == null ) %}
+                    <li style="color:red;">Vous devez choisir le nom de votre entreprise</li>
+                {% endif %}  {% endif %}
+                
             </ul>
-        </div>
-      </div>
+               {% else %} 
+                 <ul class="mb-4">
+              
+                 {% if (err1==null)   %}
+                    <li style="color:red;">Vous devez choisir le type d'utilisateur</li>
+                {% else %}
+                 {% if (err1=="ministére" ) and (err2 == null ) %}
+                    <li style="color:red;">Vous devez choisir le type de ministére</li>
+                {% endif %}
+                {% if (err1=="investisseur" ) and (err3 == null ) %}
+                    <li style="color:red;">Vous devez choisir le pays</li>
+                {% endif %}
+                {% if (err1=="investisseur" ) and (err4 == null ) %}
+                    <li style="color:red;">Vous devez choisir le nom de votre entreprise</li>
+                {% endif %}  {% endif %}
+                
+            </ul>
+
+     {% endif %}
+
+     
+               
+               
       
-    {% endif %}
+     
 
     
                              {{ form_start(form)}}

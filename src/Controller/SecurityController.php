@@ -36,9 +36,15 @@ class SecurityController extends AbstractController
     $form = $this->createForm(RegistrationType::class, $user);
 
     $form->handleRequest($request);
-
-    if ($form->isSubmitted() && $form->isValid()) {
-        
+    $err1="0";
+    $err2=$request->get('typeM');
+    $err3=$request->get('pays');
+    $err4=$request->get('nom_entreprise');
+    if ($form->isSubmitted()){
+        $err1=$request->get('type_Utilisateur');
+    if ($form->isValid() && $err1!= null && $err2!= null && $err3!= null && $err4!= null) {
+      
+      
         // Encode the new users password
         $plainPassword = $form->get('password')->getData();
         $hash = $encoder->encodePassword($user, $plainPassword);
@@ -62,6 +68,7 @@ class SecurityController extends AbstractController
         $em = $this->getDoctrine()->getManager();
         $em->persist($user);
         $em->flush();
+       
         if ($request->get('type_Utilisateur')=="ministére"){
             $ministere = new Ministere();
             $ministere->setUtilisateur($user);
@@ -84,7 +91,8 @@ class SecurityController extends AbstractController
         }
 
         return $this->redirectToRoute('app_activation');}
-    }
+     }}
+    
    
     $qb = $this->getDoctrine()->getRepository(TypeMinistere::class)->createQueryBuilder('o');
     $qbm=$this->getDoctrine()->getRepository(Ministere::class)->createQueryBuilder('m')
@@ -96,7 +104,7 @@ class SecurityController extends AbstractController
    
     $typesM = $qb->select('o')->where($qb->expr()->notIn('o.id', $qbm->getDQL()))->getQuery()->getResult();
     return $this->render('security/registration.html.twig', [
-        'form' => $form->createView(),'typesM'=>$typesM,
+        'form' => $form->createView(),'typesM'=>$typesM,'err1'=>$err1,'err2'=>$err2,'err3'=>$err3,'err4'=>$err4,
     ]);
 }
     /**
