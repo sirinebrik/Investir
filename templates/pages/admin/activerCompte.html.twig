@@ -3,8 +3,14 @@
 {% block title %}Activer compte!{% endblock %}
 
 {% block body %}
+<style>
 
-                        <div class="row">
+   .card{
+     box-shadow: 0 0 12px 1px rgba(0, 0, 0, 0.4);
+   }
+</style>
+
+                        <div class="row mt-5">
 
                             <div class="col-xl-12">
                                 <div class="card">
@@ -31,7 +37,7 @@
                                                         <td>{{user.dateInscription}}</td>
                                                        
                                                         <td> <a  href="{{ path('activation', {'id': user.id}) }}" class="btn btn-outline-success btn-sm edit" title="Activer">
-                                                                    <i class="dripicons-checkmark"></i>
+                                                                    <i class="dripicons-lock-open"></i>
                                                                 </a>
                                                         </td>
                                                         <td> <a href="{{ path('find', {'id': user.id})}}" class="btn btn-outline-primary btn-sm edit" title="Show">

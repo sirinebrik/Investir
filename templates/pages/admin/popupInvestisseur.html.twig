@@ -68,7 +68,7 @@ th{
 
 </style>
 
-                        <div class="row">
+                        <div class="row mt-5">
 
                             <div class="col-xl-12">
                                 <div class="card">
@@ -101,7 +101,7 @@ th{
                                                         <td>{{user.utilisateur.dateInscription}}</td>
                                                        
                                                         <td> <a  href="{{ path('desactivation', {'id': user.utilisateur.id}) }}" class="btn btn-outline-danger btn-sm edit" title="Desactiver">
-                                                                    <i class="dripicons-power"></i>
+                                                                    <i class="dripicons-lock"></i>
                                                                 </a>
                                                         </td>
                                                         <td> <a href="{{ path('find', {'id': user.utilisateur.id})}}" class="btn btn-outline-primary btn-sm edit" title="Show">

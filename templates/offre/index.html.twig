@@ -1,0 +1,119 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mes Offres{% endblock %}
+
+{% block body %}
+<style>
+ .ajout{
+    background:linear-gradient(to bottom right,#18DB32,#0360FF );
+  color:  #fff;
+   border-radius: 9px;
+   margin-top:10px;
+   }
+   .card{
+     box-shadow: 0 0 12px 1px rgba(0, 0, 0, 0.4);
+   }
+   .button-1 {
+  background-color: transparent;
+  border: 3px solid #00d7c3;
+  
+  -webkit-transition: all .15s ease-in-out;
+  transition: all .15s ease-in-out;
+  color: #00d7c3;
+}
+.button-1:hover {
+ background-color:#00d7c3;
+   color: white;
+   box-shadow: 0 0 10px 0 #00d7c3 inset, 0 0 3px 2px #00d7c3;
+ 
+}
+ .button-2:hover {
+  background-color: transparent;
+  border: 3px solid #00d7c3;
+  
+  -webkit-transition: all .15s ease-in-out;
+  transition: all .15s ease-in-out;
+  color: #00d7c3;
+  box-shadow: 0 0 10px 0 #00d7c3 inset, 0 0 3px 2px #00d7c3;
+}
+.button-2 {
+ background-color:#00d7c3;
+   color: white;
+ 
+}
+</style>
+   <div class="row">
+                       <div class="col-sm-6 mb-3" style="margin-left:600px">
+                                <div class="float-end d-none d-sm-block">
+                                    <a href="{{ path('ajout_offre') }}" class="btn btn-success ajout">Ajouter Offre</a>
+                                </div>
+                             </div>
+                             </div>
+                        <div class="row">
+
+                            <div class="col-xl-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="">
+                                          <a href="{{ path('app_offre') }}" class="btn  button-1 ">Offres actifs</a>
+                                          <a href="{{ path('app_offre1') }}" class="btn button-2 ">Offres désactifs</a>
+                                        </div>
+                                        <br>
+                                        <h4 style="color:blue;margin-left:12px;" class="header-title mb-4">Mes Offres Actifs : {{nb}}</h4>
+                                        <div class="table-responsive">
+                                            <table class="table table-centered table-nowrap mb-0">
+                                                <thead class="thead-light">
+                                                    <tr>
+                                                       
+                                                        <th>Titre</th>
+                                                        <th>Description</th>
+                                                        <th>Lieu</th>
+                                                        <th>Date Ajout</th>
+                                                        <th>Date Expiration</th>
+                                                      
+                                                        <th></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                 {% for offre in offre %}
+                                                    <tr>
+                                                        <td>{{offre.titre}}</td>
+                                                        <td>{{offre.description}}</td>
+                                                        <td>{{offre.lieu.ville}} ({{offre.lieu.region}} {{offre.lieu.adresse}})</td>
+                                                        <td>{{offre.dateAjout}}</td>
+                                                        <td>{{offre.dateExpiration}}</td>
+                                                      
+                                                       
+                                                        <td> <a  href="" class="btn btn-outline-warning btn-sm edit" title="Activer">
+                                                                    <i class="fas fa-pencil-alt"></i>
+                                                                </a>
+                                                        </td>
+                                                        <td> <a href="" class="btn btn-outline-primary btn-sm edit" title="Show">
+                                                                    <i style=" font-weight:bold;" class="dripicons-preview"></i>
+                                                                </a>
+                                                        </td>
+                                                       
+                                                    </tr>
+                                                  
+                                                     {% endfor %}
+               
+
+                                                </tbody>
+                                            </table>
+                                           
+                                        </div>
+                                            
+                                        <!-- end table-responsive -->
+                                    </div>
+                                </div>
+                            </div>
+                         </div>
+
+
+                        
+ {% endblock %}
+
+
+
+
+

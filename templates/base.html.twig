@@ -156,20 +156,20 @@
                         </li>
                         <li>
                             <a href="/admin/showM" class=" waves-effect">
-                                <i class="dripicons-calendar"></i>
+                                <i class="dripicons-user-group"></i>
                                 <span> Les ministéres</span>
                             </a>
                         </li>
                         <li>
                             <a href="/admin/showInv" class=" waves-effect">
-                                <i class="dripicons-calendar"></i>
+                                <i class="dripicons-user-group"></i>
                                 <span>Les investisseurs</span>
                             </a>
                         </li>
 
                         <li>
                             <a href="calendar.html" class=" waves-effect">
-                                <i class="dripicons-calendar"></i>
+                                <i class="dripicons-list"></i>
                                 <span>Les offres</span>
                             </a>
                         </li>
@@ -178,11 +178,29 @@
                                 <i class="dripicons-calendar"></i>
                                 <span>Les news</span>
                             </a>
+                            <a href="/offre" class=" waves-effect">
+                                <i class="dripicons-message"></i>
+                                <span>Discution</span>
+                            </a>
                         </li>
 
                        
                   
                     </ul>
+                   {% endif %}
+                     {% if is_granted('ROLE_MINISTERE')  %} 
+                        <li>
+                            <a href="/offreActif" class=" waves-effect">
+                                <i class="dripicons-list"></i>
+                                <span>Mes offres</span>
+                            </a>
+                            <a href="/offreActif" class=" waves-effect">
+                                <i class="dripicons-message"></i>
+                                <span>Discution</span>
+                            </a>
+                        </li>
+                       
+                     </ul>
                    {% endif %}
                 </div>
                 <!-- Sidebar -->

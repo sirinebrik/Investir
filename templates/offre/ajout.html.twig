@@ -1,0 +1,167 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajouter Offre{% endblock %}
+
+{% block body %}
+<style>
+.ajout:hover{
+ 
+  border-width: 2px;
+  border-style: solid;
+  border-image: linear-gradient(to bottom right,#18DB32,#0360FF ) 1;
+  
+  font-size: 15px; 
+  font-weight: 500;
+}
+.ajout{
+    background:linear-gradient(to bottom right,#18DB32,#0360FF );
+  color:  #fff;
+   border-radius: 9px;
+  
+ 
+}
+
+.card{
+    border-radius: 20px;
+    box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.4);
+     width: 800px;
+     right:31%;
+     
+}
+
+input[type="text"]:focus {
+  border-color: dodgerBlue;
+  box-shadow: 0 0 2px 0 dodgerBlue;
+}
+.textarea:focus {
+  border-color: dodgerBlue;
+  box-shadow: 0 0 2px 0 dodgerBlue;
+}
+input[type="number"]:focus {
+  border-color: dodgerBlue;
+  box-shadow: 0 0 2px 0 dodgerBlue;
+
+
+}
+input[type="date"]:focus {
+  border-color: dodgerBlue;
+  box-shadow: 0 0 2px 0 dodgerBlue;
+}
+input[type="file"]:focus {
+  border-color: dodgerBlue;
+  box-shadow: 0 0 2px 0 dodgerBlue;
+}
+.delai{
+    width:400px;
+}
+ 
+</style>
+<div class="row justify-content-center">
+                    <div class="col-md-8 col-lg-6 col-xl-5">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="px-2 py-3">
+
+
+                                   
+                                    <div class="text-center mb-5" >
+                                       
+                                    <h2 class=" mb-2 mt-2" style=" background: -webkit-linear-gradient(#18DB32, #0360FF);-webkit-background-clip: text;
+                                                      -webkit-text-fill-color: transparent;font-size:30px;font-weight:bold;">Ajouter Offre</h2>
+                                          <p class="text-muted" style="font-size:14.5px;">C’est rapide et facile.</p>
+                                    </div>
+                                  
+                                    {{ form_start(form)}}
+                                        <div class="row">
+                                    <div class="col-lg-6 mb-3">
+                                         {{ form_row(form.titre, {'attr':{'placeholder': 'Titre'}})}}
+                                    </div>
+                                     <div class="col-lg-6 mb-3 ">
+
+                                            <div class="form-group">
+                                                <label for="example-date-input" > Lieu</label>
+                                                    <div class="input-group">
+                                                       {{ form_widget(form.lieu)}}
+                                                        <span class="input-group-button">  <a href="{{ path('ajout_offre') }}" class="btn btn-primary" title="Ajouter lieu">+</a>
+
+                                                     </div>
+                                             </div>
+                                     </div>
+                                  
+                                 </div>
+                                  <div class="row">
+                                   
+                                
+                                    <div class="col-lg-6 mb-3 ">
+                                         <label for="example-date-input" > Date Expiration</label>
+                                        <input class="form-control" type="date"  id="example-date-input" name="dateExpiration" required>  
+                                              
+                                    </div>
+                                     <div class="col-lg-6  mb-3">
+                                         <div class="form-group">
+                                            <label for="example-date-input" > Délai</label>
+                                                <div class="input-group">
+                                                      {{ form_widget(form.delai,{'attr':{'placeholder': 'Délai'}})}} 
+                                                        <span class="input-group-text"> ans
+                                                 </div>
+                                          </div>
+                                    
+                                    
+                                    </div>
+                                </div>
+                                <div class="row">
+                                   
+                                      <div class="col-lg-6 mb-3">
+                                       {{ form_row(form.description,{'attr':{'placeholder': 'Description'}})}}
+                                    </div>
+                                    <div class="col-lg-6 mb-3">
+                                       {{ form_row(form.papiers, {'attr':{'placeholder': 'Papiers'}})}}
+                                    </div>
+                                 </div>
+                                        <div class="row">
+                                           <div class="col-lg-6 mb-3">
+                                             <div class="form-group">
+                                                <label for="example-date-input" > Budget</label>
+                                                    <div class="input-group">
+                                                      {{ form_widget(form.budget,{'attr':{'placeholder': 'Budget'}})}} 
+                                                        <span class="input-group-text"> TND
+                                                     </div>
+                                             </div>
+                                          </div>
+
+                                    <div class="col-lg-6 mb-3">
+                                     {{ form_row(form.image, {'attr':{'placeholder': 'Image'}})}}
+                                    </div>
+                                 </div>
+                              
+  
+                                        <div>
+                                            <button id="myBtn" class="btn btn-primary mt-2 ajout" style="margin-left:318px; padding-left:30px;padding-right:30px;font-size:15px;"
+                                                type="submit">Ajouter</button>
+                                        </div>
+                                    </form>
+                                   
+                                  
+                                  
+                                </div>
+                            </div>
+                        </div>
+
+                        
+                    </div>
+                </div>
+
+            </div>
+  <div class="mt-1 text-center  style="color:blue;">
+                                       <p style="text-align:center;"> <a href="/offreActif" class="fw-bold  "> <span style="font-weight:bold;"> <i class="dripicons-reply" style="font-size:17px;"></i> Liste des offres </span></a> </p>
+                           
+                                    </div>
+
+
+                        
+ {% endblock %}
+
+
+
+
+
