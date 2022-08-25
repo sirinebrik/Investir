@@ -33,7 +33,7 @@ class OffreType extends AbstractType
         $builder
             ->add('titre',TextType::class, array( 'attr'=> array( 'class'   => 'form-control')))
             ->add('description',TextareaType::class, array( 'attr'=> array( 'class'   => 'form-control textarea')))
-            ->add('budget',IntegerType::class, array( 'attr'=> array( 'class'   => 'form-control','min' =>1000,'step'=>'0.001')))
+            ->add('budget',IntegerType::class, array( 'attr'=> array( 'class'   => 'form-control','min' =>1000)))
             ->add('papiers',TextareaType::class, array( 'attr'=> array( 'class'   => 'form-control textarea')))
             ->add('delai',IntegerType::class, array( 'attr'=> array( 'class'   => 'form-control delai')))
             ->add('image',FileType::class, array( 'attr'=> array( 'class'   => 'form-control')))

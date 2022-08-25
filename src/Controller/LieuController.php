@@ -6,6 +6,7 @@ use App\Entity\Lieu;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Request;
 
 class LieuController extends AbstractController
 {
@@ -19,4 +20,25 @@ class LieuController extends AbstractController
         ->findAll();
         return $lieu;
     }
+     /**
+     * @Route("/AjoutLieu", name="ajout_lieu", methods={"GET","POST"})
+     */
+    public function Ajout(Request $request): Response
+    {
+        $lieu = new Lieu();
+      
+        $lieu->setVille($request->get('ville'));
+        $lieu->setRegion($request->get('region'));
+        $lieu->setAdresse($request->get('adresse'));
+       
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($lieu);
+        $entityManager->flush();
+            
+
+            return $this->redirectToRoute('ajout_offre');
+        
+       
+    }
+
 }

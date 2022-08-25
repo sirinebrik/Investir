@@ -9,6 +9,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\Validator\Constraints\DateTime;
+
+
 
 class OffreController extends AbstractController
 {
@@ -20,10 +24,14 @@ class OffreController extends AbstractController
         $offre = $this->getDoctrine()
         ->getRepository(Offre::class)
         ->createQueryBuilder('o')
-        ->where('etat= true')
+        ->andWhere('o.etat = :etat')
         ->join('o.user','user')
-        ->where('user.id= :id')
-        ->setParameter('id',$this->getUser()->getId())
+            ->andWhere('user.id = :id')
+            ->setParameters([
+                'etat' => 'true',
+                'id' => $this->getUser()->getId()
+              ])
+          
         ->join('o.lieu','lieu')
         ->getQuery()->getResult();
         $nb=count($offre);
@@ -42,13 +50,17 @@ class OffreController extends AbstractController
      */
     public function index1(): Response
     {
-       $offre = $this->getDoctrine()
+        $offre = $this->getDoctrine()
         ->getRepository(Offre::class)
         ->createQueryBuilder('o')
-        ->where('etat= false')
+        ->andWhere('o.etat = :etat')
         ->join('o.user','user')
-        ->where('user.id= :id')
-        ->setParameter('id',$this->getUser()->getId())
+            ->andWhere('user.id = :id')
+            ->setParameters([
+                'etat' => 'false',
+                'id' => $this->getUser()->getId()
+              ])
+          
         ->join('o.lieu','lieu')
         ->getQuery()->getResult();
         $nb=count($offre);
@@ -72,8 +84,26 @@ class OffreController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
+            $dateE=new \DateTime($request->get('dateExpiration'));
+           
+            $offre->setDateExpiration($dateE->format('d/m/Y'));
+            $date=new \DateTime('now');
+            $offre->setDateAjout($date->format('d/m/Y'));
+            $offre->setUser($this->getUser());
+            $offre->setEtat("false");
+            $image = $form->get('image')->getData();
+            $fileName = md5(uniqid()).'.'.$image->guessExtension();
+            try{
+               $image->move(
+                 $this->getParameter('image_directory'),$fileName
+               );
+             }catch(FileException $e){
+               //...UDGCUGCUGCUCGUEGUECGUECG
+             }
+             $offre->setImage($fileName);
             $entityManager->persist($offre);
             $entityManager->flush();
+
 
             return $this->redirectToRoute('app_offre');
         }
