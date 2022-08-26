@@ -35,8 +35,8 @@ class LieuController extends AbstractController
         $entityManager->persist($lieu);
         $entityManager->flush();
             
-
-            return $this->redirectToRoute('ajout_offre');
+       
+        return $this->redirect($_SERVER['HTTP_REFERER']);
         
        
     }

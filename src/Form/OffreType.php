@@ -36,7 +36,7 @@ class OffreType extends AbstractType
             ->add('budget',IntegerType::class, array( 'attr'=> array( 'class'   => 'form-control','min' =>1000)))
             ->add('papiers',TextareaType::class, array( 'attr'=> array( 'class'   => 'form-control textarea')))
             ->add('delai',IntegerType::class, array( 'attr'=> array( 'class'   => 'form-control delai')))
-            ->add('image',FileType::class, array( 'attr'=> array( 'class'   => 'form-control')))
+            ->add('image',FileType::class, array( 'attr'=> array( 'class'   => 'form-control'),'data_class' => null))
           
             ->add('lieu', EntityType::class, ['class' => Lieu::class,'attr'=> array( 'class'   => 'form-control form-select'),  'placeholder' => 'Choisir le lieu',
                 'choice_label' => function(Lieu $lieu) {

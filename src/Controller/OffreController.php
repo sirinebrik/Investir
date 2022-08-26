@@ -105,12 +105,68 @@ class OffreController extends AbstractController
             $entityManager->flush();
 
 
-            return $this->redirectToRoute('app_offre');
+            return $this->redirectToRoute('app_offre1');
         }
         return $this->render('offre/ajout.html.twig', [
             'form' => $form->createView(),
         ]);
     }
+    /**
+     * @Route("edit/{id}", name="offre_edit", methods={"GET","POST"})
+     */
+    public function edit(Request $request, Offre $offre): Response
+    {
+        $form = $this->createForm(OffreType::class, $offre);
+        $form->handleRequest($request);
+        //$form->get('image')->setData($offre->getImage());
+        if ($form->isSubmitted() && $form->isValid()) {
+            $dateE=new \DateTime($request->get('dateExpiration'));
+           
+            $offre->setDateExpiration($dateE->format('d/m/Y'));
+            $date=new \DateTime('now');
+            $offre->setDateAjout($date->format('d/m/Y'));
+            $image = $form->get('image')->getData();
+            $fileName = md5(uniqid()).'.'.$image->guessExtension();
+            try{
+               $image->move(
+                 $this->getParameter('image_directory'),$fileName
+               );
+             }catch(FileException $e){
+               //...UDGCUGCUGCUCGUEGUECGUECG
+             }
+             $offre->setImage($fileName);
+            $this->getDoctrine()->getManager()->flush();
+          
+            return $this->redirectToRoute('app_offre');
+        }
 
+        
+        $dd = substr($offre->getDateExpiration(),0,2);
+        $mm = substr($offre->getDateExpiration(),3,2);
+        $yyyy = substr($offre->getDateExpiration(),6,4);
+        $date=$yyyy.'-'.$mm.'-'.$dd;
+       
+       
+        return $this->render('offre/edit.html.twig', [
+            'offre' => $offre,
+            'date' =>$date,
+            'form' => $form->createView(),
+        ]);
+    }
+/**
+     * @Route("delete/{id}", name="offre_delete", methods={"POST","GET"})
+     */
+    public function delete(Request $request, Offre $offre): Response
+    {  $em = $this->getDoctrine()->getManager();
+        $offre = $em->getRepository(Offre::class)->find($offre);
+
+        
+
+        $em->remove($offre);
+        $em->flush();
+        return $this->redirect($_SERVER['HTTP_REFERER']);
+    }
+   
    
 }
+
