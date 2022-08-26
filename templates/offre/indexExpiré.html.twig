@@ -10,7 +10,7 @@
    border-radius: 9px;
    margin-top:10px;
    }
-   .ajout:hover{
+    .ajout:hover{
  
   border-width: 2px;
   border-style: solid;
@@ -22,40 +22,41 @@
    .card{
      box-shadow: 0 0 12px 1px rgba(0, 0, 0, 0.4);
    }
-   .button-1 {
+    .button-2{
   background-color: transparent;
-  border: 3px solid  #0360FF;
+  border: 3px solid #0360FF;
   
   -webkit-transition: all .15s ease-in-out;
   transition: all .15s ease-in-out;
   color: #0360FF;
+  
 }
-.button-1:hover {
+.button-2:hover {
  background-color:#0360FF;
    color: white;
-   box-shadow: 0 0 10px 0  #0360FF inset, 0 0 3px 2px #0360FF;
+    box-shadow: 0 0 10px 0 #0360FF inset, 0 0 3px 2px #0360FF;
  
 }
- .button-2:hover {
+ .button-1:hover {
   background-color: transparent;
-  border: 3px solid  #0360FF;
+  border: 3px solid #0360FF;
   
   -webkit-transition: all .15s ease-in-out;
   transition: all .15s ease-in-out;
-  color:  #0360FF;
-  box-shadow: 0 0 10px 0  #0360FF inset, 0 0 3px 2px  #0360FF;
+  color: #0360FF;
+   box-shadow: 0 0 10px 0 #0360FF inset, 0 0 3px 2px #0360FF;
 }
-.button-2 {
- background-color: #0360FF;
+.button-1 {
+ background-color:#0360FF;
    color: white;
+ 
 }
 .img{
    box-shadow: 0 0 10px 0  #0360FF inset, 0 0 5px 2px  #0360FF;
     box-shadow: 0 0 20px 1px rgba(0, 0, 0, 0.4);
-     border-radius: 9px;
-
+     border-radius: 9px;}
 </style>
-                <div class="row">
+ <div class="row">
                       
                     </div>
                     <div class="row">
@@ -65,23 +66,22 @@
                                     <div class="container">
                                      {% if app.user.role=="ROLE_MINISTERE"%}
                             <div class="col-sm-6 mb-3" style="margin-left:540px">
-                             
                                 <div class="float-end d-none d-sm-block">
                                     <a href="{{ path('ajout_offre') }}" class="btn btn-success ajout" style="font-weight:500;">Ajouter Offre</a>
                                 </div>
-                                
-                           </div>
-                             {% endif %}
+                               
+                            </div>
+                              {% endif %}
                                         <div style="margin-left:23px">
-                                          <a href="{{ path('app_offre') }}" class="btn  button-1 ">Offres activés <span style="background-color:red; color:white;border-radius:12px;padding:0px 4.5px;">{{nb}}</span></a>
-                                          <a href="{{ path('app_offre1') }}" class="btn button-2 ">Offres désactivés </a>
-                                          {% if app.user.role=="ROLE_ADMIN" %}
-                                           <a href="{{ path('expire_offre') }}" class="btn button-2 ">Offres Expirés </a>
+                                          <a href="{{ path('app_offre') }}" class="btn  button-1 ">Offres activés </a>
+                                          <a href="{{ path('app_offre1') }}" class="btn button-1 ">Offres désactivés </a>
+                                           {% if app.user.role=="ROLE_ADMIN" %}
+                                           <a href="{{ path('expire_offre') }}" class="btn button-2 ">Offres Expirés <span style="background-color:red; color:white;border-radius:12px;padding:0px 4.5px;">{{nb}}</span> </a>
                                            {% endif%}
                                         </div>
                                               
                <div class="main-banner"  id="women">
-         {% if nb==1 %} 
+                 {% if nb==1 %} 
                   <div class="container">
             <div class="row">
              <div class="col-lg-4">
@@ -98,8 +98,7 @@
                                         <div class="inner-content" >
                                             <h4 style="font-weight:bold;font-size:30px;" >{{offre.titre}}</h4>
                                             <span style="font-weight:bold;font-size:18px;">{{offre.lieu.ville}} ({{offre.lieu.region}} {{offre.lieu.adresse}})</span>
-                                            {% if app.user.role=="ROLE_ADMIN"%} <br> <span style="font-weight:bold;font-size:18px;">Ministére : {{offre.user.email}}</span> {% endif %}
-                                            <br> <span style="font-weight:bold;font-size:18px;">Date Ajout : {{offre.dateAjout}}</span>
+                                             <br> <span style="font-weight:bold;font-size:18px;">Date Ajout : {{offre.dateAjout}}</span>
                                                <br> <span style="font-weight:bold;font-size:18px;">Date Expiration : {{offre.dateExpiration}}</span>
                                         </div>
                                         <div class="hover-content">
@@ -109,16 +108,12 @@
                                                   <p> Budget : {{offre.budget}} TND</p>
                                                     <p>Délai : {{offre.delai}} ans</p>
                                                 <div class="">
-                                                 {% if app.user.role=="ROLE_MINISTERE"%}
+                                                    {% if app.user.role=="ROLE_MINISTERE"%}
                                                     <a  href="{{ path('offre_edit',{'id': offre.id}) }}" class="btn btn-outline-warning btn-sm edit" title="Modifier">
                                                                     <i class="fas fa-pencil-alt"></i>
                                                      </a>
                                                      {% endif %}
-                                                     {% if app.user.role=="ROLE_ADMIN"%}
-                                                     <a  href="{{ path('desactivation',{'id': offre.id}) }}" class="btn btn-outline-warning btn-sm " title="Activer">
-                                                                    <i class="dripicons-lock-open"></i>
-                                                     </a>
-                                                     {% endif %}
+                                                    
                                                       <a href="" class="btn btn-outline-primary btn-sm edit" title="Show">
                                                                     <i style=" font-weight:bold;" class="dripicons-preview"></i>
                                                        </a>
@@ -155,8 +150,8 @@
                                         <div class="inner-content" >
                                             <h4 style="font-weight:bold;font-size:30px;" >{{ offre[0].titre}}</h4>
                                             <span style="font-weight:bold;font-size:18px;">{{offre[0].lieu.ville}} ({{offre[0].lieu.region}} {{offre[0].lieu.adresse}})</span>
-                                         <br> <span style="font-weight:bold;font-size:18px;">Date Ajout : {{offre[0].dateAjout}}</span>
-                                               <br> <span style="font-weight:bold;font-size:18px;">Date Expiration : {{offre[0].dateExpiration}}</span>
+                                          <br> <span style="font-weight:bold;font-size:18px;">Date Ajout : {{offre[0].dateAjout}}</span>
+                                              <br>  <span style="font-weight:bold;font-size:18px;">Date Expiration : {{offre[0].dateExpiration}}</span>
                                         </div>
                                         <div class="hover-content">
                                             <div class="inner">
@@ -170,11 +165,7 @@
                                                                     <i class="fas fa-pencil-alt"></i>
                                                      </a>
                                                      {% endif %}
-                                                     {% if app.user.role=="ROLE_ADMIN"%}
-                                                     <a  href="{{ path('desactivation',{'id': offre[0].id}) }}" class="btn btn-outline-warning btn-sm " title="Activer">
-                                                                    <i class="dripicons-lock-open"></i>
-                                                     </a>
-                                                     {% endif %}
+                                                    
                                                       <a href="" class="btn btn-outline-primary btn-sm edit" title="Show">
                                                                     <i style=" font-weight:bold;" class="dripicons-preview"></i>
                                                        </a>
@@ -185,7 +176,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <img src="uploads/{{offre[0].image}}"  height="350px" alt="" class="img" >
+                                        <img src="uploads/{{offre[0].image}}"  height="350px" alt="" class="img"  >
                                     </div>
                                       
                                 </div>
@@ -202,8 +193,8 @@
                                         <div class="inner-content" >
                                             <h4 style="font-weight:bold;font-size:30px;" >{{ offre[1].titre}}</h4>
                                             <span style="font-weight:bold;font-size:18px;">{{offre[1].lieu.ville}} ({{offre[0].lieu.region}} {{offre[0].lieu.adresse}})</span>
-                                           <br><span style="font-weight:bold;font-size:18px;">Date Ajout : {{offre[1].dateAjout}}</span>
-                                               <br> <span style="font-weight:bold;font-size:18px;">Date Expiration : {{offre[1].dateExpiration}}</span>
+                                         <br> <span style="font-weight:bold;font-size:18px;">Date Ajout : {{offre[1].dateAjout}}</span>
+                                              <br>  <span style="font-weight:bold;font-size:18px;">Date Expiration : {{offre[1].dateExpiration}}</span>
                                         </div>
                                         <div class="hover-content">
                                             <div class="inner">
@@ -216,11 +207,8 @@
                                                     <a  href="{{ path('offre_edit',{'id': offre[1].id}) }}" class="btn btn-outline-warning btn-sm edit" title="Modifier">
                                                                     <i class="fas fa-pencil-alt"></i>
                                                      </a>
-                                                     {% endif %}
-                                                     {% if app.user.role=="ROLE_ADMIN"%}
-                                                     <a  href="{{ path('desactivation',{'id': offre[1].id}) }}" class="btn btn-outline-warning btn-sm " title="Activer">
-                                                                    <i class="dripicons-lock-open"></i>
-                                                     </a>
+                                                     
+                                                    
                                                      {% endif %}
                                                       <a href="" class="btn btn-outline-primary btn-sm edit" title="Show">
                                                                     <i style=" font-weight:bold;" class="dripicons-preview"></i>
@@ -232,7 +220,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <img src="uploads/{{offre[1].image}}"  height="350px" alt="" class="img"  >
+                                        <img src="uploads/{{offre[1].image}}"  height="350px" alt="" class="img" >
                                     </div>
                                       
                                 </div>
@@ -260,8 +248,8 @@
                                             <h4 style="font-weight:bold;font-size:30px;" >{{offre.titre}}</h4>
                                             <span style="font-weight:bold;font-size:18px;">{{offre.lieu.ville}} ({{offre.lieu.region}} {{offre.lieu.adresse}})</span>
                                           <br> <span style="font-weight:bold;font-size:18px;">Date Ajout : {{offre.dateAjout}}</span>
-                                               <br> <span style="font-weight:bold;font-size:18px;">Date Expiration : {{offre.dateExpiration}}</span>
-                                        </div>
+                                                <br><span style="font-weight:bold;font-size:18px;">Date Expiration : {{offre.dateExpiration}}</span>
+                                         </div>
                                         <div class="hover-content">
                                             <div class="inner">
                                              
@@ -269,16 +257,12 @@
                                                   <p> Budget : {{offre.budget}} TND</p>
                                                     <p>Délai : {{offre.delai}} ans</p>
                                                 <div class="">
-                                                    {% if app.user.role=="ROLE_MINISTERE"%}
+                                                     {% if app.user.role=="ROLE_MINISTERE"%}
                                                     <a  href="{{ path('offre_edit',{'id': offre.id}) }}" class="btn btn-outline-warning btn-sm edit" title="Modifier">
                                                                     <i class="fas fa-pencil-alt"></i>
                                                      </a>
                                                      {% endif %}
-                                                     {% if app.user.role=="ROLE_ADMIN"%}
-                                                     <a  href="{{ path('desactivation',{'id': offre.id}) }}" class="btn btn-outline-warning btn-sm " title="Activer">
-                                                                    <i class="dripicons-lock-open"></i>
-                                                     </a>
-                                                     {% endif %}
+                                                   
                                                       <a href="" class="btn btn-outline-primary btn-sm edit" title="Show">
                                                                     <i style=" font-weight:bold;" class="dripicons-preview"></i>
                                                        </a>
@@ -289,7 +273,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <img src="uploads/{{offre.image}}"  height="350px" alt="" class="img"  >
+                                        <img src="uploads/{{offre.image}}"  height="350px" alt="" class="img" >
                                     </div>
                                       
                                 </div>
@@ -305,8 +289,7 @@
     </div>
 
                                                
-           
-                                                   
+                                            
                                         <!-- end table-responsive -->
                                     </div>
                                 </div>
@@ -317,6 +300,8 @@
 
                         
  {% endblock %}
+
+
 
 
 
