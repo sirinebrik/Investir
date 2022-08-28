@@ -225,7 +225,7 @@ class AdminController extends AbstractController
     }
 
      /**
-     * @Route("/activation/{id}", name="activation", methods={"GET","Post"})
+     * @Route("/activationU/{id}", name="activationU", methods={"GET","Post"})
     */
     public function Activation(Request $request, User $user , SendMailService $mailer): Response
     {
@@ -243,7 +243,7 @@ class AdminController extends AbstractController
     }
 
     /**
-     * @Route("/desactivation/{id}", name="desactivation", methods={"GET","Post"})
+     * @Route("/desactivationU/{id}", name="desactivationU", methods={"GET","Post"})
     */
     public function Desactivation(Request $request, User $user ): Response
     {

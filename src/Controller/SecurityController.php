@@ -42,7 +42,7 @@ class SecurityController extends AbstractController
     $err4=$request->get('nom_entreprise');
     if ($form->isSubmitted()){
         $err1=$request->get('type_Utilisateur');
-    if ($form->isValid() && $err1!= null && $err2!= null && $err3!= null && $err4!= null) {
+    if ($form->isValid() && $err1!= null && (( $err2!= null) || ($err3!= null && $err4!= null))) {
       
       
         // Encode the new users password

@@ -42,19 +42,19 @@ class OffreController extends AbstractController
     }
     if ($this->getUser()->getRole()=="ROLE_ADMIN"){
        
-        $date=new \DateTime('now');
+        
         $offre = $this->getDoctrine()
         ->getRepository(Offre::class)
         ->createQueryBuilder('o')
         ->andWhere('o.etat = :etat')
-        ->andWhere('o.dateExpiration >= :dateExpiration')
+       
         ->join('o.user','user')
        
         ->andWhere('user.role != :role')  
             ->setParameters([
                 'etat' => 'true',
                 'role' => 'ROLE_ADMIN',
-                'dateExpiration' => $date->format('d/m/Y')
+               
               ])
           
         ->join('o.lieu','lieu')
@@ -62,8 +62,23 @@ class OffreController extends AbstractController
     }
         
         $nb=count($offre);
+$offre1=$offre;
+ foreach($offre1 as $offre1) {
+                                       
+            $dd = substr($offre1->getDateExpiration(),0,2);
+            $mm = substr($offre1->getDateExpiration(),3,2);
+            $yyyy = substr($offre1->getDateExpiration(),6,4);
+          $dateExp=$yyyy.'-'.$mm.'-'.$dd;
+          $dateA=new \DateTime('now');
+          $date= $dateA->format('Y-m-d');
+           if  ($dateExp <$date) {
+            $nb=$nb-1;
+           }
+           } 
 
-
+        
+           
+          
 
         return $this->render('offre/index.html.twig', [
             'offre' => $offre,
@@ -78,18 +93,18 @@ class OffreController extends AbstractController
     public function index1(): Response
     {
         if ($this->getUser()->getRole()=="ROLE_ADMIN"){
-            $date=new \DateTime('now');
+          
         $offre = $this->getDoctrine()
         ->getRepository(Offre::class)
         ->createQueryBuilder('o')
         ->andWhere('o.etat = :etat')
         ->join('o.user','user')
         ->andWhere('user.role != :role')
-        ->andWhere('o.dateExpiration >= :dateExpiration')
+      
             ->setParameters([
                 'etat' => 'false',
                 'role' => 'ROLE_ADMIN',
-                'dateExpiration' => $date->format('d/m/Y')
+              
               ])
           
         ->join('o.lieu','lieu')
@@ -109,7 +124,19 @@ class OffreController extends AbstractController
             ->join('o.lieu','lieu')
             ->getQuery()->getResult();}
         $nb=count($offre);
-
+        $offre1=$offre;
+        foreach($offre1 as $offre1) {
+                                       
+            $dd = substr($offre1->getDateExpiration(),0,2);
+            $mm = substr($offre1->getDateExpiration(),3,2);
+            $yyyy = substr($offre1->getDateExpiration(),6,4);
+          $dateExp=$yyyy.'-'.$mm.'-'.$dd;
+          $dateA=new \DateTime('now');
+          $date= $dateA->format('Y-m-d');
+           if  ($dateExp <$date) {
+            $nb=$nb-1;
+           }
+           } 
 
         return $this->render('offre/index1.html.twig', [
           
@@ -122,27 +149,53 @@ class OffreController extends AbstractController
      */
     public function indexExpire(): Response
     {
-       
-        $date=new \DateTime('now');
+        if ($this->getUser()->getRole()=="ROLE_ADMIN"){
         $offre = $this->getDoctrine()
         ->getRepository(Offre::class)
         ->createQueryBuilder('o')
         ->andWhere('o.etat = :etat')
-        ->andWhere('o.dateExpiration < :dateExpiration')
-        ->join('o.user','user')
-       
-        ->andWhere('user.role != :role')  
+         ->join('o.user','user')
+         ->andWhere('user.role != :role')  
             ->setParameters([
                 'etat' => 'true',
                 'role' => 'ROLE_ADMIN',
-                'dateExpiration' => $date->format('d/m/Y')
+                
               ])
           
         ->join('o.lieu','lieu')
         ->getQuery()->getResult();
-
-        
-        $nb=count($offre);
+            }
+       if ($this->getUser()->getRole()=="ROLE_MINISTERE"){
+        $offre = $this->getDoctrine()
+        ->getRepository(Offre::class)
+        ->createQueryBuilder('o')
+        ->andWhere('o.etat = :etat')
+         ->join('o.user','user')
+         ->andWhere('user.id = :id')  
+            ->setParameters([
+                'etat' => 'true',
+                'id' => $this->getUser()->getId(),
+                
+              ])
+          
+        ->join('o.lieu','lieu')
+        ->getQuery()->getResult();
+       }
+       $nb=count($offre);
+       $offre1=$offre;
+       foreach($offre1 as $offre1) {
+                                       
+        $dd = substr($offre1->getDateExpiration(),0,2);
+        $mm = substr($offre1->getDateExpiration(),3,2);
+        $yyyy = substr($offre1->getDateExpiration(),6,4);
+      $dateExp=$yyyy.'-'.$mm.'-'.$dd;
+      $dateA=new \DateTime('now');
+      $date= $dateA->format('Y-m-d');
+       if  ($dateExp >= $date) {
+        $nb=$nb-1;
+       }
+       } 
+       
 
 
 

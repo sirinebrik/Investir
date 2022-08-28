@@ -14,11 +14,8 @@
          
  <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
          
-    
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/font-awesome.css') }}" type="text/css" >
 
-    
-
-  
 
     <link rel="stylesheet" href="{{ asset('assets/css/owl-carousel.css') }}" type="text/css" >
 
@@ -221,11 +218,19 @@
                                 <i class="dripicons-list"></i>
                                 <span>Mes offres</span>
                             </a>
+                              <ul class="sub-menu" aria-expanded="false">
+                                    <li><a href="/offreActif">Offres activés</a></li>
+                                    <li><a href="/offreDesactif">Offres desactivés</a></li>
+                                      <li><a href="/offreExpire">Offres Expirés</a></li>
+                                  
+                                   
+                                </ul>
                             
                             <a href="/offreActif" class=" waves-effect">
                                 <i class="dripicons-message"></i>
                                 <span>Discution</span>
                             </a>
+                           
                         </li>
                        
                      </ul>

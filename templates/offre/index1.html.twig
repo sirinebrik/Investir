@@ -75,9 +75,9 @@
                                         <div style="margin-left:23px">
                                           <a href="{{ path('app_offre') }}" class="btn  button-1 ">Offres activés </a>
                                           <a href="{{ path('app_offre1') }}" class="btn button-2 ">Offres désactivés <span style="background-color:red; color:white;border-radius:12px;padding:0px 4.5px;">{{nb}}</span></a>
-                                           {% if app.user.role=="ROLE_ADMIN" %}
+                                         
                                            <a href="{{ path('expire_offre') }}" class="btn button-1 ">Offres Expirés </a>
-                                           {% endif%}
+                                          
                                         </div>
                                               
                <div class="main-banner"  id="women">
@@ -89,7 +89,13 @@
                  <div class="col-lg-4">
                      
                           
-                                   {% for offre in offre %}  
+                                   {% for offre in offre %} 
+                                    {% set   date = offre.dateExpiration|split('/')%}
+                                        {% set   dd = date[0]%}
+                                         {% set mm = date[1]%}
+                                        {% set yyyy = date[2]%}
+                                        {% set dateExp=yyyy ~'-' ~mm ~'-' ~dd%}
+                                         {% if  dateExp >='now'|date('Y-m-d') %} 
                             <div class="right-content">
                      
                                 <div class="right-first-image">
@@ -115,7 +121,7 @@
                                                      {% endif %}
                                                      {% if app.user.role=="ROLE_ADMIN"%}
                                                      <a  href="{{ path('activation',{'id': offre.id}) }}" class="btn btn-outline-warning btn-sm " title="Désactiver">
-                                                                    <i class="dripicons-lock"></i>
+                                                                    <i class="dripicons-lock-open"></i>
                                                      </a>
                                                      {% endif %}
                                                       <a href="" class="btn btn-outline-primary btn-sm edit" title="Show">
@@ -134,6 +140,7 @@
                                 </div>
                                
                             </div>
+                             {% endif %} 
                               {% endfor %}  
                                </div>
                     </div>
@@ -145,6 +152,13 @@
                    <div class="row">
            
                     <div class="col-lg-2">  </div >
+                      {% for offre in offre %}  
+                                   {% set   date = offre.dateExpiration|split('/')%}
+                                        {% set   dd = date[0]%}
+                                         {% set mm = date[1]%}
+                                        {% set yyyy = date[2]%}
+                                        {% set dateExp=yyyy ~'-' ~mm ~'-' ~dd%}
+                                         {% if  dateExp >='now'|date('Y-m-d') %}
                          <div class="col-lg-4">
                             <div class="right-content">
                      
@@ -152,91 +166,50 @@
                                    
                                     <div class="thumb">
                                         <div class="inner-content" >
-                                            <h4 style="font-weight:bold;font-size:30px;" >{{ offre[0].titre}}</h4>
-                                            <span style="font-weight:bold;font-size:18px;">{{offre[0].lieu.ville}} ({{offre[0].lieu.region}} {{offre[0].lieu.adresse}})</span>
-                                          <br> <span style="font-weight:bold;font-size:18px;">Date Ajout : {{offre[0].dateAjout}}</span>
-                                              <br>  <span style="font-weight:bold;font-size:18px;">Date Expiration : {{offre[0].dateExpiration}}</span>
+                                            <h4 style="font-weight:bold;font-size:30px;" >{{ offre.titre}}</h4>
+                                            <span style="font-weight:bold;font-size:18px;">{{offre.lieu.ville}} ({{offre.lieu.region}} {{offre.lieu.adresse}})</span>
+                                          <br> <span style="font-weight:bold;font-size:18px;">Date Ajout : {{offre.dateAjout}}</span>
+                                              <br>  <span style="font-weight:bold;font-size:18px;">Date Expiration : {{offre.dateExpiration}}</span>
                                         </div>
                                         <div class="hover-content">
                                             <div class="inner">
                                              
-                                                <p>Description : {{offre[0].description}}.</p>
-                                                  <p> Budget : {{offre[0].budget}} TND</p>
-                                                    <p>Délai : {{offre[0].delai}} ans</p>
+                                                <p>Description : {{offre.description}}.</p>
+                                                  <p> Budget : {{offre.budget}} TND</p>
+                                                    <p>Délai : {{offre.delai}} ans</p>
                                                 <div class="">
                                                     {% if app.user.role=="ROLE_MINISTERE"%}
-                                                    <a  href="{{ path('offre_edit',{'id': offre[0].id}) }}" class="btn btn-outline-warning btn-sm edit" title="Modifier">
+                                                    <a  href="{{ path('offre_edit',{'id': offre.id}) }}" class="btn btn-outline-warning btn-sm edit" title="Modifier">
                                                                     <i class="fas fa-pencil-alt"></i>
                                                      </a>
                                                      {% endif %}
                                                      {% if app.user.role=="ROLE_ADMIN"%}
-                                                     <a  href="{{ path('activation',{'id': offre[0].id}) }}" class="btn btn-outline-warning btn-sm " title="Désactiver">
-                                                                    <i class="dripicons-lock"></i>
+                                                     <a  href="{{ path('activation',{'id': offre.id}) }}" class="btn btn-outline-warning btn-sm " title="Désactiver">
+                                                                    <i class="dripicons-lock-open"></i>
                                                      </a>
                                                      {% endif %}
                                                       <a href="" class="btn btn-outline-primary btn-sm edit" title="Show">
                                                                     <i style=" font-weight:bold;" class="dripicons-preview"></i>
                                                        </a>
-                                                       <a href="{{ path('offre_delete',{'id': offre[0].id}) }}" class="btn btn-outline-danger btn-sm edit" title="Supprimer">
+                                                       <a href="{{ path('offre_delete',{'id': offre.id}) }}" class="btn btn-outline-danger btn-sm edit" title="Supprimer">
                                                                     <i style=" font-weight:bold;" class="dripicons-trash"></i>
                                                                 </a>
                                                        
                                                 </div>
                                             </div>
                                         </div>
-                                        <img src="uploads/{{offre[0].image}}"  height="350px" alt="" class="img"  >
+                                        <img src="uploads/{{offre.image}}"  height="350px" alt="" class="img"  >
                                     </div>
                                       
                                 </div>
                                
                             </div>
                              
-                        </div>
-                         <div class="col-lg-4">
-                        <div class="right-content">
-                     
-                                <div class="right-first-image">
-                                   
-                                    <div class="thumb">
-                                        <div class="inner-content" >
-                                            <h4 style="font-weight:bold;font-size:30px;" >{{ offre[1].titre}}</h4>
-                                            <span style="font-weight:bold;font-size:18px;">{{offre[1].lieu.ville}} ({{offre[0].lieu.region}} {{offre[0].lieu.adresse}})</span>
-                                         <br> <span style="font-weight:bold;font-size:18px;">Date Ajout : {{offre[1].dateAjout}}</span>
-                                              <br>  <span style="font-weight:bold;font-size:18px;">Date Expiration : {{offre[1].dateExpiration}}</span>
-                                        </div>
-                                        <div class="hover-content">
-                                            <div class="inner">
-                                             
-                                                <p>Description : {{offre[1].description}}.</p>
-                                                  <p> Budget : {{offre[1].budget}} TND</p>
-                                                    <p>Délai : {{offre[1].delai}} ans</p>
-                                                <div class="">
-                                                    {% if app.user.role=="ROLE_MINISTERE"%}
-                                                    <a  href="{{ path('offre_edit',{'id': offre[1].id}) }}" class="btn btn-outline-warning btn-sm edit" title="Modifier">
-                                                                    <i class="fas fa-pencil-alt"></i>
-                                                     </a>
-                                                     {% endif %}
-                                                     {% if app.user.role=="ROLE_ADMIN"%}
-                                                     <a  href="{{ path('activation',{'id': offre[1].id}) }}" class="btn btn-outline-warning btn-sm " title="Désactiver">
-                                                                    <i class="dripicons-lock"></i>
-                                                     </a>
-                                                     {% endif %}
-                                                      <a href="" class="btn btn-outline-primary btn-sm edit" title="Show">
-                                                                    <i style=" font-weight:bold;" class="dripicons-preview"></i>
-                                                       </a>
-                                                       <a href="{{ path('offre_delete',{'id': offre[1].id}) }}" class="btn btn-outline-danger btn-sm edit" title="Supprimer">
-                                                                    <i style=" font-weight:bold;" class="dripicons-trash"></i>
-                                                                </a>
-                                                       
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <img src="uploads/{{offre[1].image}}"  height="350px" alt="" class="img" >
-                                    </div>
-                                      
-                                </div>
-                               
-                            </div></div>
+                        </div>{% endif %}{% endfor %}
+                         
+                    
+
+                 
                     </div>
                 </div>
             </div>
@@ -250,6 +223,12 @@
                       <div class="owl-men-item owl-carousel" >
                           
                                    {% for offre in offre %}  
+                                   {% set   date = offre.dateExpiration|split('/')%}
+                                        {% set   dd = date[0]%}
+                                         {% set mm = date[1]%}
+                                        {% set yyyy = date[2]%}
+                                        {% set dateExp=yyyy ~'-' ~mm ~'-' ~dd%}
+                                         {% if  dateExp >='now'|date('Y-m-d') %}
                             <div class="right-content">
                      
                                 <div class="right-first-image">
@@ -275,7 +254,7 @@
                                                      {% endif %}
                                                      {% if app.user.role=="ROLE_ADMIN"%}
                                                      <a  href="{{ path('activation',{'id': offre.id}) }}" class="btn btn-outline-warning btn-sm " title="Désactiver">
-                                                                    <i class="dripicons-lock"></i>
+                                                                    <i class="dripicons-lock-open"></i>
                                                      </a>
                                                      {% endif %}
                                                       <a href="" class="btn btn-outline-primary btn-sm edit" title="Show">
@@ -294,6 +273,7 @@
                                 </div>
                                
                             </div>
+                               {% endif %}  
                               {% endfor %}  
                                </div>
                     </div>
