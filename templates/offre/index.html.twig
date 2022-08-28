@@ -103,7 +103,10 @@
                                     <div class="thumb">
                                         <div class="inner-content" >
                                             <h4 style="font-weight:bold;font-size:30px;" >{{offre.titre}}</h4>
-                                            <span style="font-weight:bold;font-size:18px;">{{offre.lieu.ville}} ({{offre.lieu.region}} {{offre.lieu.adresse}})</span>
+                                             {% for ministere in ministere %} 
+                                              {% if ministere.utilisateur.id==offre.user.id %}  
+                                              <span style="font-weight:bold;font-size:18px;">{{ministere.type.titre}}</span> {% endif %}  {% endfor %}  
+                                            <br> <span style="font-weight:bold;font-size:18px;">Lieu : {{offre.lieu.ville}} ({{offre.lieu.region}} {{offre.lieu.adresse}})</span>
                                             {% if app.user.role=="ROLE_ADMIN"%} <br> <span style="font-weight:bold;font-size:18px;">Ministére : {{offre.user.email}}</span> {% endif %}
                                             <br> <span style="font-weight:bold;font-size:18px;">Date Ajout : {{offre.dateAjout}}</span>
                                                <br> <span style="font-weight:bold;font-size:18px;">Date Expiration : {{offre.dateExpiration}}</span>
@@ -171,7 +174,10 @@
                                     <div class="thumb">
                                         <div class="inner-content" >
                                             <h4 style="font-weight:bold;font-size:30px;" >{{ offre.titre}}</h4>
-                                            <span style="font-weight:bold;font-size:18px;">{{offre.lieu.ville}} ({{offre.lieu.region}} {{offre.lieu.adresse}})</span>
+                                            {% for ministere in ministere %} 
+                                              {% if ministere.utilisateur.id==offre.user.id %}  
+                                              <span style="font-weight:bold;font-size:18px;">{{ministere.type.titre}}</span> {% endif %}  {% endfor %}  
+                                            <br> <span style="font-weight:bold;font-size:18px;">Lieu : {{offre.lieu.ville}} ({{offre.lieu.region}} {{offre.lieu.adresse}})</span>
                                          <br> <span style="font-weight:bold;font-size:18px;">Date Ajout : {{offre.dateAjout}}</span>
                                                <br> <span style="font-weight:bold;font-size:18px;">Date Expiration : {{offre.dateExpiration}}</span>
                                         </div>
@@ -237,7 +243,10 @@
                                     <div class="thumb">
                                         <div class="inner-content" >
                                             <h4 style="font-weight:bold;font-size:30px;" >{{offre.titre}}</h4>
-                                            <span style="font-weight:bold;font-size:18px;">{{offre.lieu.ville}} ({{offre.lieu.region}} {{offre.lieu.adresse}})</span>
+                                            {% for ministere in ministere %} 
+                                              {% if ministere.utilisateur.id==offre.user.id %}  
+                                              <span style="font-weight:bold;font-size:18px;">{{ministere.type.titre}}</span> {% endif %}  {% endfor %}  
+                                             <br><span style="font-weight:bold;font-size:18px;">Lieu : {{offre.lieu.ville}} ({{offre.lieu.region}} {{offre.lieu.adresse}})</span>
                                           <br> <span style="font-weight:bold;font-size:18px;">Date Ajout : {{offre.dateAjout}}</span>
                                                <br> <span style="font-weight:bold;font-size:18px;">Date Expiration : {{offre.dateExpiration}}</span>
                                         </div>

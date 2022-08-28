@@ -23,6 +23,7 @@ class OffreController extends AbstractController
     /**
      * @Route("/offreActif", name="app_offre")
      */
+
     public function index(): Response
     {
         if ($this->getUser()->getRole()=="ROLE_MINISTERE"){
@@ -62,8 +63,8 @@ class OffreController extends AbstractController
     }
         
         $nb=count($offre);
-$offre1=$offre;
- foreach($offre1 as $offre1) {
+         $offre1=$offre;
+         foreach($offre1 as $offre1) {
                                        
             $dd = substr($offre1->getDateExpiration(),0,2);
             $mm = substr($offre1->getDateExpiration(),3,2);
@@ -76,13 +77,21 @@ $offre1=$offre;
            }
            } 
 
-        
-           
+           $ministere = $this->getDoctrine()
+           ->getRepository(Ministere::class)
+           ->createQueryBuilder('u')
+           ->join('u.utilisateur','user')
+           ->where('user.etat= :etat')
+           ->setParameter('etat','true')
+           ->join('u.type','type')
+           ->getQuery()->getResult();
           
+          dump($ministere);
 
         return $this->render('offre/index.html.twig', [
             'offre' => $offre,
             'nb' => $nb,
+            'ministere'=>$ministere,
             
         ]);
     }
@@ -137,11 +146,19 @@ $offre1=$offre;
             $nb=$nb-1;
            }
            } 
-
+           $ministere = $this->getDoctrine()
+           ->getRepository(Ministere::class)
+           ->createQueryBuilder('u')
+           ->join('u.utilisateur','user')
+           ->where('user.etat= :etat')
+           ->setParameter('etat','true')
+           ->join('u.type','type')
+           ->getQuery()->getResult();
         return $this->render('offre/index1.html.twig', [
           
             'offre' => $offre,
             'nb' => $nb,
+            'ministere'=> $ministere,
         ]);
     }
  /**
@@ -196,12 +213,20 @@ $offre1=$offre;
        }
        } 
        
-
+       $ministere = $this->getDoctrine()
+       ->getRepository(Ministere::class)
+       ->createQueryBuilder('u')
+       ->join('u.utilisateur','user')
+       ->where('user.etat= :etat')
+       ->setParameter('etat','true')
+       ->join('u.type','type')
+       ->getQuery()->getResult();
 
 
         return $this->render('offre/indexExpiré.html.twig', [
             'offre' => $offre,
             'nb' => $nb,
+            'ministere'=>$ministere,
             
         ]);
     }
