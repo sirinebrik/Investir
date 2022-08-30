@@ -6,6 +6,9 @@ use App\Entity\Offre;
 use App\Form\OffreType;
 use App\Entity\TypeMinistere;
 use App\Entity\Ministere;
+use App\Entity\InvestirOffre;
+use App\Entity\Investisseur;
+
 
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -86,7 +89,7 @@ class OffreController extends AbstractController
            ->join('u.type','type')
            ->getQuery()->getResult();
           
-          dump($ministere);
+         
 
         return $this->render('offre/index.html.twig', [
             'offre' => $offre,
@@ -389,6 +392,82 @@ class OffreController extends AbstractController
           return $this->redirect($_SERVER['HTTP_REFERER']);
         
     }
+
+    /**
+     * @Route("/offreActifInv", name="app_offreInv")
+     */
+
+    public function indexInv(): Response
+    {
+       $user = $this->getDoctrine()
+        ->getRepository(Investisseur::class)
+        ->findBy(
+            ['utilisateur' => $this->getUser()]
+          );
+
+          $investir = $this->getDoctrine()
+          ->getRepository(InvestirOffre::class)
+          ->createQueryBuilder('i')
+          ->select('offre.id')
+          ->join('i.investisseur','inv')
+          ->join('i.offre','offre')
+          ->andWhere('inv.id = :id')
+      
+          ->setParameters(
+              ['id' => $user[0]]
+            )
+         
+            ->getQuery()->getResult();
+
+    
+        $offre = $this->getDoctrine()
+        ->getRepository(Offre::class)
+        ->createQueryBuilder('o')
+        ->andWhere('o.etat = :etat')
+        ->setParameters([ 'etat' => 'true' ])
+         ->join('o.lieu','lieu')
+       
+        
+         ->getQuery()->getResult();
+
+     
+     
+      $nb=count($offre);
+         $offre1=$offre;
+         foreach($offre1 as $offre1) {
+                                       
+            $dd = substr($offre1->getDateExpiration(),0,2);
+            $mm = substr($offre1->getDateExpiration(),3,2);
+            $yyyy = substr($offre1->getDateExpiration(),6,4);
+          $dateExp=$yyyy.'-'.$mm.'-'.$dd;
+          $dateA=new \DateTime('now');
+          $date= $dateA->format('Y-m-d');
+           if  ($dateExp <$date) {
+            $nb=$nb-1;
+           }
+           } 
+
+           $ministere = $this->getDoctrine()
+           ->getRepository(Ministere::class)
+           ->createQueryBuilder('u')
+           ->join('u.utilisateur','user')
+           ->where('user.etat= :etat')
+           ->setParameter('etat','true')
+           ->join('u.type','type')
+           ->getQuery()->getResult();
+          
+       
+
+        return $this->render('offre/indexInv.html.twig', [
+            'offre' => $offre,
+            'investir' => $investir,
+            'nb' => $nb,
+           
+            'ministere'=>$ministere,
+            
+        ]);
+    }
+
 
 }
 

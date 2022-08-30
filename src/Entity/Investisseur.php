@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\InvestisseurRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -32,6 +34,22 @@ class Investisseur
      * @ORM\Column(type="string", length=255)
      */
     private $nom_entreprise;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Discussion::class, mappedBy="investisseur")
+     */
+    private $discussions;
+
+    /**
+     * @ORM\OneToMany(targetEntity=InvestirOffre::class, mappedBy="investisseur")
+     */
+    private $investirOffres;
+
+    public function __construct()
+    {
+        $this->discussions = new ArrayCollection();
+        $this->investirOffres = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -70,6 +88,66 @@ class Investisseur
     public function setNomEntreprise(string $nom_entreprise): self
     {
         $this->nom_entreprise = $nom_entreprise;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Discussion>
+     */
+    public function getDiscussions(): Collection
+    {
+        return $this->discussions;
+    }
+
+    public function addDiscussion(Discussion $discussion): self
+    {
+        if (!$this->discussions->contains($discussion)) {
+            $this->discussions[] = $discussion;
+            $discussion->setInvestisseur($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDiscussion(Discussion $discussion): self
+    {
+        if ($this->discussions->removeElement($discussion)) {
+            // set the owning side to null (unless already changed)
+            if ($discussion->getInvestisseur() === $this) {
+                $discussion->setInvestisseur(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, InvestirOffre>
+     */
+    public function getInvestirOffres(): Collection
+    {
+        return $this->investirOffres;
+    }
+
+    public function addInvestirOffre(InvestirOffre $investirOffre): self
+    {
+        if (!$this->investirOffres->contains($investirOffre)) {
+            $this->investirOffres[] = $investirOffre;
+            $investirOffre->setInvestisseur($this);
+        }
+
+        return $this;
+    }
+
+    public function removeInvestirOffre(InvestirOffre $investirOffre): self
+    {
+        if ($this->investirOffres->removeElement($investirOffre)) {
+            // set the owning side to null (unless already changed)
+            if ($investirOffre->getInvestisseur() === $this) {
+                $investirOffre->setInvestisseur(null);
+            }
+        }
 
         return $this;
     }

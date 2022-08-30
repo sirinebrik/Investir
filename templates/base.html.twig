@@ -235,6 +235,30 @@
                        
                      </ul>
                    {% endif %}
+                    {% if is_granted('ROLE_INVESTISSEUR')  %} 
+                    
+                        <li>
+                            <a href="/offreActifInv" class=" waves-effect">
+                                <i class="dripicons-list"></i>
+                                <span>Les offres</span>
+                            </a>
+                              <ul class="sub-menu" aria-expanded="false">
+                                    <li><a href="/offreActifInv">Tous les offres</a></li>
+                                    <li><a href="/investirAcceptee">Demandes acceptées</a></li>
+                                      <li><a href="/investirNonAcceptee">Demandes non acceptées</a></li>
+                                  
+                                   
+                                </ul>
+                            
+                            <a href="/offreActif" class=" waves-effect">
+                                <i class="dripicons-message"></i>
+                                <span>Discution</span>
+                            </a>
+                           
+                        </li>
+                       
+                     </ul>
+                   {% endif %}
                 </div>
                 <!-- Sidebar -->
             </div>
