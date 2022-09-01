@@ -112,6 +112,29 @@
                                                 <p>Description : {{offre.description}}.</p>
                                                   <p> Budget : {{offre.budget}} TND</p>
                                                     <p>Délai : {{offre.delai}} ans</p>
+                                                      {% set nb=0  %} 
+                                                      {% for investir in investir  %} 
+                                                        {% if (investir.id ==offre.id ) %} 
+                                                          {% set nb=nb+1  %} 
+                                                              <div class="">
+                                                                {% if (investir.etat =="true" ) %} 
+                                                                   <a  href="{{ path('app_ouvreDiscussion', {'id': offre.id})}}" class="btn btn-outline-success btn-sm edit" title="Ouvre Discussion">
+                                                                    <i class="dripicons-message"></i>
+                                                                </a>
+                                                                {% endif %} 
+                                                              </div>
+                                                     
+                                                          {% endif %} 
+                                                        {% endfor %}  
+                                                      {% if (nb==0 ) %} 
+                                                        
+                                                              <div class="">
+                                                                  <a  href="{{ path('app_investir_offre',{'id': offre.id}) }}" class="btn btn-outline-success btn-sm edit" title="Modifier">
+                                                                    Investir
+                                                                  </a>
+                                                              </div>
+                                                        
+                                                          {% endif %} 
                                                 <div class="">
                                              
                                                     <a  href="{{ path('app_investir_offre',{'id': offre.id}) }}" class="btn btn-outline-success btn-sm edit" title="Modifier">
@@ -173,6 +196,29 @@
                                                 <p>Description : {{offre.description}}.</p>
                                                   <p> Budget : {{offre.budget}} TND</p>
                                                     <p>Délai : {{offre.delai}} ans</p>
+                                                    {% set nb=0  %} 
+                                                      {% for investir in investir  %} 
+                                                        {% if (investir.id ==offre.id ) %} 
+                                                          {% set nb=nb+1  %} 
+                                                              <div class="">
+                                                                {% if (investir.etat =="true" ) %} 
+                                                                   <a  href="{{ path('app_ouvreDiscussion', {'id': offre.id})}}" class="btn btn-outline-success btn-sm edit" title="Ouvre Discussion">
+                                                                    <i class="dripicons-message"></i>
+                                                                </a>
+                                                                {% endif %} 
+                                                              </div>
+                                                     
+                                                          {% endif %} 
+                                                        {% endfor %}  
+                                                      {% if (nb==0 ) %} 
+                                                        
+                                                              <div class="">
+                                                                  <a  href="{{ path('app_investir_offre',{'id': offre.id}) }}" class="btn btn-outline-success btn-sm edit" title="Modifier">
+                                                                    Investir
+                                                                  </a>
+                                                              </div>
+                                                        
+                                                          {% endif %}  
                                                 <div class="">
                                                   
                                                     <a  href="{{ path('app_investir_offre',{'id': offre.id}) }}" class="btn btn-outline-success btn-sm edit" title="Modifier">
@@ -236,10 +282,14 @@
                                                      
                                                  {% set nb=0  %} 
                                                       {% for investir in investir  %} 
-                                                      {% if (investir.id ==offre.id ) %} 
+                                                        {% if (investir.id ==offre.id ) %} 
                                                           {% set nb=nb+1  %} 
                                                               <div class="">
-                                                                 
+                                                                {% if (investir.etat =="true" ) %} 
+                                                                   <a  href="{{ path('app_ouvreDiscussion', {'id': offre.id})}}" class="btn btn-outline-success btn-sm edit" title="Ouvre Discussion">
+                                                                    <i class="dripicons-message"></i>
+                                                                </a>
+                                                                {% endif %} 
                                                               </div>
                                                      
                                                           {% endif %} 

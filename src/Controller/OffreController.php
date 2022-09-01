@@ -408,7 +408,7 @@ class OffreController extends AbstractController
           $investir = $this->getDoctrine()
           ->getRepository(InvestirOffre::class)
           ->createQueryBuilder('i')
-          ->select('offre.id')
+          ->select('offre.id','i.etat')
           ->join('i.investisseur','inv')
           ->join('i.offre','offre')
           ->andWhere('inv.id = :id')
@@ -503,7 +503,7 @@ class OffreController extends AbstractController
        ->getQuery()->getResult();
           
        return $this->render('offre/details.html.twig', [
-        'offre' => $offre,
+        'offre' => $offre1,
         'nb' => $nb,
         'user'=>$user,
         'ministere'=>$ministere,
