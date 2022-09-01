@@ -96,11 +96,7 @@
                 </div>
 
                 <div class="d-flex">
-                    <div class="dropdown d-none d-lg-inline-block">
-                        <button type="button" class="btn header-item toggle-search noti-icon waves-effect" data-target="#search-wrap">
-                            <i class="mdi mdi-magnify"></i>
-                        </button>
-                    </div>
+                   
 
                     <div class="dropdown d-inline-block">
                         <button type="button" class="btn header-item waves-effect" id="page-header-user-dropdown"
@@ -111,9 +107,15 @@
                             <i class="mdi mdi-chevron-down d-none d-xl-inline-block"></i>
                         </button>
                         <div class="dropdown-menu dropdown-menu-end">
-                            <!-- item-->
-                            <a class="dropdown-item" href="#"><i class="mdi mdi-account-circle-outline font-size-16 align-middle me-1"></i> Profile</a>
-                           
+                             {% if is_granted('ROLE_MINISTERE')  %}
+                            <a class="dropdown-item" href="/profileM"><i class="mdi mdi-account-circle-outline font-size-16 align-middle me-1"></i> Profile</a>
+                           {%endif%}
+                             {% if is_granted('ROLE_INVESTISSEUR')  %}
+                            <a class="dropdown-item" href="/profileInv"><i class="mdi mdi-account-circle-outline font-size-16 align-middle me-1"></i> Profile</a>
+                           {%endif%}
+                             {% if is_granted('ROLE_ADMIN')  %}
+                            <a class="dropdown-item" href="/admin/profileA"><i class="mdi mdi-account-circle-outline font-size-16 align-middle me-1"></i> Profile</a>
+                           {%endif%}
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item text-danger" href="/logout"><i class="mdi mdi-power font-size-16 align-middle me-1 text-danger"></i> Se déconnecter</a>
                         </div>
@@ -164,6 +166,10 @@
                         </li>
                     {% if is_granted('ROLE_ADMIN')  %} 
                         <li>
+                         <a class="dropdown-item" href="/admin/profileA"><i class="mdi mdi-account-circle-outline font-size-16 align-middle me-1"></i> Profile</a>
+
+                        </li>
+                        <li>
                             <a href="/admin/activerCompte" class=" waves-effect">
                                 <i class="dripicons-user"></i>
                                 <span>Activation comptes</span>
@@ -213,7 +219,10 @@
                     </ul>
                    {% endif %}
                      {% if is_granted('ROLE_MINISTERE')  %} 
-                    
+                         <li>
+                         <a class="dropdown-item" href="/profileM"><i class="mdi mdi-account-circle-outline font-size-16 align-middle me-1"></i> Profile</a>
+
+                        </li>
                         <li>
                             <a href="/offreActif" class=" waves-effect">
                                 <i class="dripicons-list"></i>
@@ -234,7 +243,10 @@
                      </ul>
                    {% endif %}
                     {% if is_granted('ROLE_INVESTISSEUR')  %} 
-                    
+                         <li>
+                         <a class="dropdown-item" href="/profileInv"><i class="mdi mdi-account-circle-outline font-size-16 align-middle me-1"></i> Profile</a>
+
+                        </li>
                         <li>
                             <a href="/offreActifInv" class=" waves-effect">
                                 <i class="dripicons-list"></i>

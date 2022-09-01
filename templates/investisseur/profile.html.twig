@@ -1,0 +1,175 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Profile{% endblock %}
+
+{% block body %}
+<style>
+ .ajout{
+    background:linear-gradient(to bottom right,#18DB32,#0360FF );
+  color:  #fff;
+   border-radius: 9px;
+   margin-top:10px;
+   }
+   .ajout:hover{
+ 
+  border-width: 2px;
+  border-style: solid;
+  border-image: linear-gradient(to bottom right,#18DB32,#0360FF ) 1;
+  
+  font-size: 13px; 
+  font-weight: 500;
+}
+   .card{
+     box-shadow: 0 0 12px 1px rgba(0, 0, 0, 0.4);
+   }
+   .button-1 {
+  background-color: transparent;
+  border: 3px solid  #0360FF;
+  
+  -webkit-transition: all .15s ease-in-out;
+  transition: all .15s ease-in-out;
+  color: #0360FF;
+}
+.button-1:hover {
+ background-color:#0360FF;
+   color: white;
+   box-shadow: 0 0 10px 0  #0360FF inset, 0 0 3px 2px #0360FF;
+ 
+}
+ .button-2:hover {
+  background-color: transparent;
+  border: 3px solid  #0360FF;
+  
+  -webkit-transition: all .15s ease-in-out;
+  transition: all .15s ease-in-out;
+  color:  #0360FF;
+  box-shadow: 0 0 10px 0  #0360FF inset, 0 0 3px 2px  #0360FF;
+}
+.button-2 {
+ background-color: #0360FF;
+   color: white;
+}
+.img{
+   box-shadow: 0 0 10px 0  #0360FF inset, 0 0 5px 2px  #0360FF;
+    box-shadow: 0 0 20px 1px rgba(0, 0, 0, 0.4);
+     border-radius: 9px;
+
+</style>
+             
+                    
+                                    
+                                              
+        <br>  
+        <div class="container">
+                   <div class="row">
+           
+             <div class="col-lg-2"></div>
+                     {% for user2 in investisseur %}  
+                    
+                       <div class="col-lg-8 card">
+                            <br> 
+                              {% set id=user2.id%}
+                                             <div class="container">
+                                             <center>  <img class="rounded-circle" width="70px" src="/admin/assetsAdmin/images/admin.png">
+                                                           <br><br><br>
+                                                           <div class="row">
+                                                                 <div class="col-lg-6">
+                                                                  <h5>Nom Complet : </h5>
+                                                                 </div>
+                                                                  <div class="col-lg-6">
+                                                                    <h5>{{user2.utilisateur.username}} <h5>
+                                                                 </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                 <div class="col-lg-6">
+                                                                  <h5>Email : </h5>
+                                                                 </div>
+                                                                  <div class="col-lg-6">
+                                                                    <h5>{{user2.utilisateur.email}} <h5>
+                                                                 </div>
+                                                            </div>
+                                                             <div class="row">
+                                                                 <div class="col-lg-6">
+                                                                  <h5>Rôle : </h5>
+                                                                 </div>
+                                                                  <div class="col-lg-6">
+                                                                    <h5>Investisseur <h5>
+                                                                 </div>
+                                                            </div>
+                                                            
+                                                            <div class="row">
+                                                                 <div class="col-lg-6">
+                                                                  <h5>Num Téléphone : </h5>
+                                                                 </div>
+                                                                  <div class="col-lg-6">
+                                                                    <h5>{{user2.utilisateur.tel}} <h5>
+                                                                 </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                 <div class="col-lg-6">
+                                                                  <h5>Adresse : </h5>
+                                                                 </div>
+                                                                  <div class="col-lg-6">
+                                                                    <h5>{{user2.utilisateur.adresse}}</ <h5>
+                                                                 </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                 <div class="col-lg-6">
+                                                                  <h5>Nom Entreprise : </h5>
+                                                                 </div>
+                                                                  <div class="col-lg-6">
+                                                                    <h5>{{user2.nomEntreprise}}</ <h5>
+                                                                 </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                 <div class="col-lg-6">
+                                                                  <h5>Pays : </h5>
+                                                                 </div>
+                                                                  <div class="col-lg-6">
+                                                                    <h5>{{user2.pays}}</ <h5>
+                                                                 </div>
+                                                            </div> 
+                                                              <div class="row">
+                                                                 <div class="col-lg-6">
+                                                                  <h5>Date Inscription : </h5>
+                                                                 </div>
+                                                                  <div class="col-lg-6">
+                                                                    <h5>{{user2.utilisateur.dateInscription}}</ <h5>
+                                                                 </div>
+                                                            </div>
+                                                            
+                                                            </div><br>
+                                                             
+		                           
+                        </div>
+                        
+                     
+                    </div>
+                </div>
+                                                     
+             
+                                        {% endfor %}
+            </div>
+        </div>
+       
+          
+    </div>
+
+          
+                                                   
+                                        <!-- end table-responsive -->
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                            
+                         </div>
+                        
+ 
+
+                        
+ {% endblock %}
+
+
+
+

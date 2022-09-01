@@ -259,4 +259,23 @@ class AdminController extends AbstractController
           else
             return $this->redirectToRoute('showInv') ;
     }
+     /**
+     * @Route("/profileA", name="app_profileA")
+     */
+    public function profile(): Response
+    {
+        $admin = $this->getDoctrine()
+        ->getRepository(User::class)
+        ->createQueryBuilder('u')
+        ->andWhere('u.id = :id')
+        ->setParameters([
+            'id' => $this->getUser()->getId(),
+          
+          ])
+       ->getQuery()->getResult();
+       
+        return $this->render('pages/admin/profile.html.twig', [
+            'admin' => $admin,
+        ]);
+    }
 }
