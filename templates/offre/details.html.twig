@@ -1,0 +1,192 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Détails{% endblock %}
+
+{% block body %}
+<style>
+ .ajout{
+    background:linear-gradient(to bottom right,#18DB32,#0360FF );
+  color:  #fff;
+   border-radius: 9px;
+   margin-top:10px;
+   }
+   .ajout:hover{
+ 
+  border-width: 2px;
+  border-style: solid;
+  border-image: linear-gradient(to bottom right,#18DB32,#0360FF ) 1;
+  
+  font-size: 13px; 
+  font-weight: 500;
+}
+   .card{
+     box-shadow: 0 0 12px 1px rgba(0, 0, 0, 0.4);
+   }
+   .button-1 {
+  background-color: transparent;
+  border: 3px solid  #0360FF;
+  
+  -webkit-transition: all .15s ease-in-out;
+  transition: all .15s ease-in-out;
+  color: #0360FF;
+}
+.button-1:hover {
+ background-color:#0360FF;
+   color: white;
+   box-shadow: 0 0 10px 0  #0360FF inset, 0 0 3px 2px #0360FF;
+ 
+}
+ .button-2:hover {
+  background-color: transparent;
+  border: 3px solid  #0360FF;
+  
+  -webkit-transition: all .15s ease-in-out;
+  transition: all .15s ease-in-out;
+  color:  #0360FF;
+  box-shadow: 0 0 10px 0  #0360FF inset, 0 0 3px 2px  #0360FF;
+}
+.button-2 {
+ background-color: #0360FF;
+   color: white;
+}
+.img{
+   box-shadow: 0 0 10px 0  #0360FF inset, 0 0 5px 2px  #0360FF;
+    box-shadow: 0 0 20px 1px rgba(0, 0, 0, 0.4);
+     border-radius: 9px;
+
+</style>
+               
+                    <div class="row">
+                        <div class="col-xl-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                    <div class="container">
+                                    
+                                              
+               <div class="main-banner"  id="women">
+        <div class="container">
+                   <div class="row">
+                  
+            {% for offre in offre %} 
+            
+              <div class="col-lg-2"> </div>
+                     <div class="col-lg-4"> 
+                  
+                            <div class="right-content">
+                     
+                                <div class="right-first-image">
+                                   
+                                    <div class="thumb">
+                                        <div class="inner-content" >
+                                            <h4 style="font-weight:bold;font-size:30px;" >{{ offre.titre}}</h4>
+                                            {% for ministere in ministere %} 
+                                              {% if ministere.utilisateur.id==offre.user.id %}  
+                                              <span style="font-weight:bold;font-size:18px;">{{ministere.type.titre}}</span> {% endif %}  {% endfor %}  
+                                             {% if offre.user.role=="ROLE_ADMIN" %}  
+                                              <span style="font-weight:bold;font-size:18px;">Administrateur</span> {% endif %} 
+                                            <br> <span style="font-weight:bold;font-size:18px;">Lieu : {{offre.lieu.ville}} ({{offre.lieu.region}} {{offre.lieu.adresse}})</span>
+                                         <br> <span style="font-weight:bold;font-size:18px;">Date Ajout : {{offre.dateAjout}}</span>
+                                               <br> <span style="font-weight:bold;font-size:18px;">Date Expiration : {{offre.dateExpiration}}</span>
+                                        </div>
+                                        <div class="hover-content">
+                                            <div class="inner">
+                                             
+                                                <p>Description : {{offre.description}}.</p>
+                                                  <p> Budget : {{offre.budget}} TND</p>
+                                                    <p>Délai : {{offre.delai}} ans</p>
+                                               
+                                            </div>
+                                        </div>
+                                        <img src="uploads/{{offre.image}}"  height="450px" alt="" class="img" >
+                                       
+                                    </div>
+                                      
+                                </div>
+                               
+                            </div>
+                             
+                        </div>   <div class="col-lg-2"> </div>{% endfor %}
+             
+                    </div>
+ <div class="row">
+                         
+                          <div class="table-responsive">
+                                   <div >
+                                          <p style="color:blue; font-size:14px; font-weight:bold;">Liste investisseurs : <span style="background-color:red; font-size:14px;color:white;border-radius:12px;padding:0px 5px;"> {{nb}}</span></p>
+                                       
+                                        </div>
+                                            <table class="table table-centered table-nowrap mb-0">
+                                                <thead class="thead-light">
+                                                    <tr>
+                                                       
+                                                        <th>Nom Complet</th>
+                                                        <th>Email</th>
+                                                        <th>Pays</th>
+                                                        <th>Nom Entreprise</th>
+                                                        <th>Num Téléphone</th>
+                                                        <th>Adresse</th>
+                                                        <th>Date inscription</th>
+                                                         <th>Demande</th>
+                                                       
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                 {% for user in user %}
+                                                    <tr>
+                                                        <td>{{user.investisseur.utilisateur.username}}</td>
+                                                        <td>{{user.investisseur.utilisateur.email}}</td>
+                                                        <td>{{user.investisseur.pays}}</td>
+                                                        <td>{{user.investisseur.nomEntreprise}}</td>
+                                                        <td>{{user.investisseur.utilisateur.tel}}</td>
+                                                        <td>{{user.investisseur.utilisateur.adresse}}</td>
+                                                        <td>{{user.investisseur.utilisateur.dateInscription}}</td>
+                                                        {% if user.etat=='true' %}
+                                                         <td style="color:green">Validée</td>
+                                                         {% else %} <td style="color:orange">En attente</td>
+                                                        {% endif %}
+                                                       
+                                                    </tr>
+                                                  
+                                                     {% endfor %}
+               
+
+                                                </tbody>
+                                            </table>
+                                           
+                                        </div>
+                        
+                      <div>
+                                          
+                                        </div>
+                        
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+       
+          
+    </div>
+
+                                               
+           
+                                                   
+                                        <!-- end table-responsive -->
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                            
+                         </div>
+                          <div class="mt-1 text-center  style="color:blue;">
+                                       <p style="text-align:center;"> <a href="/offreActif" class="fw-bold  "> <span style="font-weight:bold;"> <i class="dripicons-reply" style="font-size:17px;"></i> Liste des offres </span></a> </p>
+                           
+                                    </div> 
+ 
+
+                        
+ {% endblock %}
+
+
+
+

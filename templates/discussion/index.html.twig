@@ -1,20 +1,71 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello DiscussionController!{% endblock %}
+{% block title %}Ouvre Discussion{% endblock %}
 
 {% block body %}
 <style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+
+   .card{
+     box-shadow: 0 0 12px 1px rgba(0, 0, 0, 0.4);
+   }
 </style>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+                        <div class="row mt-5">
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/xampp/htdocs/Investir/Investir/src/Controller/DiscussionController.php'|file_link(0) }}">src/Controller/DiscussionController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/xampp/htdocs/Investir/Investir/templates/discussion/index.html.twig'|file_link(0) }}">templates/discussion/index.html.twig</a></code></li>
-    </ul>
-</div>
-{% endblock %}
+                            <div class="col-xl-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                     <p style="color:blue; font-size:16px; font-weight:bold;">Ouvre discussion : <span style="background-color:red; font-size:15px;color:white;border-radius:12px;padding:0px 5px;"> {{nb}}</span></p>
+                                       <br>
+                                        <div class="table-responsive">
+                                            <table class="table table-centered table-nowrap mb-0">
+                                                <thead class="thead-light">
+                                                    <tr>
+                                                       
+                                                        <th>Nom Investisseur</th>
+                                                        <th>Email Investisseur</th>
+                                                        <th>Offre</th>
+                                                        <th>Date Demande</th>
+                                                        <th></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                 {% for offre in offre %}
+                                                    <tr>
+                                                        <td>{{offre.investisseur.utilisateur.username}}</td>
+                                                        <td>{{offre.investisseur.utilisateur.email}}</td>
+                                                        <td>{{offre.offre.titre}}</td>
+                                                        <td>{{offre.dateInvestir}}</td>
+                                                       
+                                                        <td> <a  href="{{ path('app_ouvreDiscussion', {'id': offre.id})}}" class="btn btn-outline-success btn-sm edit" title="Ouvre Discussion">
+                                                                    <i class="dripicons-message"></i>
+                                                                </a>
+                                                        </td>
+                                                        <td> <a href="{{ path('app_details', {'id': offre.investisseur.id,'id1':offre.offre.id})}}" class="btn btn-outline-primary btn-sm edit" title="Show">
+                                                                    <i style=" font-weight:bold;" class="dripicons-preview"></i>
+                                                                </a>
+                                                        </td>
+                                                       
+                                                    </tr>
+                                                  
+                                                     {% endfor %}
+               
+
+                                                </tbody>
+                                            </table>
+                                           
+                                        </div>
+                                            
+                                        <!-- end table-responsive -->
+                                    </div>
+                                </div>
+                            </div>
+                         </div>
+
+
+                        
+ {% endblock %}
+
+
+
+

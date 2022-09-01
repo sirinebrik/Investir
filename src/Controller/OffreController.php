@@ -426,16 +426,12 @@ class OffreController extends AbstractController
         ->andWhere('o.etat = :etat')
         ->setParameters([ 'etat' => 'true' ])
          ->join('o.lieu','lieu')
-       
-        
-         ->getQuery()->getResult();
+       ->getQuery()->getResult();
 
-     
-     
-      $nb=count($offre);
+        $nb=count($offre);
          $offre1=$offre;
+
          foreach($offre1 as $offre1) {
-                                       
             $dd = substr($offre1->getDateExpiration(),0,2);
             $mm = substr($offre1->getDateExpiration(),3,2);
             $yyyy = substr($offre1->getDateExpiration(),6,4);
@@ -462,10 +458,58 @@ class OffreController extends AbstractController
             'offre' => $offre,
             'investir' => $investir,
             'nb' => $nb,
-           
             'ministere'=>$ministere,
             
         ]);
+    }
+
+      /**
+     * @Route("/detailOffre/{id}", name="detailOffre", methods={"GET"})
+    */
+    public function DetailsOffre(Request $request, Offre $offre ): Response
+    {
+        $offre1 = $this->getDoctrine()
+        ->getRepository(Offre::class)
+        ->createQueryBuilder('o')
+        ->andWhere('o.id = :id')
+        ->setParameters([ 'id' => $offre->getId() ])
+         ->join('o.lieu','lieu')
+       ->getQuery()->getResult();
+
+       $user = $this->getDoctrine()
+        ->getRepository(InvestirOffre::class)
+        ->createQueryBuilder('i')
+        ->join('i.investisseur','inv')
+        ->join('inv.utilisateur','user')
+      
+        ->join('i.offre','offre')
+      
+        ->andWhere('offre.id = :id')
+        ->setParameters([
+            'id' => $offre->getId(),
+         
+          
+          ])
+       ->getQuery()->getResult();
+       $nb=count($user);
+
+       $ministere = $this->getDoctrine()
+       ->getRepository(Ministere::class)
+       ->createQueryBuilder('u')
+       ->join('u.utilisateur','user')
+       ->where('user.etat= :etat')
+       ->setParameter('etat','true')
+       ->join('u.type','type')
+       ->getQuery()->getResult();
+          
+       return $this->render('offre/details.html.twig', [
+        'offre' => $offre,
+        'nb' => $nb,
+        'user'=>$user,
+        'ministere'=>$ministere,
+        
+    ]);
+        
     }
 
 

@@ -85,8 +85,7 @@ th{
                                                         <th>Nom Complet</th>
                                                         <th>Email</th>
                                                         <th>Type</th>
-                                                        <th>Num Téléphone</th>
-                                                        <th>Adresse</th>
+                                                      
                                                         <th>Date inscription</th>
                                                         <th></th>
                                                     </tr>
@@ -97,8 +96,7 @@ th{
                                                         <td>{{user.utilisateur.username}}</td>
                                                         <td>{{user.utilisateur.email}}</td>
                                                         <td>{{user.type.titre}}</td>
-                                                        <td>{{user.utilisateur.tel}}</td>
-                                                        <td>{{user.utilisateur.adresse}}</td>
+                                                       
                                                         <td>{{user.utilisateur.dateInscription}}</td>
                                                        
                                                         <td> <a  href="{{ path('desactivationU', {'id': user.utilisateur.id}) }}" class="btn btn-outline-danger btn-sm edit" title="Desactiver">
