@@ -113,16 +113,7 @@ class DiscussionController extends AbstractController
     {
         $entityManager = $this->getDoctrine()->getManager();
        
-        $discussion = new Discussion();
-        $discussion->setDateEnvoi('');
-        $discussion->setSend('');
-        $discussion->setMessage('');
-        $discussion->setHeure('');
-        $discussion->setInvestisseur($investir->getInvestisseur());
-        $discussion->setOffre($investir->getOffre());
-       $entityManager->persist( $discussion);
-        $entityManager->flush();
-
+      
         $investir->setEtat('true');
         $entityManager->persist( $investir);
         $entityManager->flush();
@@ -231,10 +222,85 @@ class DiscussionController extends AbstractController
      /**
      * @Route("/messageAM/{id}/{id1}", name="app_messageAM", methods={"GET"})
      */
-    public function messageAM(Request $request,Offre $offre,Investisseur $investisseur): Response
+    public function messageAM(Request $request,Offre $offre): Response
     {
         
-        return $this->render('discussion/message.html.twig');
+        $message = $this->getDoctrine()
+        ->getRepository(Discussion::class)
+        ->createQueryBuilder('d')
+        ->join('d.investisseur','inv')
+        ->andWhere('inv.id = :id1')
+        ->join('d.offre','offre')
+        ->andWhere('offre.id = :id')
+        ->setParameters([
+            'id' => $offre->getId(),
+            'id1' => $request->attributes->get('id1'),
+         
+          
+          ])
+        ->join('offre.user','user')
+       
+       ->getQuery()->getResult();
+     
+     
+       $investisseur = $this->getDoctrine()
+       ->getRepository(Investisseur::class)
+       ->createQueryBuilder('i')
+       ->join('i.utilisateur','user')
+       ->where('i.id= :id')
+       ->setParameters([
+       'id' => $request->attributes->get('id1'),
+     ])
+       ->getQuery()->getResult();
+
+       $offre1 = $this->getDoctrine()
+       ->getRepository(Offre::class)
+       ->createQueryBuilder('o')
+       ->andWhere('o.id = :id')
+       ->join('o.user','user')
+       ->setParameters([ 'id' => $offre->getId() ])
+      ->getQuery()->getResult();
+        
+        return $this->render('discussion/messageAM.html.twig', [
+            'message' => $message,
+            'investisseur' => $investisseur[0],
+            'offre'=>$offre1
+           
+           
+        ]);
+    }
+
+      /**
+     * @Route("/ajoutMessageAM/{id}/{id1}", name="ajout_messageAM", methods={"GET","Post"})
+     */
+    public function AjoutMessageAM(Request $request,Offre $offre): Response
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+
+        $investisseur = $this->getDoctrine()
+        ->getRepository(Investisseur::class)
+        ->createQueryBuilder('i')
+        ->andWhere('i.id = :id')
+        ->setParameters([
+          'id' => $request->attributes->get('id1'),
+          
+          ])
+       ->getQuery()->getResult();
+       
+       $date=new \DateTime('now');
+       $date->setTimezone(new \DateTimeZone("Africa/Tunis"));  
+        $discussion = new Discussion();
+       
+        $discussion->setDateEnvoi($date->format('d/m/Y'));
+        $discussion->setSend($this->getUser()->getId());
+        $discussion->setMessage($request->get('message'));
+        $discussion->setHeure($date->format('G:i'));
+        $discussion->setInvestisseur($investisseur[0]);
+        $discussion->setOffre($offre);
+       $entityManager->persist( $discussion);
+        $entityManager->flush();
+        
+        return $this->redirect("/messageAM/".$offre->getId()."/".$investisseur[0]->getId());
     }
 
     
