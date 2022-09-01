@@ -123,14 +123,18 @@
                                                                     <i class="fas fa-pencil-alt"></i>
                                                      </a>
                                                      {% endif %}
-                                                     {% if app.user.role=="ROLE_ADMIN"%}
+                                                    {% if app.user.role=="ROLE_ADMIN"%}
                                                      <a  href="{{ path('desactivation',{'id': offre.id}) }}" class="btn btn-outline-warning btn-sm " title="Activer">
                                                                     <i class="dripicons-lock"></i>
                                                      </a>
-                                                     {% endif %}
+                                                      <a href="{{ path('detailOffreAdmin',{'id': offre.id}) }}" class="btn btn-outline-primary btn-sm edit" title="Show">
+                                                                    <i style=" font-weight:bold;" class="dripicons-preview"></i>
+                                                       </a>
+                                                     {% else %}
                                                       <a href="{{ path('detailOffre',{'id': offre.id}) }}" class="btn btn-outline-primary btn-sm edit" title="Show">
                                                                     <i style=" font-weight:bold;" class="dripicons-preview"></i>
                                                        </a>
+                                                       {% endif %}
                                                        <a href="{{ path('offre_delete',{'id': offre.id}) }}" class="btn btn-outline-danger btn-sm edit" title="Supprimer">
                                                                     <i style=" font-weight:bold;" class="dripicons-trash"></i>
                                                                 </a>
@@ -197,10 +201,14 @@
                                                      <a  href="{{ path('desactivation',{'id': offre.id}) }}" class="btn btn-outline-warning btn-sm " title="Activer">
                                                                     <i class="dripicons-lock"></i>
                                                      </a>
-                                                     {% endif %}
+                                                      <a href="{{ path('detailOffreAdmin',{'id': offre.id}) }}" class="btn btn-outline-primary btn-sm edit" title="Show">
+                                                                    <i style=" font-weight:bold;" class="dripicons-preview"></i>
+                                                       </a>
+                                                     {% else %}
                                                       <a href="{{ path('detailOffre',{'id': offre.id}) }}" class="btn btn-outline-primary btn-sm edit" title="Show">
                                                                     <i style=" font-weight:bold;" class="dripicons-preview"></i>
                                                        </a>
+                                                       {% endif %}
                                                        <a href="{{ path('offre_delete',{'id': offre.id}) }}" class="btn btn-outline-danger btn-sm edit" title="Supprimer">
                                                                     <i style=" font-weight:bold;" class="dripicons-trash"></i>
                                                                 </a>
@@ -262,14 +270,18 @@
                                                                     <i class="fas fa-pencil-alt"></i>
                                                      </a>
                                                      {% endif %}
-                                                     {% if app.user.role=="ROLE_ADMIN"%}
+                                                      {% if app.user.role=="ROLE_ADMIN"%}
                                                      <a  href="{{ path('desactivation',{'id': offre.id}) }}" class="btn btn-outline-warning btn-sm " title="Activer">
                                                                     <i class="dripicons-lock"></i>
                                                      </a>
-                                                     {% endif %}
+                                                      <a href="{{ path('detailOffreAdmin',{'id': offre.id}) }}" class="btn btn-outline-primary btn-sm edit" title="Show">
+                                                                    <i style=" font-weight:bold;" class="dripicons-preview"></i>
+                                                       </a>
+                                                     {% else %}
                                                       <a href="{{ path('detailOffre',{'id': offre.id}) }}" class="btn btn-outline-primary btn-sm edit" title="Show">
                                                                     <i style=" font-weight:bold;" class="dripicons-preview"></i>
                                                        </a>
+                                                       {% endif %}
                                                        <a href="{{ path('offre_delete',{'id': offre.id}) }}" class="btn btn-outline-danger btn-sm edit" title="Supprimer">
                                                                     <i style=" font-weight:bold;" class="dripicons-trash"></i>
                                                                 </a>

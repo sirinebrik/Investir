@@ -141,9 +141,7 @@
                                                         <td>{{user.investisseur.utilisateur.adresse}}</td>
                                                         <td>{{user.investisseur.utilisateur.dateInscription}}</td>
                                                         {% if user.etat=='true' %}
-                                                         <td ><a  href="{{ path('app_message', {'id': id1})}}" class="btn btn-outline-success btn-sm edit" title="Ouvre Discussion">
-                                                                    <i class="dripicons-message"></i>
-                                                                </a>
+                                                         <td style="color:green" >Validée
                                                         </td>
                                                          {% else %} <td style="color:orange">En attente</td>
                                                         {% endif %}

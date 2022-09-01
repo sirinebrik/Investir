@@ -42,6 +42,11 @@ class Discussion
      */
     private $message;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $heure;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -103,6 +108,18 @@ class Discussion
     public function setMessage(string $message): self
     {
         $this->message = $message;
+
+        return $this;
+    }
+
+    public function getHeure(): ?string
+    {
+        return $this->heure;
+    }
+
+    public function setHeure(string $heure): self
+    {
+        $this->heure = $heure;
 
         return $this;
     }

@@ -104,6 +104,8 @@ class DiscussionController extends AbstractController
         ]);
     }
 
+    
+
      /**
      * @Route("/ouvreDiscussion/{id}", name="app_ouvreDiscussion", methods={"GET","Post"})
      */
@@ -115,6 +117,7 @@ class DiscussionController extends AbstractController
         $discussion->setDateEnvoi('');
         $discussion->setSend('');
         $discussion->setMessage('');
+        $discussion->setHeure('');
         $discussion->setInvestisseur($investir->getInvestisseur());
         $discussion->setOffre($investir->getOffre());
        $entityManager->persist( $discussion);
@@ -127,4 +130,112 @@ class DiscussionController extends AbstractController
         return $this->redirect('/discussion');
        
     }
+
+    /**
+     * @Route("/message/{id}", name="app_message", methods={"GET"})
+     */
+    public function message(Request $request,Offre $offre): Response
+    {
+       
+
+       $message = $this->getDoctrine()
+        ->getRepository(Discussion::class)
+        ->createQueryBuilder('d')
+        ->join('d.investisseur','inv')
+        ->join('inv.utilisateur','investisseur')
+        ->andWhere('investisseur.id = :id1')
+        ->join('d.offre','offre')
+        ->andWhere('offre.id = :id')
+        ->setParameters([
+            'id' => $offre->getId(),
+            'id1' => $this->getUser(),
+         
+          
+          ])
+        ->join('offre.user','user')
+       
+       ->getQuery()->getResult();
+       
+     
+       $ministere = $this->getDoctrine()
+       ->getRepository(Ministere::class)
+       ->createQueryBuilder('u')
+       ->join('u.utilisateur','user')
+       ->where('user.etat= :etat')
+       ->setParameter('etat','true')
+       ->join('u.type','type')
+       ->getQuery()->getResult();
+
+       $offre1 = $this->getDoctrine()
+       ->getRepository(Offre::class)
+       ->createQueryBuilder('o')
+       ->andWhere('o.id = :id')
+       ->join('o.user','user')
+       ->setParameters([ 'id' => $offre->getId() ])
+      
+      ->getQuery()->getResult();
+        
+        return $this->render('discussion/message.html.twig', [
+            'message' => $message,
+            'ministere' => $ministere,
+            'offre' => $offre1,
+           
+        ]);
+    }
+  /**
+     * @Route("/ajoutMessage/{id}", name="ajout_message", methods={"GET","Post"})
+     */
+    public function AjoutMessage(Request $request,Offre $offre): Response
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $investisseur = $this->getDoctrine()
+        ->getRepository(Investisseur::class)
+        ->createQueryBuilder('i')
+        ->join('i.utilisateur','user')
+        ->andWhere('user.id = :id')
+        ->setParameters([
+            'id' => $this->getUser()->getId(),
+          
+          ])
+       ->getQuery()->getResult();
+       
+       $date=new \DateTime('now');
+       $date->setTimezone(new \DateTimeZone("Africa/Tunis"));  
+        $discussion = new Discussion();
+       
+        $discussion->setDateEnvoi($date->format('d/m/Y'));
+        $discussion->setSend($investisseur[0]->getId());
+        $discussion->setMessage($request->get('message'));
+        $discussion->setHeure($date->format('G:i'));
+        $discussion->setInvestisseur($investisseur[0]);
+        $discussion->setOffre($offre);
+       $entityManager->persist( $discussion);
+        $entityManager->flush();
+        
+        return $this->redirect("/message/".$offre->getId());
+    }
+    /**
+     * @Route("deleteMessage/{id}", name="deleteMessage", methods={"POST","GET"})
+     */
+    public function deleteMessage(Request $request, Discussion $discussion): Response
+    {  $em = $this->getDoctrine()->getManager();
+        $discussion = $em->getRepository(Discussion::class)->find($discussion);
+
+        
+
+        $em->remove($discussion);
+        $em->flush();
+        return $this->redirect($_SERVER['HTTP_REFERER']);
+    }
+   
+     /**
+     * @Route("/messageAM/{id}/{id1}", name="app_messageAM", methods={"GET"})
+     */
+    public function messageAM(Request $request,Offre $offre,Investisseur $investisseur): Response
+    {
+        
+        return $this->render('discussion/message.html.twig');
+    }
+
+    
 }

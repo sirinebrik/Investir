@@ -512,6 +512,55 @@ class OffreController extends AbstractController
         
     }
 
+      /**
+     * @Route("/detailOffreAdmin/{id}", name="detailOffreAdmin", methods={"GET"})
+    */
+    public function DetailsOffreAdmin(Request $request, Offre $offre ): Response
+    {
+        $offre1 = $this->getDoctrine()
+        ->getRepository(Offre::class)
+        ->createQueryBuilder('o')
+        ->andWhere('o.id = :id')
+        ->setParameters([ 'id' => $offre->getId() ])
+         ->join('o.lieu','lieu')
+       ->getQuery()->getResult();
+
+       $user = $this->getDoctrine()
+        ->getRepository(InvestirOffre::class)
+        ->createQueryBuilder('i')
+        ->join('i.investisseur','inv')
+        ->join('inv.utilisateur','user')
+      
+        ->join('i.offre','offre')
+      
+        ->andWhere('offre.id = :id')
+        ->setParameters([
+            'id' => $offre->getId(),
+         
+          
+          ])
+       ->getQuery()->getResult();
+       $nb=count($user);
+
+       $ministere = $this->getDoctrine()
+       ->getRepository(Ministere::class)
+       ->createQueryBuilder('u')
+       ->join('u.utilisateur','user')
+       ->where('user.etat= :etat')
+       ->setParameter('etat','true')
+       ->join('u.type','type')
+       ->getQuery()->getResult();
+          
+       return $this->render('offre/detailsOffreAdmin.html.twig', [
+        'offre' => $offre1,
+        'nb' => $nb,
+        'user'=>$user,
+        'ministere'=>$ministere,
+        
+    ]);
+        
+    }
+
 
 }
 

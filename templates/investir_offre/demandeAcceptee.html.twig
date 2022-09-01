@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Mes Demandes Acceptée{% endblock %}
+{% block title %}Mes Demandes Acceptées{% endblock %}
 
 {% block body %}
 <style>
@@ -109,7 +109,7 @@
                                                     <p>Délai : {{offre.offre.delai}} ans</p>
                                                  <div class="">
                                               
-                                                   <a  href="{{ path('app_ouvreDiscussion', {'id': offre.id})}}" class="btn btn-outline-success btn-sm edit" title="Ouvre Discussion">
+                                                   <a  href="{{ path('app_message', {'id': offre.offre.id})}}" class="btn btn-outline-success btn-sm edit" title="Ouvre Discussion">
                                                                     <i class="dripicons-message"></i>
                                                                 </a>
                                                 </div>
@@ -161,7 +161,7 @@
                                                     <p>Délai : {{offre.offre.delai}} ans</p>
                                                 <div class="">
                                               
-                                                   <a  href="{{ path('app_ouvreDiscussion', {'id': offre.id})}}" class="btn btn-outline-success btn-sm edit" title="Ouvre Discussion">
+                                                   <a  href="{{ path('app_message', {'id': offre.offre.id})}}" class="btn btn-outline-success btn-sm edit" title="Ouvre Discussion">
                                                                     <i class="dripicons-message"></i>
                                                                 </a>
                                                 </div>
@@ -214,7 +214,7 @@
                                                     <p>Délai : {{offre.offre.delai}} ans</p>
                                                <div class="">
                                               
-                                                   <a  href="{{ path('app_ouvreDiscussion', {'id': offre.id})}}" class="btn btn-outline-success btn-sm edit" title="Ouvre Discussion">
+                                                   <a  href="{{ path('app_message', {'id': offre.offre.id})}}" class="btn btn-outline-success btn-sm edit" title="Ouvre Discussion">
                                                                     <i class="dripicons-message"></i>
                                                                 </a>
                                                 </div>

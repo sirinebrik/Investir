@@ -1,0 +1,144 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Discussion{% endblock %}
+
+{% block body %}
+<style>
+
+   .card{
+     box-shadow: 0 0 12px 1px rgba(0, 0, 0, 0.4);
+   }
+
+  
+</style>
+
+                        <div class="row mt-5">
+
+                            <div class="col-xl-12">
+                     
+                                <div class="w-100 user-chat">
+                                    <div class="card">
+                                        <div class="p-4 border-bottom ">
+                                            <div class="row">
+                                                <div class="col-md-4 col-9">
+                                                  {% for offre in offre %} 
+                                                    {% if offre.user.role=="ROLE_ADMIN" %}  
+                                                       <h5 class="font-size-15 mb-1 text-truncate">{{offre.user.username}}</h5>
+                                                       <p class="text-muted mb-0 text-truncate">Administrateur</p>
+                                                      {% endif %}  
+                                                      {% if offre.user.role=="ROLE_MINISTERE" %}  
+                                                   {% for ministere in ministere %} 
+                                              {% if ministere.utilisateur.id==offre.user.id %}  
+                                                    <h5 class="font-size-15 mb-1 text-truncate">{{offre.user.username}}</h5>
+                                                    <p class="text-muted mb-0 text-truncate"> {{ministere.type.titre}}</p>
+                                                   {% endif %} 
+                                                   {% endfor %} 
+                                                     {% endif %} 
+                                                     {% endfor %} 
+                                                </div>
+                                               
+                                            </div>
+                                        </div>
+            
+            
+                                        <div>
+                                            <div class="chat-conversation p-3">
+                                                <ul class="list-unstyled" data-simplebar style="max-height: 600px;">
+                                                    
+                                    
+                                    {% for message1 in message if message1.send !="" %}
+                                     {% if message1.investisseur.id!=message1.send %}
+                                    
+                                                    <li>
+                                                        <div class="conversation-list">
+            
+                                                            <div class="media">
+            
+                                                                <img src="/admin/assetsAdmin/images/user.png" class="rounded-circle avatar-xs" alt="">
+                                                                <div class="media-body arrow-left ms-3">
+            
+                                                                   
+                                                                    
+                                                                    <div class="ctext-wrap">
+                                                                        <div class="conversation-name">{{message1.offre.user.username}}</div>
+                                                                        <p>
+                                                                            {{message1.message}}
+                                                                        </p>
+                                                                        <p class="chat-time mb-0"><i class="bx bx-time-five align-middle me-1"></i>{{message1.dateEnvoi}}  {{message1.heure}}</p>
+                                                                    </div>
+                                                                    
+            
+                                                                </div>
+                                                            </div>
+                                                          
+                                                        </div>
+                                                    </li>
+                                                {% else %}
+                                                    <li class="right"   >
+                                                        <div class="conversation-list" >
+            
+                                                            <div class="media" >
+            
+                                                               
+                                                                <div class="media-body1 arrow-right me-3" ">
+            
+                                                                 
+                                                                    <div class="ctext-wrap">
+                                                                        <div class="conversation-name">{{message1.investisseur.utilisateur.username}}</div>
+                                                                        <p>
+                                                                            {{message1.message}}
+                                                                        </p>
+                    
+                                                                        <p class="chat-time mb-0"><i class="bx bx-time-five align-middle me-1"></i> {{message1.dateEnvoi}}  {{message1.heure}}  <a href="{{ path('deleteMessage',{'id': message1.id}) }}" style="color:red;" title="Supprimer">
+                                                                    <i style=" font-weight:bold;" class="dripicons-trash"></i>
+                                                                </a></p>
+                                                                    </div>
+                                                                    
+                                                                
+                                                                </div>
+            
+                                                                <img src="/admin/assetsAdmin/images/admin.png" class="rounded-circle avatar-xs" alt="">
+            
+            
+                                                           
+            
+            
+                                                        </div>
+                                                        </div>
+                                                    </li> {% endif %}
+                                                    {%endfor%}
+                                               </ul>
+
+                                            </div>
+                                              <form  action = "{{ path('ajout_message', {'id': offre[0].id})}}" method="post">
+                                            <div class="p-3 chat-input-section">
+                                                <div class="row">
+                                               
+                                                    <div class="col">
+                                                        <div class="position-relative">
+                                                            <input type="text" class="form-control chat-input" name="message" placeholder="Message..." required>
+                                                           
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-auto">
+                                                    
+                                                        <button type="submit" class="btn btn-primary btn-rounded chat-send w-md waves-effect waves-light"><span class="d-none d-sm-inline-block me-2">Envoyer</span> <i class="mdi mdi-send"></i></button>
+                                                    </div>
+                                                 
+                                                </div>
+                                            </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            
+                             </div>
+                                </div>
+                            </div>
+                         </div>
+
+
+                        
+ {% endblock %}
+
+

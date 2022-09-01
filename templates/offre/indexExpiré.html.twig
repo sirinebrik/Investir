@@ -123,9 +123,16 @@
                                                      </a>
                                                      {% endif %}
                                                     
-                                                      <a href="" class="btn btn-outline-primary btn-sm edit" title="Show">
+                                                      {% if app.user.role=="ROLE_ADMIN"%}
+                                                   
+                                                      <a href="{{ path('detailOffreAdmin',{'id': offre.id}) }}" class="btn btn-outline-primary btn-sm edit" title="Show">
                                                                     <i style=" font-weight:bold;" class="dripicons-preview"></i>
                                                        </a>
+                                                     {% else %}
+                                                      <a href="{{ path('detailOffre',{'id': offre.id}) }}" class="btn btn-outline-primary btn-sm edit" title="Show">
+                                                                    <i style=" font-weight:bold;" class="dripicons-preview"></i>
+                                                       </a>
+                                                       {% endif %}
                                                        <a href="{{ path('offre_delete',{'id': offre.id}) }}" class="btn btn-outline-danger btn-sm edit" title="Supprimer">
                                                                     <i style=" font-weight:bold;" class="dripicons-trash"></i>
                                                                 </a>
@@ -190,9 +197,16 @@
                                                      </a>
                                                      {% endif %}
                                                     
-                                                      <a href="" class="btn btn-outline-primary btn-sm edit" title="Show">
+                                                       {% if app.user.role=="ROLE_ADMIN"%}
+                                                   
+                                                      <a href="{{ path('detailOffreAdmin',{'id': offre.id}) }}" class="btn btn-outline-primary btn-sm edit" title="Show">
                                                                     <i style=" font-weight:bold;" class="dripicons-preview"></i>
                                                        </a>
+                                                     {% else %}
+                                                      <a href="{{ path('detailOffre',{'id': offre.id}) }}" class="btn btn-outline-primary btn-sm edit" title="Show">
+                                                                    <i style=" font-weight:bold;" class="dripicons-preview"></i>
+                                                       </a>
+                                                       {% endif %}
                                                        <a href="{{ path('offre_delete',{'id': offre.id}) }}" class="btn btn-outline-danger btn-sm edit" title="Supprimer">
                                                                     <i style=" font-weight:bold;" class="dripicons-trash"></i>
                                                                 </a>
@@ -258,9 +272,16 @@
                                                      </a>
                                                      {% endif %}
                                                    
-                                                      <a href="" class="btn btn-outline-primary btn-sm edit" title="Show">
+                                                        {% if app.user.role=="ROLE_ADMIN"%}
+                                                   
+                                                      <a href="{{ path('detailOffreAdmin',{'id': offre.id}) }}" class="btn btn-outline-primary btn-sm edit" title="Show">
                                                                     <i style=" font-weight:bold;" class="dripicons-preview"></i>
                                                        </a>
+                                                     {% else %}
+                                                      <a href="{{ path('detailOffre',{'id': offre.id}) }}" class="btn btn-outline-primary btn-sm edit" title="Show">
+                                                                    <i style=" font-weight:bold;" class="dripicons-preview"></i>
+                                                       </a>
+                                                       {% endif %}
                                                        <a href="{{ path('offre_delete',{'id': offre.id}) }}" class="btn btn-outline-danger btn-sm edit" title="Supprimer">
                                                                     <i style=" font-weight:bold;" class="dripicons-trash"></i>
                                                                 </a>
