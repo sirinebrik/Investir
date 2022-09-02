@@ -8,6 +8,7 @@ use App\Entity\TypeMinistere;
 use App\Entity\Ministere;
 use App\Entity\Investisseur;
 use App\Entity\Offre;
+use App\Entity\News;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -62,11 +63,34 @@ class HomeController extends AbstractController
            ->setParameter('etat','true')
            ->join('u.type','type')
            ->getQuery()->getResult();
+
+           $news = $this->getDoctrine()
+           ->getRepository(News::class)
+           ->createQueryBuilder('n')
+            ->join('n.lieu','lieu')
+           ->getQuery()->getResult();
+            $nbn=count($news);
+            $news1=$news;
+            foreach($news1 as $news1) {
+                                          
+               $dd = substr($news1->getDateExpiration(),0,2);
+               $mm = substr($news1->getDateExpiration(),3,2);
+               $yyyy = substr($news1->getDateExpiration(),6,4);
+             $dateExp=$yyyy.'-'.$mm.'-'.$dd;
+             $dateA=new \DateTime('now');
+             $date= $dateA->format('Y-m-d');
+              if  ($dateExp <$date) {
+               $nbn=$nbn-1;
+              }
+
+              } 
          
         return $this->render('pages/home/index.html.twig', [
             'user' => $user[0],
             'offre' => $offre,
             'nb' => $nb,
+            'nbn' => $nbn,
+            'news' => $news,
             'ministere'=>$ministere,
         ]);
     }

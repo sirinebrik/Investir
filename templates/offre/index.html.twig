@@ -110,6 +110,7 @@
                                             {% if app.user.role=="ROLE_ADMIN"%} <br> <span style="font-weight:bold;font-size:18px;">Ministére : {{offre.user.email}}</span> {% endif %}
                                             <br> <span style="font-weight:bold;font-size:18px;">Date Ajout : {{offre.dateAjout}}</span>
                                                <br> <span style="font-weight:bold;font-size:18px;">Date Expiration : {{offre.dateExpiration}}</span>
+                                             {%if app.user!=null%} {% if app.user.role=="ROLE_ADMIN"%} <br> <span style="font-weight:bold;font-size:18px;">Ministére : {{offre.user.email}}</span> {% endif %}{% endif %}
                                         </div>
                                         <div class="hover-content">
                                             <div class="inner">
@@ -184,7 +185,8 @@
                                             <br> <span style="font-weight:bold;font-size:18px;">Lieu : {{offre.lieu.ville}} ({{offre.lieu.region}} {{offre.lieu.adresse}})</span>
                                          <br> <span style="font-weight:bold;font-size:18px;">Date Ajout : {{offre.dateAjout}}</span>
                                                <br> <span style="font-weight:bold;font-size:18px;">Date Expiration : {{offre.dateExpiration}}</span>
-                                        </div>
+                                         {%if app.user!=null%} {% if app.user.role=="ROLE_ADMIN"%} <br> <span style="font-weight:bold;font-size:18px;">Ministére : {{offre.user.email}}</span> {% endif %}{% endif %}
+                                         </div>
                                         <div class="hover-content">
                                             <div class="inner">
                                              
@@ -257,6 +259,7 @@
                                              <br><span style="font-weight:bold;font-size:18px;">Lieu : {{offre.lieu.ville}} ({{offre.lieu.region}} {{offre.lieu.adresse}})</span>
                                           <br> <span style="font-weight:bold;font-size:18px;">Date Ajout : {{offre.dateAjout}}</span>
                                                <br> <span style="font-weight:bold;font-size:18px;">Date Expiration : {{offre.dateExpiration}}</span>
+                                        {%if app.user!=null%} {% if app.user.role=="ROLE_ADMIN"%} <br> <span style="font-weight:bold;font-size:18px;">Ministére : {{offre.user.email}}</span> {% endif %}{% endif %}
                                         </div>
                                         <div class="hover-content">
                                             <div class="inner">

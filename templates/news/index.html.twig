@@ -1,0 +1,293 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Les Nouvelles{% endblock %}
+
+{% block body %}
+<style>
+ .ajout{
+    background:linear-gradient(to bottom right,#18DB32,#0360FF );
+  color:  #fff;
+   border-radius: 9px;
+   margin-top:10px;
+   }
+   .ajout:hover{
+ 
+  border-width: 2px;
+  border-style: solid;
+  border-image: linear-gradient(to bottom right,#18DB32,#0360FF ) 1;
+  
+  font-size: 13px; 
+  font-weight: 500;
+}
+   .card{
+     box-shadow: 0 0 12px 1px rgba(0, 0, 0, 0.4);
+   }
+   .button-1 {
+  background-color: transparent;
+  border: 3px solid  #0360FF;
+  
+  -webkit-transition: all .15s ease-in-out;
+  transition: all .15s ease-in-out;
+  color: #0360FF;
+}
+.button-1:hover {
+ background-color:#0360FF;
+   color: white;
+   box-shadow: 0 0 10px 0  #0360FF inset, 0 0 3px 2px #0360FF;
+ 
+}
+ .button-2:hover {
+  background-color: transparent;
+  border: 3px solid  #0360FF;
+  
+  -webkit-transition: all .15s ease-in-out;
+  transition: all .15s ease-in-out;
+  color:  #0360FF;
+  box-shadow: 0 0 10px 0  #0360FF inset, 0 0 3px 2px  #0360FF;
+}
+.button-2 {
+ background-color: #0360FF;
+   color: white;
+}
+.img{
+   box-shadow: 0 0 10px 0  #0360FF inset, 0 0 5px 2px  #0360FF;
+    box-shadow: 0 0 20px 1px rgba(0, 0, 0, 0.4);
+     border-radius: 9px;
+
+</style>
+                <div class="row">
+                      
+                    </div>
+                    <div class="row">
+                        <div class="col-xl-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                    <div class="container">
+                                     {% if app.user.role=="ROLE_ADMIN"%}
+                            <div class="col-sm-6 mb-3" style="margin-left:540px">
+                             
+                                <div class="float-end d-none d-sm-block">
+                                    <a href="{{ path('ajout_news') }}" class="btn btn-success ajout" style="font-weight:500;">Ajouter Nouvelle</a>
+                                </div>
+                                
+                           </div>
+                             {% endif %}
+                                        <div style="margin-left:23px">
+                                          <a href="{{ path('app_news') }}" class="btn  button-1 ">Les Nouvelles Activées <span style="background-color:red; color:white;border-radius:12px;padding:0px 4.5px;">{{nb}}</span></a>
+                                          
+                                          {% if app.user.role=="ROLE_ADMIN"%}
+                                           <a href="{{ path('app_newsExpire') }}" class="btn button-2 ">Les Nouvelles Expirées </a>
+                                           {% endif %}
+                                        </div>
+                                              
+               <div class="main-banner"  id="women">
+         {% if nb==1 %} 
+                  <div class="container">
+            <div class="row">
+             <div class="col-lg-4">
+             </div>
+                 <div class="col-lg-4">
+                     
+                          
+                                   {% for news in news %}  
+                                    {% set   date = news.dateExpiration|split('/')%}
+                                        {% set   dd = date[0]%}
+                                         {% set mm = date[1]%}
+                                        {% set yyyy = date[2]%}
+                                        {% set dateExp=yyyy ~'-' ~mm ~'-' ~dd%}
+                                         {% if  dateExp >='now'|date('Y-m-d') %}
+                            <div class="right-content">
+                     
+                                <div class="right-first-image">
+                                   
+                                    <div class="thumb">
+                                        <div class="inner-content" >
+                                            <h4 style="font-weight:bold;font-size:30px;" >{{news.titre}}</h4>
+                                           
+                                            <br> <span style="font-weight:bold;font-size:18px;">Lieu : {{news.lieu.ville}} ({{news.lieu.region}} {{news.lieu.adresse}})</span>
+                                            <br> <span style="font-weight:bold;font-size:18px;">Date Ajout : {{news.dateAjout}}</span>
+                                               <br> <span style="font-weight:bold;font-size:18px;">Date Expiration : {{news.dateExpiration}}</span>
+                                        </div>
+                                        <div class="hover-content">
+                                            <div class="inner">
+                                             
+                                                <p>Description : {{news.description}}.</p>
+                                                 
+                                                <div class="">
+                                                 {% if app.user.role=="ROLE_ADMIN"%}
+                                                    <a  href="{{ path('news_edit',{'id': news.id}) }}" class="btn btn-outline-warning btn-sm edit" title="Modifier">
+                                                                    <i class="fas fa-pencil-alt"></i>
+                                                     </a>
+                                                   
+                                                    
+                                                        <a href="{{ path('news_delete',{'id': news.id}) }}" class="btn btn-outline-danger btn-sm edit" title="Supprimer">
+                                                                    <i style=" font-weight:bold;" class="dripicons-trash"></i>
+                                                                </a>
+                                                       {% endif %}
+                                                      
+                                                      
+                                                      
+                                                       
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <img src="/uploads/{{news.image}}"  height="350px" alt="" class="img"  >
+                                    </div>
+                                      
+                                </div>
+                               
+                            </div>
+                             {% endif %} 
+                              {% endfor %}  
+                               </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+          {% elseif nb==2 %} 
+                <div class="container">
+                   <div class="row">
+           
+                    <div class="col-lg-2">  </div >
+                     {% for news in news %}  
+                                    {% set   date = news.dateExpiration|split('/')%}
+                                        {% set   dd = date[0]%}
+                                         {% set mm = date[1]%}
+                                        {% set yyyy = date[2]%}
+                                        {% set dateExp=yyyy ~'-' ~mm ~'-' ~dd%}
+                                         {% if  dateExp >='now'|date('Y-m-d') %}
+                
+                         <div class="col-lg-4">
+                             <div class="right-content">
+                     
+                                <div class="right-first-image">
+                                   
+                                    <div class="thumb">
+                                        <div class="inner-content" >
+                                            <h4 style="font-weight:bold;font-size:30px;" >{{news.titre}}</h4>
+                                           
+                                            <br> <span style="font-weight:bold;font-size:18px;">Lieu : {{news.lieu.ville}} ({{news.lieu.region}} {{news.lieu.adresse}})</span>
+                                            <br> <span style="font-weight:bold;font-size:18px;">Date Ajout : {{news.dateAjout}}</span>
+                                               <br> <span style="font-weight:bold;font-size:18px;">Date Expiration : {{news.dateExpiration}}</span>
+                                        </div>
+                                        <div class="hover-content">
+                                            <div class="inner">
+                                             
+                                                <p>Description : {{news.description}}.</p>
+                                                 
+                                                <div class="">
+                                                 {% if app.user.role=="ROLE_ADMIN"%}
+                                                    <a  href="{{ path('news_edit',{'id': news.id}) }}" class="btn btn-outline-warning btn-sm edit" title="Modifier">
+                                                                    <i class="fas fa-pencil-alt"></i>
+                                                     </a>
+                                                   
+                                                    
+                                                        <a href="{{ path('news_delete',{'id': news.id}) }}" class="btn btn-outline-danger btn-sm edit" title="Supprimer">
+                                                                    <i style=" font-weight:bold;" class="dripicons-trash"></i>
+                                                                </a>
+                                                       {% endif %}
+                                                     
+                                                    
+                                                      
+                                                       
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <img src="/uploads/{{news.image}}"  height="350px" alt="" class="img"  >
+                                    </div>
+                                      
+                                </div>
+                               
+                            </div>
+                             
+                        </div>{% endif %}{% endfor %}
+                         
+                    </div>
+                </div>
+            </div>
+        </div>
+       
+           
+           {% else %} 
+        <div class="container">
+            <div class="row">
+                 <div class="col-lg-12">
+                      <div class="owl-men-item owl-carousel" >
+                          
+                                   {% for news in news %}  
+                                     {% set   date = news.dateExpiration|split('/')%}
+                                        {% set   dd = date[0]%}
+                                         {% set mm = date[1]%}
+                                        {% set yyyy = date[2]%}
+                                        {% set dateExp=yyyy ~'-' ~mm ~'-' ~dd%}
+                                         {% if  dateExp >='now'|date('Y-m-d') %}
+                             <div class="right-content">
+                     
+                                <div class="right-first-image">
+                                   
+                                    <div class="thumb">
+                                        <div class="inner-content" >
+                                            <h4 style="font-weight:bold;font-size:30px;" >{{news.titre}}</h4>
+                                           
+                                            <br> <span style="font-weight:bold;font-size:18px;">Lieu : {{news.lieu.ville}} ({{news.lieu.region}} {{news.lieu.adresse}})</span>
+                                            <br> <span style="font-weight:bold;font-size:18px;">Date Ajout : {{news.dateAjout}}</span>
+                                               <br> <span style="font-weight:bold;font-size:18px;">Date Expiration : {{news.dateExpiration}}</span>
+                                        </div>
+                                        <div class="hover-content">
+                                            <div class="inner">
+                                             
+                                                <p>Description : {{news.description}}.</p>
+                                                 
+                                                <div class="">
+                                                 {% if app.user.role=="ROLE_ADMIN"%}
+                                                    <a  href="{{ path('news_edit',{'id': news.id}) }}" class="btn btn-outline-warning btn-sm edit" title="Modifier">
+                                                                    <i class="fas fa-pencil-alt"></i>
+                                                     </a>
+                                                   
+                                                    
+                                                        <a href="{{ path('news_delete',{'id': news.id}) }}" class="btn btn-outline-danger btn-sm edit" title="Supprimer">
+                                                                    <i style=" font-weight:bold;" class="dripicons-trash"></i>
+                                                                </a>
+                                                       {% endif %}
+                                                     
+                                                       
+                                                      
+                                                       
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <img src="/uploads/{{news.image}}"  height="350px" alt="" class="img"  >
+                                       
+                                    </div>
+                                      
+                                </div>
+                               
+                            </div>
+                             
+                                         {% endif %}
+                              {% endfor %}  
+                               </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}    
+    </div>
+
+                                               
+           
+                                                   
+                                        <!-- end table-responsive -->
+                                    </div>
+                                </div>
+                            </div>
+                         </div>
+                       
+
+
+                        
+ {% endblock %}
+
+
+
+

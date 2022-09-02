@@ -87,11 +87,7 @@ class Offre
      */
     private $investirOffres;
 
-    public function __construct()
-    {
-        $this->discussions = new ArrayCollection();
-        $this->investirOffres = new ArrayCollection();
-    }
+   
 
     public function getId(): ?int
     {

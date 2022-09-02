@@ -286,7 +286,6 @@ background:linear-gradient(to bottom right,#18DB32,#0360FF );
                                               {% if offre.user.role=="ROLE_ADMIN" %}  
                                               <span style="font-weight:bold;font-size:18px;">Administrateur</span> {% endif %} 
                                             <br> <span style="font-weight:bold;font-size:18px;">Lieu : {{offre.lieu.ville}} ({{offre.lieu.region}} {{offre.lieu.adresse}})</span>
-                                            {% if app.user.role=="ROLE_ADMIN"%} <br> <span style="font-weight:bold;font-size:18px;">Ministére : {{offre.user.email}}</span> {% endif %}
                                    
                                         </div>
                                         <div class="hover-content">
@@ -295,6 +294,13 @@ background:linear-gradient(to bottom right,#18DB32,#0360FF );
                                                 <p>Description : {{offre.description}}.</p>
                                                   <p> Budget : {{offre.budget}} TND</p>
                                                     <p>Délai : {{offre.delai}} ans</p>
+                                                      <div class="">
+                                                               
+                                                                   <a  href="{{ path('app_login') }}" class="btn btn-outline-success btn-sm edit" title="login">
+                                                                    Plus de détails
+                                                                  </a>
+                                                               
+                                                              </div>
                                               
                                             </div>
                                         </div>
@@ -348,6 +354,13 @@ background:linear-gradient(to bottom right,#18DB32,#0360FF );
                                                 <p>Description : {{offre.description}}.</p>
                                                   <p> Budget : {{offre.budget}} TND</p>
                                                     <p>Délai : {{offre.delai}} ans</p>
+                                                      <div class="">
+                                                               
+                                                                   <a  href="{{ path('app_login') }}" class="btn btn-outline-success btn-sm edit" title="login">
+                                                                    Plus de détails
+                                                                  </a>
+                                                               
+                                                              </div>
                                                     
                                            </div>
                                         </div>
@@ -400,6 +413,13 @@ background:linear-gradient(to bottom right,#18DB32,#0360FF );
                                                 <p>Description : {{offre.description}}.</p>
                                                   <p> Budget : {{offre.budget}} TND</p>
                                                     <p>Délai : {{offre.delai}} ans</p>
+                                                      <div class="">
+                                                               
+                                                                   <a  href="{{ path('app_login') }}" class="btn btn-outline-success btn-sm edit" title="login">
+                                                                    Plus de détails
+                                                                  </a>
+                                                               
+                                                              </div>
                                                                                                     
                                             </div>
                                         </div>
@@ -417,18 +437,7 @@ background:linear-gradient(to bottom right,#18DB32,#0360FF );
                 </div>
            
         {% endif %}  
-         <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="section-border">
-                            <center> <div class="main-button">
-                                           <a href="/login">Plus de détails</a>
-                                     </div>
-                            </center>
-                    </div>
-                </div>
-            </div>
-        </div>
+        
     </div>
         
   
@@ -446,107 +455,168 @@ background:linear-gradient(to bottom right,#18DB32,#0360FF );
                 </div>
             </div>
         </div>
-         <div class="container">
+          {% if nbn==1 %} 
+                  <div class="container">
+            <div class="row">
+             <div class="col-lg-4">
+             </div>
+                 <div class="col-lg-4">
+                     
+                          
+                                   {% for news in news %}  
+                                    {% set   date = news.dateExpiration|split('/')%}
+                                        {% set   dd = date[0]%}
+                                         {% set mm = date[1]%}
+                                        {% set yyyy = date[2]%}
+                                        {% set dateExp=yyyy ~'-' ~mm ~'-' ~dd%}
+                                         {% if  dateExp >='now'|date('Y-m-d') %}
+                            <div class="right-content">
+                     
+                                <div class="right-first-image">
+                                   
+                                    <div class="thumb">
+                                        <div class="inner-content" >
+                                            <h4 style="font-weight:bold;font-size:30px;" >{{news.titre}}</h4>
+                                           
+                                            <br> <span style="font-weight:bold;font-size:18px;">Lieu : {{news.lieu.ville}} ({{news.lieu.region}} {{news.lieu.adresse}})</span>
+                                   
+                                        </div>
+                                        <div class="hover-content">
+                                            <div class="inner">
+                                             
+                                                <p>Description : {{news.description}}.</p>
+                                                            <div class="">
+                                                               
+                                                                   <a  href="{{ path('app_login') }}" class="btn btn-outline-success btn-sm edit" title="login">
+                                                                    Plus de détails
+                                                                  </a>
+                                                               
+                                                              </div>
+                                              
+                                            </div>
+                                        </div>
+                                        <img src="uploads/{{news.image}}"  height="350px" alt="" class="img"  >
+                                    </div>
+                                      
+                                </div>
+                               
+                            </div>
+                             {% endif %} 
+                              {% endfor %}  
+                               </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+          {% elseif nbn==2 %} 
+                <div class="container">
+                   <div class="row">
+           
+                    <div class="col-lg-2">  </div >
+                     {% for news in news %}  
+                      {% set   date = news.dateExpiration|split('/')%}
+                     {% set   dd = date[0]%}
+                     {% set mm = date[1]%}
+                     {% set yyyy = date[2]%}
+                     {% set dateExp=yyyy ~'-' ~mm ~'-' ~dd%}
+                  
+
+                  {% if  dateExp >='now'|date('Y-m-d') %}
+                
+                         <div class="col-lg-4">
+                            <div class="right-content">
+                     
+                                <div class="right-first-image">
+                                   
+                                    <div class="thumb">
+                                        <div class="inner-content" >
+                                            <h4 style="font-weight:bold;font-size:30px;" >{{ news.titre}}</h4>
+                                            
+                                            <br> <span style="font-weight:bold;font-size:18px;">Lieu : {{news.lieu.ville}} ({{news.lieu.region}} {{news.lieu.adresse}})</span>
+                                         
+                                        </div>
+                                        <div class="hover-content">
+                                            <div class="inner">
+                                             
+                                                <p>Description : {{news.description}}.</p>
+                                                  <div class="">
+                                                               
+                                                                   <a  href="{{ path('app_login') }}" class="btn btn-outline-success btn-sm edit" title="login">
+                                                                    Plus de détails
+                                                                  </a>
+                                                               
+                                                              </div>
+                                                    
+                                           </div>
+                                        </div>
+                                        <img src="uploads/{{news.image}}"  height="350px" alt="" class="img" >
+                                    </div>
+                                      
+                                </div>
+                               
+                            </div>
+                             
+                        </div>{% endif %}{% endfor %}
+                         
+                    </div>
+                </div>
+            </div>
+        </div>
+       
+           
+           {% else %} 
+        <div class="container">
             <div class="row">
                  <div class="col-lg-12">
-                    <div class="men-item-carousel">
-                        <div class="owl-men-item owl-carousel">
+                      <div class="owl-men-item owl-carousel" >
+                          
+                                   {% for news in news %}  
+                                     {% set   date = news.dateExpiration|split('/')%}
+                                        {% set   dd = date[0]%}
+                                         {% set mm = date[1]%}
+                                        {% set yyyy = date[2]%}
+                                        {% set dateExp=yyyy ~'-' ~mm ~'-' ~dd%}
+                                         {% if  dateExp >='now'|date('Y-m-d') %}
                             <div class="right-content">
+                     
                                 <div class="right-first-image">
+                                   
                                     <div class="thumb">
-                                        <div class="inner-content">
-                                            <h4>Women</h4>
-                                            <span>Best Clothes For Women</span>
+                                        <div class="inner-content" >
+                                            <h4 style="font-weight:bold;font-size:30px;" >{{news.titre}}</h4>
+                                     
+                                             <br><span style="font-weight:bold;font-size:18px;">Lieu : {{news.lieu.ville}} ({{news.lieu.region}} {{news.lieu.adresse}})</span>
+                                         
                                         </div>
                                         <div class="hover-content">
                                             <div class="inner">
-                                                <h4>Women</h4>
-                                                <p>Lorem ipsum dolor sit amet, conservisii ctetur adipiscing elit incid.</p>
-                                                <div class="main-border-button">
-                                                    <a href="#">Discover More</a>
-                                                </div>
+                                             
+                                                <p>Description : {{news.description}}.</p>
+                                                  <div class="">
+                                                               
+                                                                   <a  href="{{ path('app_login') }}" class="btn btn-outline-success btn-sm edit" title="login">
+                                                                    Plus de détails
+                                                                  </a>
+                                                               
+                                                              </div>
+                                                                                                    
                                             </div>
                                         </div>
-                                        <img src="assets/images/baner-right-image-01.jpg"  height="395px" alt="">
+                                        <img src="uploads/{{news.image}}"  height="350px" alt="" class="img"  >
                                     </div>
+                                      
                                 </div>
+                               
                             </div>
-                             <div class="right-content">
-                                <div class="right-first-image">
-                                    <div class="thumb">
-                                        <div class="inner-content">
-                                            <h4>Women</h4>
-                                            <span>Best Clothes For Women</span>
-                                        </div>
-                                        <div class="hover-content">
-                                            <div class="inner">
-                                                <h4>Women</h4>
-                                                <p>Lorem ipsum dolor sit amet, conservisii ctetur adipiscing elit incid.</p>
-                                                <div class="main-border-button">
-                                                    <a href="#">Discover More</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <img src="assets/images/baner-right-image-01.jpg"  height="395px" alt="">
-                                    </div>
-                                </div>
-                            </div>
-                             <div class="right-content">
-                                <div class="right-first-image">
-                                    <div class="thumb">
-                                        <div class="inner-content">
-                                            <h4>Women</h4>
-                                            <span>Best Clothes For Women</span>
-                                        </div>
-                                        <div class="hover-content">
-                                            <div class="inner">
-                                                <h4>Women</h4>
-                                                <p>Lorem ipsum dolor sit amet, conservisii ctetur adipiscing elit incid.</p>
-                                                <div class="main-border-button">
-                                                    <a href="#">Discover More</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <img src="assets/images/baner-right-image-01.jpg"  height="395px" alt="">
-                                    </div>
-                                </div>
-                            </div> <div class="right-content">
-                                <div class="right-first-image">
-                                    <div class="thumb">
-                                        <div class="inner-content">
-                                            <h4>Women</h4>
-                                            <span>Best Clothes For Women</span>
-                                        </div>
-                                        <div class="hover-content">
-                                            <div class="inner">
-                                                <h4>Women</h4>
-                                                <p>Lorem ipsum dolor sit amet, conservisii ctetur adipiscing elit incid.</p>
-                                                <div class="main-border-button">
-                                                    <a href="#">Discover More</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <img src="assets/images/baner-right-image-01.jpg"  height="395px" alt="">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                             
+                                         {% endif %}
+                              {% endfor %}  
+                               </div>
                     </div>
                 </div>
-            </div>
-        </div>
-         <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="section-border">
-                            <center> <div class="main-button">
-                                           <a href="/login">Plus de nouvelles</a>
-                                     </div>
-                            </center>
-                    </div>
-                </div>
-            </div>
-        </div>
+           
+        {% endif %}  
+       
     </div>
     <!-- ***** nouvelles Ends ***** -->
 

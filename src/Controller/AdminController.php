@@ -6,7 +6,9 @@ use App\Service\SendMailService;
 use App\Entity\TypeMinistere;
 use App\Entity\Ministere;
 use App\Entity\Investisseur;
+use App\Entity\InvestirOffre;
 use App\Entity\Offre;
+use App\Entity\News;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -66,6 +68,29 @@ class AdminController extends AbstractController
             ['user'=>$this->getUser()]
           );
         $nbOM=count( $mesoffres);
+        $news= $this->getDoctrine()
+        ->getRepository(News::class)
+        ->findAll();
+        $nbN=count( $news);
+
+        $offrediscu = $this->getDoctrine()
+        ->getRepository(InvestirOffre::class)
+        ->createQueryBuilder('i')
+        ->where('i.etat = :etat')
+        ->setParameters([
+            'etat' => 'false',
+          
+          ])
+       
+        ->join('i.investisseur','inv')
+        ->join('i.offre','offre')
+        ->join('inv.utilisateur','user')
+        ->join('offre.user','user1')
+      
+     ->getQuery()->getResult();
+      
+        $nbdi=count($offrediscu);
+      
         return $this->render('pages/admin/dashboard.html.twig', [
             'nbD'=> $nbD,
             'nbM'=> $nbM,
@@ -73,6 +98,8 @@ class AdminController extends AbstractController
             'nbOD'=> $nbOD,
             'nbOA'=> $nbOA,
             'nbOM'=> $nbOM,
+            'nbN'=> $nbN,
+            'nbdi'=> $nbdi,
         ]);
     }
 

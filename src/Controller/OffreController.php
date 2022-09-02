@@ -8,6 +8,7 @@ use App\Entity\TypeMinistere;
 use App\Entity\Ministere;
 use App\Entity\InvestirOffre;
 use App\Entity\Investisseur;
+use App\Entity\Discussion;
 
 
 
@@ -320,8 +321,7 @@ class OffreController extends AbstractController
             $dateE=new \DateTime($request->get('dateExpiration'));
            
             $offre->setDateExpiration($dateE->format('d/m/Y'));
-            $date=new \DateTime('now');
-            $offre->setDateAjout($date->format('d/m/Y'));
+          
             $image = $form->get('image')->getData();
             $fileName = md5(uniqid()).'.'.$image->guessExtension();
             try{
@@ -355,11 +355,28 @@ class OffreController extends AbstractController
      */
     public function delete(Request $request, Offre $offre): Response
     {  $em = $this->getDoctrine()->getManager();
-        $offre = $em->getRepository(Offre::class)->find($offre);
-
         
+        
+        $offre = $em->getRepository(Offre::class)->find($offre);
+        $investirOffre = $em->getRepository(InvestirOffre::class)->createQueryBuilder('u')
+        ->join('u.offre','offre')
+        ->where('offre.id= :id')
+        ->setParameter('id',$offre->getId())
+        ->getQuery()->getResult();
+        foreach( $investirOffre as  $investirOffre){
+            $em->remove($investirOffre);}
 
-        $em->remove($offre);
+        $discussion = $em->getRepository(Discussion::class)->createQueryBuilder('d')
+        ->join('d.offre','offre')
+        ->where('offre.id= :id')
+        ->setParameter('id',$offre->getId())
+        ->getQuery()->getResult();
+       
+
+       foreach( $discussion as  $discussion){
+      $em->remove($discussion);}
+
+       $em->remove($offre);
         $em->flush();
         return $this->redirect($_SERVER['HTTP_REFERER']);
     }

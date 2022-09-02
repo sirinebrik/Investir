@@ -32,6 +32,8 @@ class Lieu
      */
     private $adresse;
 
+  
+
     public function getId(): ?int
     {
         return $this->id;
@@ -72,4 +74,6 @@ class Lieu
 
         return $this;
     }
+
+  
 }
