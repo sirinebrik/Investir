@@ -6,6 +6,7 @@ use App\Service\SendMailService;
 use App\Entity\TypeMinistere;
 use App\Entity\Ministere;
 use App\Entity\Investisseur;
+use App\Entity\Offre;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -28,7 +29,51 @@ class AdminController extends AbstractController
      */
     public function index(): Response
     {
-        return $this->render('pages/admin/dashboard.html.twig');
+        $userD = $this->getDoctrine()
+        ->getRepository(User::class)
+        ->findBy(
+            ['etat' => 'false']
+          );
+          $nbD=count( $userD);
+
+          $ministere = $this->getDoctrine()
+        ->getRepository(Ministere::class)
+        ->findAll( );
+        $nbM=count( $ministere);
+
+        $investisseur = $this->getDoctrine()
+        ->getRepository(Investisseur::class)
+        ->findAll( );
+        $nbI=count( $investisseur);
+
+        $offreD = $this->getDoctrine()
+        ->getRepository(Offre::class)
+        ->findBy(
+            ['etat' => 'false']
+          );
+        $nbOD=count( $offreD);
+
+        $offreA = $this->getDoctrine()
+        ->getRepository(Offre::class)
+        ->findBy(
+            ['etat' => 'true']
+          );
+        $nbOA=count( $offreA);
+
+        $mesoffres= $this->getDoctrine()
+        ->getRepository(Offre::class)
+        ->findBy(
+            ['user'=>$this->getUser()]
+          );
+        $nbOM=count( $mesoffres);
+        return $this->render('pages/admin/dashboard.html.twig', [
+            'nbD'=> $nbD,
+            'nbM'=> $nbM,
+            'nbI'=> $nbI,
+            'nbOD'=> $nbOD,
+            'nbOA'=> $nbOA,
+            'nbOM'=> $nbOM,
+        ]);
     }
 
     /**

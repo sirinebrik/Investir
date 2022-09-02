@@ -20,8 +20,60 @@ class InvestisseurController extends AbstractController
      */
     public function index(): Response
     {
+        $investisseur = $this->getDoctrine()
+        ->getRepository(Investisseur::class)
+        ->createQueryBuilder('i')
+        ->join('i.utilisateur','user')
+        ->andWhere('user.id = :id')
+        ->setParameters([
+            'id' => $this->getUser()->getId(),
+          
+          ])
+       ->getQuery()->getResult();
+
+        $investirD = $this->getDoctrine()
+        ->getRepository(InvestirOffre::class)
+        ->findBy(
+            ['etat' => 'false','investisseur'=>$investisseur[0] ]
+          );
+          $nbD=count( $investirD);
+
+          $investirA = $this->getDoctrine()
+          ->getRepository(InvestirOffre::class)
+          ->findBy(
+              ['etat' => 'true','investisseur'=>$investisseur[0] ]
+            );
+            $nbA=count( $investirA);
+
+            $offre = $this->getDoctrine()
+            ->getRepository(Offre::class)
+            ->createQueryBuilder('o')
+            ->andWhere('o.etat = :etat')
+            ->setParameters([ 'etat' => 'true' ])
+            ->getQuery()->getResult();
+    
+            $nb=count($offre);
+             $offre1=$offre;
+    
+             foreach($offre1 as $offre1) {
+                $dd = substr($offre1->getDateExpiration(),0,2);
+                $mm = substr($offre1->getDateExpiration(),3,2);
+                $yyyy = substr($offre1->getDateExpiration(),6,4);
+              $dateExp=$yyyy.'-'.$mm.'-'.$dd;
+              $dateA=new \DateTime('now');
+              $date= $dateA->format('Y-m-d');
+               if  ($dateExp <$date) {
+                $nb=$nb-1;
+               }
+               } 
+    
+
+        
         return $this->render('investisseur/index.html.twig', [
-            'controller_name' => 'InvestisseurController',
+            'nbD'=> $nbD, 
+            'nbA'=> $nbA,
+            'nb'=> $nb,
+           
         ]);
     }
 
