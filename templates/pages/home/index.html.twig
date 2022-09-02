@@ -120,6 +120,11 @@ background:linear-gradient(to bottom right,#18DB32,#0360FF );
   padding-left:300px;
 }
 
+.img{
+   box-shadow: 0 0 10px 0  #0360FF inset, 0 0 5px 2px  #0360FF;
+    box-shadow: 0 0 20px 1px rgba(0, 0, 0, 0.4);
+     border-radius: 9px;}
+
 </style>
       <!-- ***** Preloader Start ***** -->
      
@@ -151,7 +156,9 @@ background:linear-gradient(to bottom right,#18DB32,#0360FF );
                             <li class="scroll-to-section" ><a href="#men"  style="color: #0360FF">Offres</a></li>
                             <li class="scroll-to-section"><a href="#women" style="color: #0360FF">Nouvelles</a></li>
                             <li class="scroll-to-section"><a href="#contact" style="color: #0360FF">Contact us</a></li>
-                            <li class="scroll-to-section"><input type="button"  class="btn btn" onclick="location.href='/login';" value="Se connecter" ></li>
+                           {%if app.user==null%} <li class="scroll-to-section"><input type="button"  class="btn btn" onclick="location.href='/login';" value="Se connecter" ></li> 
+                           
+                           {%else%}<li class="scroll-to-section"><input type="button"  class="btn btn" onclick="location.href='/logout';" value="Se déconnecter" ></li> {%endif%}
                       
                         </ul>  
 
@@ -179,7 +186,7 @@ background:linear-gradient(to bottom right,#18DB32,#0360FF );
                                 <h4> Bienvenue sur notre site internet</h4>
                                
                             </div>
-                            <img src="assets/images/products-page-heading.jpg" alt="" height="450px" width="1000px">
+                            <img src="assets/images/tunisie.jpg" alt="" height="500px" width="1000px">
                         </div>
                     </div>
                 </div>
@@ -210,24 +217,25 @@ background:linear-gradient(to bottom right,#18DB32,#0360FF );
                         <div class="row">
                             <div class="col-lg-6">
                                 <div class="leather">
-                                    <h4>Leather Bags</h4>
-                                    <span>Latest Collection</span>
+                                    <h4>Des offres</h4>
+                                    <span>Trés important</span>
                                 </div>
                             </div>
-                            <div class="col-lg-6">
-                                <div class="first-image">
-                                    <img src="assets/images/explore-image-01.jpg" alt="">
-                                </div>
-                            </div>
+                         
                             <div class="col-lg-6">
                                 <div class="second-image">
-                                    <img src="assets/images/explore-image-02.jpg" alt="">
+                                    <img src="assets/images/tunisie_carte.jpg" height="250px" alt="">
+                                </div>
+                            </div>
+                               <div class="col-lg-6">
+                                <div class="first-image">
+                                    <img src="assets/images/bateau.jpg" height="250px" alt="">
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="types">
-                                    <h4>Different Types</h4>
-                                    <span>Over 304 Products</span>
+                                    <h4>Des nouvelles</h4>
+                                    <span>Trés importante</span>
                                 </div>
                             </div>
                         </div>
@@ -250,101 +258,171 @@ background:linear-gradient(to bottom right,#18DB32,#0360FF );
                 </div>
             </div>
         </div>
-        <div class="container">
+         {% if nb==1 %} 
+                  <div class="container">
             <div class="row">
-                 <div class="col-lg-12">
-                    <div class="men-item-carousel">
-                        <div class="owl-men-item owl-carousel">
+             <div class="col-lg-4">
+             </div>
+                 <div class="col-lg-4">
+                     
+                          
+                                   {% for offre in offre %}  
+                                    {% set   date = offre.dateExpiration|split('/')%}
+                                        {% set   dd = date[0]%}
+                                         {% set mm = date[1]%}
+                                        {% set yyyy = date[2]%}
+                                        {% set dateExp=yyyy ~'-' ~mm ~'-' ~dd%}
+                                         {% if  dateExp >='now'|date('Y-m-d') %}
                             <div class="right-content">
+                     
                                 <div class="right-first-image">
+                                   
                                     <div class="thumb">
-                                        <div class="inner-content">
-                                            <h4>Women</h4>
-                                            <span>Best Clothes For Women</span>
+                                        <div class="inner-content" >
+                                            <h4 style="font-weight:bold;font-size:30px;" >{{offre.titre}}</h4>
+                                             {% for ministere in ministere %} 
+                                              {% if ministere.utilisateur.id==offre.user.id %}  
+                                              <span style="font-weight:bold;font-size:18px;">{{ministere.type.titre}}</span> {% endif %}  {% endfor %} 
+                                              {% if offre.user.role=="ROLE_ADMIN" %}  
+                                              <span style="font-weight:bold;font-size:18px;">Administrateur</span> {% endif %} 
+                                            <br> <span style="font-weight:bold;font-size:18px;">Lieu : {{offre.lieu.ville}} ({{offre.lieu.region}} {{offre.lieu.adresse}})</span>
+                                            {% if app.user.role=="ROLE_ADMIN"%} <br> <span style="font-weight:bold;font-size:18px;">Ministére : {{offre.user.email}}</span> {% endif %}
+                                   
                                         </div>
                                         <div class="hover-content">
                                             <div class="inner">
-                                                <h4>Women</h4>
-                                                <p>Lorem ipsum dolor sit amet, conservisii ctetur adipiscing elit incid.</p>
-                                                <div class="main-border-button">
-                                                    <a href="#">Discover More</a>
-                                                </div>
+                                             
+                                                <p>Description : {{offre.description}}.</p>
+                                                  <p> Budget : {{offre.budget}} TND</p>
+                                                    <p>Délai : {{offre.delai}} ans</p>
+                                              
                                             </div>
                                         </div>
-                                        <img src="assets/images/baner-right-image-01.jpg"  height="395px" alt="">
+                                        <img src="uploads/{{offre.image}}"  height="350px" alt="" class="img"  >
                                     </div>
+                                      
                                 </div>
+                               
                             </div>
-                             <div class="right-content">
-                                <div class="right-first-image">
-                                    <div class="thumb">
-                                        <div class="inner-content">
-                                            <h4>Women</h4>
-                                            <span>Best Clothes For Women</span>
-                                        </div>
-                                        <div class="hover-content">
-                                            <div class="inner">
-                                                <h4>Women</h4>
-                                                <p>Lorem ipsum dolor sit amet, conservisii ctetur adipiscing elit incid.</p>
-                                                <div class="main-border-button">
-                                                    <a href="#">Discover More</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <img src="assets/images/baner-right-image-01.jpg"  height="395px" alt="">
-                                    </div>
-                                </div>
-                            </div>
-                             <div class="right-content">
-                                <div class="right-first-image">
-                                    <div class="thumb">
-                                        <div class="inner-content">
-                                            <h4>Women</h4>
-                                            <span>Best Clothes For Women</span>
-                                        </div>
-                                        <div class="hover-content">
-                                            <div class="inner">
-                                                <h4>Women</h4>
-                                                <p>Lorem ipsum dolor sit amet, conservisii ctetur adipiscing elit incid.</p>
-                                                <div class="main-border-button">
-                                                    <a href="#">Discover More</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <img src="assets/images/baner-right-image-01.jpg"  height="395px" alt="">
-                                    </div>
-                                </div>
-                            </div> <div class="right-content">
-                                <div class="right-first-image">
-                                    <div class="thumb">
-                                        <div class="inner-content">
-                                            <h4>Women</h4>
-                                            <span>Best Clothes For Women</span>
-                                        </div>
-                                        <div class="hover-content">
-                                            <div class="inner">
-                                                <h4>Women</h4>
-                                                <p>Lorem ipsum dolor sit amet, conservisii ctetur adipiscing elit incid.</p>
-                                                <div class="main-border-button">
-                                                    <a href="#">Discover More</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <img src="assets/images/baner-right-image-01.jpg"  height="395px" alt="">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                             {% endif %} 
+                              {% endfor %}  
+                               </div>
                     </div>
                 </div>
             </div>
         </div>
+          {% elseif nb==2 %} 
+                <div class="container">
+                   <div class="row">
+           
+                    <div class="col-lg-2">  </div >
+                     {% for offre in offre %}  
+                      {% set   date = offre.dateExpiration|split('/')%}
+                     {% set   dd = date[0]%}
+                     {% set mm = date[1]%}
+                     {% set yyyy = date[2]%}
+                     {% set dateExp=yyyy ~'-' ~mm ~'-' ~dd%}
+                  
+
+                  {% if  dateExp >='now'|date('Y-m-d') %}
+                
+                         <div class="col-lg-4">
+                            <div class="right-content">
+                     
+                                <div class="right-first-image">
+                                   
+                                    <div class="thumb">
+                                        <div class="inner-content" >
+                                            <h4 style="font-weight:bold;font-size:30px;" >{{ offre.titre}}</h4>
+                                            {% for ministere in ministere %} 
+                                              {% if ministere.utilisateur.id==offre.user.id %}  
+                                              <span style="font-weight:bold;font-size:18px;">{{ministere.type.titre}}</span> {% endif %}  {% endfor %}  
+                                                {% if offre.user.role=="ROLE_ADMIN" %}  
+                                              <span style="font-weight:bold;font-size:18px;">Administrateur</span> {% endif %} 
+                                            <br> <span style="font-weight:bold;font-size:18px;">Lieu : {{offre.lieu.ville}} ({{offre.lieu.region}} {{offre.lieu.adresse}})</span>
+                                         
+                                        </div>
+                                        <div class="hover-content">
+                                            <div class="inner">
+                                             
+                                                <p>Description : {{offre.description}}.</p>
+                                                  <p> Budget : {{offre.budget}} TND</p>
+                                                    <p>Délai : {{offre.delai}} ans</p>
+                                                    
+                                           </div>
+                                        </div>
+                                        <img src="uploads/{{offre.image}}"  height="350px" alt="" class="img" >
+                                    </div>
+                                      
+                                </div>
+                               
+                            </div>
+                             
+                        </div>{% endif %}{% endfor %}
+                         
+                    </div>
+                </div>
+            </div>
+        </div>
+       
+           
+           {% else %} 
+        <div class="container">
+            <div class="row">
+                 <div class="col-lg-12">
+                      <div class="owl-men-item owl-carousel" >
+                          
+                                   {% for offre in offre %}  
+                                     {% set   date = offre.dateExpiration|split('/')%}
+                                        {% set   dd = date[0]%}
+                                         {% set mm = date[1]%}
+                                        {% set yyyy = date[2]%}
+                                        {% set dateExp=yyyy ~'-' ~mm ~'-' ~dd%}
+                                         {% if  dateExp >='now'|date('Y-m-d') %}
+                            <div class="right-content">
+                     
+                                <div class="right-first-image">
+                                   
+                                    <div class="thumb">
+                                        <div class="inner-content" >
+                                            <h4 style="font-weight:bold;font-size:30px;" >{{offre.titre}}</h4>
+                                            {% for ministere in ministere %} 
+                                              {% if ministere.utilisateur.id==offre.user.id %}  
+                                              <span style="font-weight:bold;font-size:18px;">{{ministere.type.titre}}</span> {% endif %}  {% endfor %}  
+                                                {% if offre.user.role=="ROLE_ADMIN" %}  
+                                              <span style="font-weight:bold;font-size:18px;">Administrateur</span> {% endif %} 
+                                             <br><span style="font-weight:bold;font-size:18px;">Lieu : {{offre.lieu.ville}} ({{offre.lieu.region}} {{offre.lieu.adresse}})</span>
+                                         
+                                        </div>
+                                        <div class="hover-content">
+                                            <div class="inner">
+                                             
+                                                <p>Description : {{offre.description}}.</p>
+                                                  <p> Budget : {{offre.budget}} TND</p>
+                                                    <p>Délai : {{offre.delai}} ans</p>
+                                                                                                    
+                                            </div>
+                                        </div>
+                                        <img src="uploads/{{offre.image}}"  height="350px" alt="" class="img"  >
+                                    </div>
+                                      
+                                </div>
+                               
+                            </div>
+                             
+                                         {% endif %}
+                              {% endfor %}  
+                               </div>
+                    </div>
+                </div>
+           
+        {% endif %}  
          <div class="container">
             <div class="row">
                 <div class="col-lg-12">
                     <div class="section-border">
                             <center> <div class="main-button">
-                                           <a href="#">Plus d'offres</a>
+                                           <a href="/login">Plus de détails</a>
                                      </div>
                             </center>
                     </div>
@@ -462,7 +540,7 @@ background:linear-gradient(to bottom right,#18DB32,#0360FF );
                 <div class="col-lg-12">
                     <div class="section-border">
                             <center> <div class="main-button">
-                                           <a href="#">Plus de nouvelles</a>
+                                           <a href="/login">Plus de nouvelles</a>
                                      </div>
                             </center>
                     </div>
@@ -482,21 +560,23 @@ background:linear-gradient(to bottom right,#18DB32,#0360FF );
                         <h2>Envoyez nous un message</h2>
                        
                     </div>
-                    <form id="contact" action="" method="post">
+                    <form id="contact" action="/sendEmail" method="post">
                         <div class="row">
+                        {%if(app.user==null)%}
                           <div class="col-lg-6">
                             <fieldset>
-                              <input name="name" type="text" id="name" placeholder="votre nom Complet" required="">
+                              <input name="name" type="text" id="name" name="name" placeholder="votre nom Complet" required="">
                             </fieldset>
                           </div>
                           <div class="col-lg-6">
                             <fieldset>
-                              <input name="email" type="text" id="email" placeholder="votre email" required="">
+                              <input name="email" type="text" id="email" name="email" placeholder="votre email" required="">
                             </fieldset>
                           </div>
+                           {%endif%}
                           <div class="col-lg-12">
                             <fieldset>
-                              <textarea name="message" rows="6" id="message" placeholder="votre message" required=""></textarea>
+                              <textarea name="message" rows="6" id="message" name="message" placeholder="votre message" required=""></textarea>
                             </fieldset>
                           </div>
                           <div class="col-lg-12">
@@ -511,9 +591,9 @@ background:linear-gradient(to bottom right,#18DB32,#0360FF );
                     <div class="row">
                         <div class="col-8">
                             <ul>
-                                <li>Adresse:<br><span>14 Rue de Manouba, Tunis 1006</span></li>
-                                <li>Email:<br><span>Investir@company.com</span></li>
-                                <li>Téléphone:<br><span>(+216) 71 096 814</span></li>
+                                <li>Adresse:<br><span>{{user.adresse}}</span></li>
+                                <li>Email:<br><span>{{user.email}}</span></li>
+                                <li>Téléphone:<br><span>(+216) {{user.tel}}</span></li>
                               
                             </ul>
                         </div>
@@ -542,9 +622,9 @@ background:linear-gradient(to bottom right,#18DB32,#0360FF );
                             <img src="assets/images/logo1.1.png" width="170px">
                         </div>
                         <ul>
-                            <li><a href="#">14 Rue de Manouba, Tunis 1006</a></li>
-                            <li><a href="#">Investir@company.com</a></li>
-                            <li><a href="#">(+216) 71 096 814</a></li>
+                            <li><a href="#">{{user.adresse}}</a></li>
+                            <li><a href="#">{{user.email}}</a></li>
+                            <li><a href="#">(+216) {{user.tel}}</a></li>
                         </ul>
                     </div>
                 </div>
@@ -557,6 +637,7 @@ background:linear-gradient(to bottom right,#18DB32,#0360FF );
                        
                     </ul>
                 </div>
+                 {%if app.user==null%}
                  <div class="col-lg-3">
                     <h4>Mon compte</h4>
                     <ul>
@@ -564,6 +645,7 @@ background:linear-gradient(to bottom right,#18DB32,#0360FF );
                         <li><a href="/login">Se connecter</a></li>
                     </ul>
                 </div>
+                 {%endif%}
                 <div class="col-lg-3">
                     <h4>Aide & Contact</h4>
                     <ul>

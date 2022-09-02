@@ -66,7 +66,8 @@
 
                        <!-- LOGO -->
                  <div class="navbar-brand-box">
-                  {% if is_granted('ROLE_ADMIN')  %} <a href="/admin/dashboardAdmin" cclass="logo logo-dark">{% endif %}
+                
+                  {% if is_granted('ROLE_ADMIN')  %} <a href="/admin/dashboardAdmin" class="logo logo-dark">{% endif %}
                             {% if is_granted('ROLE_INVESTISSEUR')  %} <a href="/investisseur" class="logo logo-dark">{% endif %}
                              {% if is_granted('ROLE_MINISTERE')  %} <a href="/ministere" class="logo logo-dark">{% endif %}
                    
@@ -107,6 +108,7 @@
                             <i class="mdi mdi-chevron-down d-none d-xl-inline-block"></i>
                         </button>
                         <div class="dropdown-menu dropdown-menu-end">
+                         
                              {% if is_granted('ROLE_MINISTERE')  %}
                             <a class="dropdown-item" href="/profileM"><i class="mdi mdi-account-circle-outline font-size-16 align-middle me-1"></i> Profile</a>
                            {%endif%}
@@ -160,9 +162,10 @@
                             {% if is_granted('ROLE_ADMIN')  %} <a href="/admin/dashboardAdmin" class="waves-effect">{% endif %}
                             {% if is_granted('ROLE_INVESTISSEUR')  %} <a href="/investisseur" class="waves-effect">{% endif %}
                              {% if is_granted('ROLE_MINISTERE')  %} <a href="/ministere" class="waves-effect">{% endif %}
-                                <i class="dripicons-home"></i>
+                                <i class="dripicons-graph-bar"></i>
                                 <span>Dashboard</span>
                             </a>
+                             <a href="/home" class="waves-effect"> <i class="dripicons-home"></i> home </a>
                         </li>
                     {% if is_granted('ROLE_ADMIN')  %} 
                         <li>
