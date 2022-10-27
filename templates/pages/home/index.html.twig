@@ -158,7 +158,13 @@ background:linear-gradient(to bottom right,#18DB32,#0360FF );
                             <li class="scroll-to-section"><a href="#contact" style="color: #0360FF">Contact us</a></li>
                            {%if app.user==null%} <li class="scroll-to-section"><input type="button"  class="btn btn" onclick="location.href='/login';" value="Se connecter" ></li> 
                            
-                           {%else%}<li class="scroll-to-section"><input type="button"  class="btn btn" onclick="location.href='/logout';" value="Se déconnecter" ></li> {%endif%}
+                           {%else%}
+                            
+                  {% if is_granted('ROLE_ADMIN')  %}    <li class="scroll-to-section"><input type="button"  class="btn btn" onclick="location.href='/admin/dashboardAdmin';" value="Mon compte" ></li>{% endif %}
+                            {% if is_granted('ROLE_INVESTISSEUR')  %}   <li class="scroll-to-section"><input type="button"  class="btn btn" onclick="location.href='/investisseur';" value="Mon compte" ></li>{% endif %}
+                             {% if is_granted('ROLE_MINISTERE')  %}   <li class="scroll-to-section"><input type="button"  class="btn btn" onclick="location.href='/ministere';" value="Mon compte" ></li>{% endif %}
+                {%endif%}
+
                       
                         </ul>  
 
